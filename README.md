@@ -1,2 +1,2 @@
-# dts-vc-issuer-service
+# DTS Verifiable Credential Issuer Service
 Digital Trust Verifiable Credential Issuer Service

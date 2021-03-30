@@ -20,6 +20,44 @@ function echoWarning (){
   echo -e "${_yellow}${_msg}${_nc}"
 }
 
+function isInstalled () {
+  rtnVal=$(type "$1" >/dev/null 2>&1)
+  rtnCd=$?
+  if [ ${rtnCd} -ne 0 ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+function isJQInstalled () {
+  JQ_EXE=jq
+  if ! isInstalled ${JQ_EXE}; then
+    echoError "The ${JQ_EXE} executable is required and was not found on your path."
+    echoError "Installation instructions can be found here: https://stedolan.github.io/jq/download"
+    echoError "Alternatively, a package manager such as Chocolatey (Windows) or Brew (Mac) can be used to install this dependecy."
+    exit 1
+  fi
+}
+
+function isNgrokInstalled () {
+  NGROK_EXE=ngrok
+  if ! isInstalled ${NGROK_EXE}; then
+    echoError "The ${NGROK_EXE} executable is needed and not on your path."
+    echoError "It can be downloaded from here: https://ngrok.com/download"
+    echoError "Alternatively, a package manager such as Chocolatey (Windows) or Brew (Mac) can be used to install this dependecy."
+    exit 1
+  fi
+}
+
+function checkNgrokTunnelActive () {
+  if [ -z "${NGROK_AGENT_ENDPOINT}" ]; then
+    echoError "It appears that ngrok tunneling is not enabled."
+    echoError "Please open another shell in the scripts folder and execute start-ngrok.sh before trying again."
+    exit 1
+  fi
+}
+
 function customizeKeycloakConfig () {
   # Customize realm settings for development environment
   cp -f ./keycloak/config/realm-export.json ./keycloak/config/realm-export-docker.json
@@ -291,6 +329,15 @@ case "${COMMAND}" in
       echo "Generated AGENT_WALLET_SEED=${AGENT_WALLET_SEED}"
       echo "AGENT_WALLET_SEED=${AGENT_WALLET_SEED}" > .env
     fi
+
+    if [ -z "$NGROK_AGENT_ENDPOINT" ]; then
+      isNgrokInstalled
+      export NGROK_AGENT_ENDPOINT=$(${CURL_EXE} http://localhost:4040/api/tunnels | ${JQ_EXE} --raw-output '.tunnels | map(select(.name | contains("issuer-agent"))) | .[0] | .public_url')
+    fi
+    
+    checkNgrokTunnelActive
+    echo "The agent endpoint is: ${NGROK_AGENT_ENDPOINT}"
+
     configureEnvironment "$@"
     customizeKeycloakConfig
     docker-compose --env-file .env up -d ${_startupParams}

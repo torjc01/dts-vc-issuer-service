@@ -19,26 +19,70 @@ namespace Immunization.Models
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// Represents Immunization Result.
+    /// Represents an Immunization Record.
     /// </summary>
     public class Immunization
     {
         /// <summary>
+        /// Gets or sets this immunization Fully qualified URL
+        /// </summary>
+        [JsonPropertyName("fullUrl")]
+        public string FullUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the immunization record identifier
+        /// </summary>
+        [JsonPropertyName("id")]
+        public string Identifier { get; set; }
+
+        /// <summary>
         /// Gets or sets the Vaccine Description,a generic description and codification of the 
         /// </summary>
-        [JsonPropertyName("vaccineDescription")]
-        public string VaccineAdministered { get; set; } = new LoadStateModel();
+        [JsonPropertyName("patient")]
+        public Patient Patient { get; set; } = new Patient();
 
         /// <summary>
-        /// Gets or sets the list of Immunizations events.
+        /// Gets or sets the Vaccine Description,a generic description and codification of the 
         /// </summary>
-        [JsonPropertyName("immunizations")]
-        public IList<ImmunizationEvent> Immunizations { get; set; } = new List<ImmunizationEvent>();
+        [JsonPropertyName("vaccine")]
+        public Vaccine Vaccine { get; set; } = new Vaccine();
 
         /// <summary>
-        /// Gets or sets the list of Immunizations recommendations.
+        /// Gets or sets the lot Number (aka Batch Number)
         /// </summary>
-        [JsonPropertyName("recommendations")]
-        public IList<ImmunizationRecommendation> Recommendations { get; set; } = new List<ImmunizationRecommendation>();
+        [JsonPropertyName("lotNumber")]
+        public string LotNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date of vaccination: ISO 8601
+        /// </summary>
+        [JsonPropertyName("dateOfVaccination")]
+        public string VaccinationDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date of vaccination: ISO 8601
+        /// </summary>
+        [JsonPropertyName("doseNumber")]
+        public int DoseNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country of vaccination: ISO 3166
+        /// </summary>
+        [JsonPropertyName("countryOfVaccination")]
+        public string CountryOfVaccination { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the vaccination facility
+        /// </summary>
+        [JsonPropertyName("administeringCentre")]
+        public string CountryOfVaccination { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the next Vaccination due-by Date.
+        /// ISO 8601
+        /// </summary>
+        [JsonPropertyName("nextVaccinationDate")]
+        public string NextVaccinationDueDate { get; set; }
+
     }
 }

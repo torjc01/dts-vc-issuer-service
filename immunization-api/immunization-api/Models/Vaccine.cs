@@ -19,32 +19,26 @@ namespace Immunization.Models
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// Represents basic Patient or Subject Information
+    /// Represents basic Vaccine Information
     /// </summary>
-    public class Patient
+    public class Vaccine
     {
         /// <summary>
-        /// Gets or sets the Subject's Full name "SURNAME GIVEN-NAME(S)"
+        /// Gets or the Identifier for the drug (e.g. DIN code)
         /// </summary>
-        [JsonPropertyName("fullName")]
-        public string FullName { get; set; }
+        [JsonPropertyName("identifer")]
+        public Identifier VaccineIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the subject's birthdate.  ISO 9601
+        /// Gets or sets the vaccine manufacturer
         /// </summary>
-        [JsonPropertyName("birthDate")]
-        public string BirthDate { get; set; }
+        [JsonPropertyName("manufacturer")]
+        public string Manufacturer { get; set; }
 
         /// <summary>
-        /// Gets or sets the subject's Identifier.
-        /// </summary>j
-        [JsonPropertyName("identifier")]
-        public Identifier { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subject's unique URI for this patient.
-        /// </summary>j
-        [JsonPropertyName("reference")]
-        public ReferenceURI { get; set; }
+        /// Gets or sets the vaccine manufacturer
+        /// </summary>
+        [JsonPropertyName("productName")]
+        public string ProductName { get; set; }
     }
 }

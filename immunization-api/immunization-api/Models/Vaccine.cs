@@ -40,5 +40,11 @@ namespace Immunization.Models
         /// </summary>
         [JsonPropertyName("productName")]
         public string ProductName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vaccine's targeted disease
+        /// </summary>
+        [JsonPropertyName("disease")]
+        public string Disease { get; set; }
     }
 }

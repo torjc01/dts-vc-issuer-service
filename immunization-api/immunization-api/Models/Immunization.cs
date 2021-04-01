@@ -1,0 +1,44 @@
+//-------------------------------------------------------------------------
+// Copyright © 2021 Province of British Columbia
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//-------------------------------------------------------------------------
+namespace Immunization.Models
+{
+    using System.Collections.Generic;
+    using System.Text.Json.Serialization;
+
+    /// <summary>
+    /// Represents Immunization Result.
+    /// </summary>
+    public class Immunization
+    {
+        /// <summary>
+        /// Gets or sets the Vaccine Description,a generic description and codification of the 
+        /// </summary>
+        [JsonPropertyName("vaccineDescription")]
+        public string VaccineAdministered { get; set; } = new LoadStateModel();
+
+        /// <summary>
+        /// Gets or sets the list of Immunizations events.
+        /// </summary>
+        [JsonPropertyName("immunizations")]
+        public IList<ImmunizationEvent> Immunizations { get; set; } = new List<ImmunizationEvent>();
+
+        /// <summary>
+        /// Gets or sets the list of Immunizations recommendations.
+        /// </summary>
+        [JsonPropertyName("recommendations")]
+        public IList<ImmunizationRecommendation> Recommendations { get; set; } = new List<ImmunizationRecommendation>();
+    }
+}

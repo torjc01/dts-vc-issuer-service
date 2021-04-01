@@ -49,7 +49,7 @@ namespace ImmunizationApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}")] // GET Matches api/Immunization/{id}
+        [HttpGet("{immunizationId}")] // GET Matches api/Immunization/{id}
         [Produces("application/json")]
         public ImmunizationRecord GetImmunization(string immunizationId)
         {

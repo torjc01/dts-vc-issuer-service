@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Immunization.Models
+namespace ImmunizationApi.Models
 {
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
@@ -39,12 +39,12 @@ namespace Immunization.Models
         /// Gets or sets the subject's Identifier.
         /// </summary>j
         [JsonPropertyName("identifier")]
-        public Identifier { get; set; }
+        public Identifier Identifier { get; set; } = new Identifier();
 
         /// <summary>
         /// Gets or sets the subject's unique URI for this patient.
         /// </summary>j
         [JsonPropertyName("reference")]
-        public ReferenceURI { get; set; }
+        public string ReferenceURI { get; set; }
     }
 }

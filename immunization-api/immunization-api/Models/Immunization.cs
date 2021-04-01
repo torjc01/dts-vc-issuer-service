@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace Immunization.Models
+namespace ImmunizationApi.Models
 {
     using System.Collections.Generic;
     using System.Text.Json.Serialization;
@@ -21,7 +21,7 @@ namespace Immunization.Models
     /// <summary>
     /// Represents an Immunization Record.
     /// </summary>
-    public class Immunization
+    public class ImmunizationRecord
     {
         /// <summary>
         /// Gets or sets this immunization Fully qualified URL
@@ -33,7 +33,7 @@ namespace Immunization.Models
         /// Gets or sets the immunization record identifier
         /// </summary>
         [JsonPropertyName("id")]
-        public string Identifier { get; set; }
+        public string RecordIdentifier { get; set; }
 
         /// <summary>
         /// Gets or sets the Vaccine Description,a generic description and codification of the 
@@ -75,7 +75,7 @@ namespace Immunization.Models
         /// Gets or sets the name of the vaccination facility
         /// </summary>
         [JsonPropertyName("administeringCentre")]
-        public string CountryOfVaccination { get; set; }
+        public string Facility { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the next Vaccination due-by Date.

@@ -26,7 +26,7 @@ namespace ImmunizationApi.Models
         /// <summary>
         /// Gets or the Identifier for the drug (e.g. DIN code)
         /// </summary>
-        [JsonPropertyName("identifer")]
+        [JsonPropertyName("identifier")]
         public Identifier VaccineIdentifier { get; set; }
 
         /// <summary>

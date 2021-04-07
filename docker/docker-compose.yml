@@ -77,7 +77,7 @@ services:
   # keycloak-db:
   #   image: postgres:latest
   #   environment:
-  #     POSTGRES_USERNAME: ${KEYCLOAK_DB_USER}
+  #     POSTGRES_USER: ${KEYCLOAK_DB_USER}
   #     POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
   #     POSTGRES_DB: ${KEYCLOAK_DB_NAME}
   #   volumes:

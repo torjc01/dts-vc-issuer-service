@@ -2,27 +2,27 @@ version: "3"
 
 services:
   
-  # .Net Core API
-  api-dev:
-    image: dts-vc-issuer-api-dev
-    environment:
-      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};"
-      AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
-    ports:
-      - ${API_PORT}:5000
-    networks:
-      - dts-vc-issuer
-    volumes:
-      - ../api/:/app
-      - api-dev-bin:/app/bin
-      - api-dev-obj:/app/obj
-    depends_on:
-      - db
-    command: >
-      /bin/bash -c "
-      echo waiting for db ...;
-      sleep 15;
-      dotnet watch run"
+  # # .Net Core API
+  # api-dev:
+  #   image: dts-vc-issuer-api-dev
+  #   environment:
+  #     DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};"
+  #     AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
+  #   ports:
+  #     - ${API_PORT}:5000
+  #   networks:
+  #     - dts-vc-issuer
+  #   volumes:
+  #     - ../api/:/app
+  #     - api-dev-bin:/app/bin
+  #     - api-dev-obj:/app/obj
+  #   depends_on:
+  #     - db
+  #   command: >
+  #     /bin/bash -c "
+  #     echo waiting for db ...;
+  #     sleep 15;
+  #     dotnet watch run"
 
   # PostgreSQL database used by the API
   db:
@@ -38,52 +38,52 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  # VueJS Frontend
-  frontend:
-    image: node:erbium
-    volumes:
-      - ../frontend:/usr/src/frontend
-    working_dir: /usr/src/frontend
-    ports:
-      - ${FRONTEND_WEB_PORT}:${FRONTEND_WEB_PORT}
-    networks:
-      - dts-vc-issuer
-    command: npm run serve
+  # # VueJS Frontend
+  # frontend:
+  #   image: node:erbium
+  #   volumes:
+  #     - ../frontend:/usr/src/frontend
+  #   working_dir: /usr/src/frontend
+  #   ports:
+  #     - ${FRONTEND_WEB_PORT}:${FRONTEND_WEB_PORT}
+  #   networks:
+  #     - dts-vc-issuer
+  #   command: npm run serve
 
-  # Keycloak
-  keycloak:
-    image: jboss/keycloak:12.0.4
-    environment:
-      DB_VENDOR: ${KEYCLOAK_DB_VENDOR}
-      DB_ADDR: ${KEYCLOAK_DB_ADDR}
-      DB_DATABASE: ${KEYCLOAK_DB_NAME}
-      DB_USER: ${KEYCLOAK_DB_USER}
-      DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
-      KEYCLOAK_USER: ${KEYCLOAK_USER}
-      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
-      KEYCLOAK_LOGLEVEL: ${KEYCLOAK_LOGLEVEL}
-      ROOT_LOGLEVEL: ${KEYCLOAK_ROOT_LOGLEVEL}
-      KEYCLOAK_IMPORT: ${KEYCLOAK_IMPORT}
-    volumes:
-      - ../docker/keycloak/config/realm-export-docker.json:/tmp/realm-export-docker.json
-    ports:
-      - 8180:8080
-    depends_on:
-      - keycloak-db
-    networks:
-      - dts-vc-issuer
+  # # Keycloak
+  # keycloak:
+  #   image: jboss/keycloak:12.0.4
+  #   environment:
+  #     DB_VENDOR: ${KEYCLOAK_DB_VENDOR}
+  #     DB_ADDR: ${KEYCLOAK_DB_ADDR}
+  #     DB_DATABASE: ${KEYCLOAK_DB_NAME}
+  #     DB_USER: ${KEYCLOAK_DB_USER}
+  #     DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+  #     KEYCLOAK_USER: ${KEYCLOAK_USER}
+  #     KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+  #     KEYCLOAK_LOGLEVEL: ${KEYCLOAK_LOGLEVEL}
+  #     ROOT_LOGLEVEL: ${KEYCLOAK_ROOT_LOGLEVEL}
+  #     # KEYCLOAK_IMPORT: ${KEYCLOAK_IMPORT}
+  #   # volumes:
+  #   #   - ../docker/keycloak/config/realm-export-docker.json:/tmp/realm-export-docker.json
+  #   ports:
+  #     - 8180:8080
+  #   depends_on:
+  #     - keycloak-db
+  #   networks:
+  #     - dts-vc-issuer
 
-  # Keycloak DB
-  keycloak-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USERNAME: ${KEYCLOAK_DB_USER}
-      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
-      POSTGRES_DB: ${KEYCLOAK_DB_NAME}
-    volumes:
-      - keycloak-db-data:/var/lib/postgresql/data
-    networks:
-      - dts-vc-issuer
+  # # Keycloak DB
+  # keycloak-db:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_USER: ${KEYCLOAK_DB_USER}
+  #     POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+  #     POSTGRES_DB: ${KEYCLOAK_DB_NAME}
+  #   volumes:
+  #     - keycloak-db-data:/var/lib/postgresql/data
+  #   networks:
+  #     - dts-vc-issuer
 
   # Agent
   agent:

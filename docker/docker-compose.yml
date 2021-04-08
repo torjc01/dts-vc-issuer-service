@@ -1,28 +1,28 @@
 version: "3"
 
 services:
-  
-  # # .Net Core API
-  # api-dev:
-  #   image: dts-vc-issuer-api-dev
-  #   environment:
-  #     DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USERNAME};Password=${DATABASE_PASSWORD};"
-  #     AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
-  #   ports:
-  #     - ${API_PORT}:5000
-  #   networks:
-  #     - dts-vc-issuer
-  #   volumes:
-  #     - ../api/:/app
-  #     - api-dev-bin:/app/bin
-  #     - api-dev-obj:/app/obj
-  #   depends_on:
-  #     - db
-  #   command: >
-  #     /bin/bash -c "
-  #     echo waiting for db ...;
-  #     sleep 15;
-  #     dotnet watch run"
+
+  # .Net Core API Issuer
+  issuer-api-dev:
+    image: dts-vc-issuer-api-dev
+    environment:
+      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
+      AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
+    ports:
+      - ${API_PORT}:5000
+    networks:
+      - dts-vc-issuer
+    volumes:
+      - ../issuer-api/:/app
+      - issuer-api-dev-bin:/app/bin
+      - issuer-api-dev-obj:/app/obj
+    depends_on:
+      - db
+    command: >
+      /bin/bash -c "
+      echo waiting for db ...;
+      sleep 15;
+      dotnet watch run"
 
   # PostgreSQL database used by the API
   db:
@@ -38,17 +38,19 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
-  # # VueJS Frontend
-  # frontend:
-  #   image: node:erbium
-  #   volumes:
-  #     - ../frontend:/usr/src/frontend
-  #   working_dir: /usr/src/frontend
-  #   ports:
-  #     - ${FRONTEND_WEB_PORT}:${FRONTEND_WEB_PORT}
-  #   networks:
-  #     - dts-vc-issuer
-  #   command: npm run serve
+  # Angular Frontend
+  frontend:
+    image: node:erbium
+    volumes:
+      - ../angular-frontend:/usr/src/frontend
+    working_dir: /usr/src/frontend
+    ports:
+      - ${FRONTEND_WEB_PORT}:${FRONTEND_WEB_PORT}
+    networks:
+      - dts-vc-issuer
+    command: npm run serve
+    depends_on:
+      - issuer-api-dev
 
   # # Keycloak
   # keycloak:
@@ -152,7 +154,7 @@ services:
       - ${WALLET_PORT}:${WALLET_PORT}
     volumes:
       - wallet-data:/var/lib/postgresql/data
-  
+
   # Outgoing mail server
   # See: https://hub.docker.com/r/maildev/maildev
   maildev:
@@ -170,3 +172,5 @@ volumes:
   wallet-data:
   db-data:
   tails-storage:
+  issuer-api-dev-bin:
+  issuer-api-dev-obj:

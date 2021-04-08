@@ -9,7 +9,7 @@ services:
       DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
       AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
     ports:
-      - ${API_PORT}:5000
+      - ${ISSUER_API_PORT}:5000
     networks:
       - dts-vc-issuer
     volumes:
@@ -18,6 +18,27 @@ services:
       - issuer-api-dev-obj:/app/obj
     depends_on:
       - db
+    command: >
+      /bin/bash -c "
+      echo waiting for db ...;
+      sleep 15;
+      dotnet watch run"
+
+  # .Net Core API Immunization
+  immunization-api-dev:
+    image: dts-vc-immunization-api-dev
+    # environment:
+    #   DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
+    ports:
+      - ${IMMUNIZATION_API_PORT}:5000
+    networks:
+      - dts-vc-issuer
+    volumes:
+      - ../immunization-api/immunization-api/:/app
+      - immunization-api-dev-bin:/app/bin
+      - immunization-api-dev-obj:/app/obj
+    # depends_on:
+    #   - db
     command: >
       /bin/bash -c "
       echo waiting for db ...;
@@ -174,3 +195,5 @@ volumes:
   tails-storage:
   issuer-api-dev-bin:
   issuer-api-dev-obj:
+  immunization-api-dev-bin:
+  immunization-api-dev-obj:

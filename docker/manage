@@ -112,11 +112,11 @@ SCRIPT_HOME="$(cd "$(dirname "$0")" && pwd)"
 # -----------------------------------------------------------------------------------------------------------------
 usage() {
   cat <<-EOF
-    
+
       Usage: $0 [command] [options]
-    
+
       Commands:
-    
+
       logs - Display the logs from the docker compose run (ctrl-c to exit).
 
       start - Runs the containers in production mode.
@@ -124,7 +124,7 @@ usage() {
 
       stop - Stops the services.  This is a non-destructive process.  The volumes and containers
              are not deleted so they will be reused the next time you run start.
-    
+
       down - Brings down the services and removes the volumes (storage) and containers.
       rm - Same as down
 
@@ -180,7 +180,7 @@ configureEnvironment() {
   export TAILS_SERVER_URL=${TAILS_SERVER_URL:-"https://tails-dev.vonx.io"}
 
   # frontend
-  export FRONTEND_WEB_PORT=4251
+  export FRONTEND_WEB_PORT=4200
 
   # db
   export DATABASE_NAME="dts_issuer-db"
@@ -346,7 +346,7 @@ case "${COMMAND}" in
       isNgrokInstalled
       export NGROK_AGENT_ENDPOINT=$(${CURL_EXE} http://localhost:4040/api/tunnels | ${JQ_EXE} --raw-output '.tunnels | map(select(.name | contains("issuer-agent"))) | .[0] | .public_url')
     fi
-    
+
     checkNgrokTunnelActive
     echo "The agent endpoint is: ${NGROK_AGENT_ENDPOINT}"
 
@@ -357,7 +357,7 @@ case "${COMMAND}" in
     ;;
   stop)
     configureEnvironment
-    docker-compose stop 
+    docker-compose stop
     ;;
   rm|down)
     rm .env

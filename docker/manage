@@ -188,10 +188,9 @@ configureEnvironment() {
   export FRONTEND_WEB_PORT=4200
 
   # db
-  export DATABASE_NAME="dts_issuer-db"
   export DATABASE_USER="dbuser"
   export DATABASE_PASSWORD="dbpassword"
-  export DATABASE_PORT="5433"
+  export DATABASE_PORT="5432"
 
   # keycloak
   export KEYCLOAK_DB_VENDOR="POSTGRES"

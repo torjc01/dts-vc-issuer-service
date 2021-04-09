@@ -18,7 +18,7 @@ namespace Issuer
             public static readonly string Username = System.Environment.GetEnvironmentVariable("POSTGRES_USERNAME");
             public static readonly string Db = System.Environment.GetEnvironmentVariable("POSTGRES_DB");
             public static readonly string PgPassword = System.Environment.GetEnvironmentVariable("PGPASSWORD");
-            public static readonly string ConnectionString = System.Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? $"Host=db;Port=5433;Database=dts_issuer-db;Username=dbuser;Password=dbpassword;";
+            public static readonly string ConnectionString = System.Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
         }
 
         /// <summary>

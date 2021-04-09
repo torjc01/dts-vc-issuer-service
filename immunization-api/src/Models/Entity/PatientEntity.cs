@@ -36,7 +36,7 @@ namespace ImmunizationApi.Models.Entity
         /// <summary>
         /// Gets or sets the Subject's Given Name(s)
         /// </summary>
-        public IEnumerable<string> GivenNames { get; set; }
+        public string GivenNames { get; set; }
 
         /// <summary>
         /// Gets or sets the subject's birthdate.

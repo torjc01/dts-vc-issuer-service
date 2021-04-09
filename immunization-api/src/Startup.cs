@@ -65,7 +65,9 @@ namespace ImmunizationApi
                 endpoints.MapControllers();
             });
 
-            var context = app.ApplicationServices.GetService<ImmunizationDbContext>();
+            // Creating a new scope as the default dbContext is scoped.
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ImmunizationDbContext>();
             SampleDataInitializer.Seed(context);
         }
     }

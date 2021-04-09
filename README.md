@@ -7,9 +7,11 @@ Digital Trust Verifiable Credential Issuer Service
 
 ## Repository Structure
 
-- `api`: contains the .Net Core back-end code that defines the business logic for the DTS VC issuer.
+- `immunization-api`: contains the .Net Core 5.0 back-end code that defines the business logic for patient immunization information.
 
-- `frontend`: a VueJS frontend that provides users with a user interface to request Verifiable Credentials.
+- `issuer-api`: contains the .Net Core 3.1 back-end code that defines the business logic for the DTS VC issuer.
+
+- `angular-frontend`: a Angular frontend that provides users with a user interface to request Verifiable Credentials.
 
 - `docker`: configurations and script to run the services in Docker on localhost.
 

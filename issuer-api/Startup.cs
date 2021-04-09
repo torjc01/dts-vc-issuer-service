@@ -146,7 +146,7 @@ namespace Issuer
             string connectionString;
             if (IssuerEnvironment.IsLocal)
             {
-                connectionString = IssuerEnvironment.Postgres.ConnectionString;
+                connectionString = Configuration.GetConnectionString("IssuerDatabase");
             }
             else
             {

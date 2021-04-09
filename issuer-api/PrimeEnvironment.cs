@@ -4,21 +4,21 @@ namespace Prime
 {
     public static class PrimeEnvironment
     {
-        public readonly static string Name = Environment.GetEnvironmentVariable("APP") ?? "local";
-        public readonly static string FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "localhost:4200";
-        public readonly static string BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL") ?? "http://localhost:5000/api";
-        public readonly static string LogFile = Environment.GetEnvironmentVariable("LOG_FILE_PATH") ?? "logs";
+        public static readonly string Name = Environment.GetEnvironmentVariable("APP") ?? "local";
+        public static readonly string FrontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL") ?? "localhost:4200";
+        public static readonly string BackendUrl = Environment.GetEnvironmentVariable("BACKEND_URL") ?? "http://localhost:5000/api";
+        public static readonly string LogFile = Environment.GetEnvironmentVariable("LOG_FILE_PATH") ?? "logs";
 
         public static bool IsProduction { get => Name == "prod"; }
         public static bool IsLocal { get => Name == "local"; }
 
         public static class Postgres
         {
-            public readonly static string Server = System.Environment.GetEnvironmentVariable("POSTGRES_SERVER");
-            public readonly static string Username = System.Environment.GetEnvironmentVariable("POSTGRES_USERNAME");
-            public readonly static string Db = System.Environment.GetEnvironmentVariable("POSTGRES_DB");
-            public readonly static string PgPassword = System.Environment.GetEnvironmentVariable("PGPASSWORD");
-            public readonly static string ConnectionString = $"Server={Server}; User Id={Username}; Database=${Db}; Port=5432; Password={PgPassword}; SSLMode=Prefer";
+            public static readonly string Server = System.Environment.GetEnvironmentVariable("POSTGRES_SERVER");
+            public static readonly string Username = System.Environment.GetEnvironmentVariable("POSTGRES_USERNAME");
+            public static readonly string Db = System.Environment.GetEnvironmentVariable("POSTGRES_DB");
+            public static readonly string PgPassword = System.Environment.GetEnvironmentVariable("PGPASSWORD");
+            public static readonly string ConnectionString = $"Host=db;Port=5432;Database=dts_issuer-db;Username=dbuser;Password=dbpassword;";
         }
 
         /// <summary>

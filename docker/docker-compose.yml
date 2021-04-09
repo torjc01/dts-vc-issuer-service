@@ -6,7 +6,7 @@ services:
   issuer-api-dev:
     image: dts-vc-issuer-api-dev
     environment:
-      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
+      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${ISSUER_DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
       AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
     ports:
       - ${ISSUER_API_PORT}:5000
@@ -28,7 +28,7 @@ services:
   immunization-api-dev:
     image: dts-vc-immunization-api-dev
     environment:
-      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
+      DB_CONNECTION_STRING: "Host=db;Port=${DATABASE_PORT};Database=${IMMUNIZATION_DATABASE_NAME};Username=${DATABASE_USER};Password=${DATABASE_PASSWORD};"
     ports:
       - ${IMMUNIZATION_API_PORT}:5000
     networks:

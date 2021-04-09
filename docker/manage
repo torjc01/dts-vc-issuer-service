@@ -139,7 +139,12 @@ build() {
   echo -e "\nBuilding dts-vc-issuer-api development image..."
   docker build \
     -t 'dts-vc-issuer-api-dev' \
-    -f './api/Dockerfile.dev' '..'
+    -f './api/issuer/Dockerfile.dev' '..'
+
+  echo -e "\nBuilding dts-vc-immunization-api development image..."
+  docker build \
+    -t 'dts-vc-immunization-api-dev' \
+    -f './api/immunization/Dockerfile.dev' '..'
 }
 
 configureEnvironment() {
@@ -226,10 +231,13 @@ configureEnvironment() {
     AGENT_ADMIN_MODE="admin-api-key ${AGENT_ADMIN_API_KEY}"
   fi
 
-  # api
-  export API_PORT=5000
-  export AGENT_ADMIN_URL=${AGENT_ADMIN_URL:-http://agent:$AGENT_ADMIN_PORT}
-  export DB_SERVICE="db"
+  # issuer api
+  export ISSUER_API_PORT=5000
+  export ISSUER_AGENT_ADMIN_URL=${ISSUER_AGENT_ADMIN_URL:-http://agent:$AGENT_ADMIN_PORT}
+  export ISSUER_DB_SERVICE="db"
+
+  # immunization api
+  export IMMUNIZATION_API_PORT=5001
 }
 
 getInputParams() {

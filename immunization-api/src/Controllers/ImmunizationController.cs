@@ -17,7 +17,6 @@ namespace ImmunizationApi.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authentication;
@@ -27,43 +26,60 @@ namespace ImmunizationApi.Controllers
     using Microsoft.Extensions.Logging;
 
     using ImmunizationApi.Models;
+    using ImmunizationApi.Services;
+
     /// <summary>
     /// The Immunization controller.
     /// </summary>
-
     //[Authorize]
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class ImmunizationController : ControllerBase
     {
-
-        private readonly ILogger<ImmunizationController> _logger;
+        private readonly ILogger logger;
 
         /// <summary>
         /// Gets or sets the immunization data service.
         /// </summary>
-        //private readonly IImmunizationDataService dataService;
+        private readonly IImmunizationService service;
 
-        public ImmunizationController(ILogger<ImmunizationController> logger)
+        /// <summary>
+        /// Gets or sets the http context accessor.
+        /// </summary>
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImmunizationController"/> class.
+        /// </summary>
+        /// <param name="logger">Injected Logger Provider.</param>
+        /// <param name="svc">The immunization data service.</param>
+        /// <param name="httpContextAccessor">The Http Context accessor.</param>
+        public ImmunizationController(ILogger<ImmunizationController> logger,
+            IImmunizationService service,
+            IHttpContextAccessor httpContextAccessor)
+
         {
-            _logger = logger;
+            this.logger = logger;
+            this.service = service;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet("{immunizationId}")] // GET Matches api/Immunization/{id}
         [Produces("application/json")]
-        public ImmunizationRecord GetImmunization(string immunizationId)
+        //[Authorize]
+        public async Task<IActionResult> GetImmunization(string immunizationId)
         {
-            return new ImmunizationRecord();
+            Immunization immunization = await service.GetImmunization(immunizationId);
+            return new JsonResult(immunization);
         }
 
         [HttpGet] // GET  api/Immunization?patient=39393993
         [Produces("application/json")]
-        public IEnumerable<ImmunizationRecord> GetImmunizationRecords(string patient)
+        //[Authorize]
+        public async Task<IActionResult> GetImmunizations(string patient)
         {
-            List<ImmunizationRecord> list  = new List<ImmunizationRecord>();
-            list.Add(new ImmunizationRecord());
-            return list;
-            
+            IEnumerable<Immunization> immunizations = await service.GetImmunizations(patient);
+            return new JsonResult(immunizations);
         }
     }
 }

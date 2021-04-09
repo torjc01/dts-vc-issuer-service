@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------
-// Copyright © 2021 Province of British Columbia
+// Copyright © 2019 Province of British Columbia
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,26 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //-------------------------------------------------------------------------
-namespace ImmunizationApi.Models
+namespace ImmunizationApi.Repository
 {
     using System.Collections.Generic;
-    using System.Text.Json.Serialization;
+    using ImmunizationApi.Models;
+
 
     /// <summary>
-    /// Represents Immunization Result.
-    /// </summary>
-    public class Identifier
+    /// The Immunization data service.
+    /// </summary>5
+    public interface IImmunizationRepository
     {
         /// <summary>
-        /// Gets or sets the Identifier value
+        /// Gets the ImmunizationResult including load state and a list of immunization records.
         /// </summary>
-        [JsonPropertyName("value")]
-        public string Value { get; set; }
+        /// <param name="patientId">The patient identifier user.</param>
+        /// <returns>Returns a list of immunizations.</returns>
+        IEnumerable<Immunization> Find(string patientId);
 
-        /// <summary>
-        /// Gets or sets the list of Immunizations events.
+                /// <summary>
+        /// Gets the ImmunizationResult including load state and a list of immunization records.
         /// </summary>
-        [JsonPropertyName("system")]
-        public string SystemUri { get; set; }
+        /// <returns>Returns a list of immunizations.</returns>
+        Immunization Get(string immunizationId);
     }
 }

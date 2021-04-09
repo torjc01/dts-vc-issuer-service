@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using ImmunizationApi.Repository.Example;
+
 namespace ImmunizationApi
 {
     public class Program

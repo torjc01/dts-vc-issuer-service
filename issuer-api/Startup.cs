@@ -45,14 +45,16 @@ namespace Prime
 
             services.AddCors(options =>
             {
-                options.AddPolicy(AllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                    });
+                options.AddPolicy(
+                        AllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder
+                                .WithOrigins("http://localhost:4200")
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials();
+                        });
             });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -128,7 +130,7 @@ namespace Prime
             app.UseCors(AllowSpecificOrigins);
 
             app.UseAuthentication();
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

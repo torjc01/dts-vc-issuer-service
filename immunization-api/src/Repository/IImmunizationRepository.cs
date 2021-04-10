@@ -16,6 +16,8 @@
 namespace ImmunizationApi.Repository
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     using ImmunizationApi.Models;
 
 
@@ -29,12 +31,12 @@ namespace ImmunizationApi.Repository
         /// </summary>
         /// <param name="patientId">The patient identifier user.</param>
         /// <returns>Returns a list of immunizations.</returns>
-        IEnumerable<Immunization> Find(string patientId);
+        Task<IEnumerable<Immunization>> Find(string patientId);
 
                 /// <summary>
         /// Gets the ImmunizationResult including load state and a list of immunization records.
         /// </summary>
         /// <returns>Returns a list of immunizations.</returns>
-        Immunization Get(string immunizationId);
+        Task<Immunization> Get(string immunizationId);
     }
 }

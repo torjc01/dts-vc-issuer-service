@@ -38,29 +38,38 @@ namespace ImmunizationApi.Repository.Example
             PatientEntity patient1 = new PatientEntity
             {
                 BirthDate = new System.DateTime(1957, 6, 22),
-                GivenNames = new List<string> { "Jay", "Francis" },
-                LastName = "Pritchett",
+                GivenNames = "Johnny Michael",
+                LastName = "Rose",
                 Id = "9039555099"
             };
             context.Patients.Add(patient1);
 
             PatientEntity patient2 = new PatientEntity
             {
-                BirthDate = new System.DateTime(1972, 3, 17),
-                GivenNames = new List<string>() { "Gloria", "Maria" },
-                LastName = "Ramirez-Pritchett",
+                BirthDate = new System.DateTime(1961, 3, 17),
+                GivenNames = "Moira Maria",
+                LastName = "Rose",
                 Id = "9034545122"
             };
             context.Patients.Add(patient2);
 
             PatientEntity patient3 = new PatientEntity
             {
-                BirthDate = new System.DateTime(1996, 1, 14),
-                GivenNames = new List<string>() { "Alexandra", "Anastasia" },
-                LastName = "Dunphy",
-                Id = "9104899178"
+                BirthDate = new System.DateTime(1952, 1, 14),
+                GivenNames = "Roland Ethan",
+                LastName = "Schitt",
+                Id = "900489178"
             };
             context.Patients.Add(patient3);
+
+            PatientEntity patient4 = new PatientEntity
+            {
+                BirthDate = new System.DateTime(1991, 9, 22),
+                GivenNames = "Veronica",
+                LastName = "Lee",
+                Id = "9902489314"
+            };
+            context.Patients.Add(patient4);
             context.SaveChanges();
 
             VaccineEntity vaccine1 = new VaccineEntity
@@ -116,8 +125,8 @@ namespace ImmunizationApi.Repository.Example
                 DoseNumber = 1,
                 LotNumber = "123456A",
                 NextDueDate = new DateTime(2021, 4, 30),
-                Patient = patient1,
-                Vaccine = vaccine1
+                PatientId = patient1.Id,
+                VaccineId = vaccine1.Id
             };
             context.Immunizations.Add(imm1);
 
@@ -127,8 +136,8 @@ namespace ImmunizationApi.Repository.Example
                 DoseNumber = 2,
                 LotNumber = "123456A",
                 AdministeredAt = loc2,
-                Patient = patient1,
-                Vaccine = vaccine1
+                PatientId = patient1.Id,
+                VaccineId = vaccine1.Id
             };
             context.Immunizations.Add(imm2);
 
@@ -138,10 +147,32 @@ namespace ImmunizationApi.Repository.Example
                 DoseNumber = 1,
                 LotNumber = "MT0055",
                 AdministeredAt = loc1,
-                Patient = patient2,
-                Vaccine = vaccine2
+                PatientId = patient2.Id,
+                VaccineId = vaccine2.Id
             };
             context.Immunizations.Add(imm3);
+
+            ImmunizationEntity imm4 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2021, 2, 27),
+                DoseNumber = 1,
+                LotNumber = "AB1234",
+                AdministeredAt = loc2,
+                PatientId = patient3.Id,
+                VaccineId = vaccine5.Id
+            };
+            context.Immunizations.Add(imm4);
+
+            ImmunizationEntity imm5 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2021, 4, 2),
+                DoseNumber = 1,
+                LotNumber = "AA3303",
+                AdministeredAt = loc1,
+                Patient = patient4,
+                VaccineId = vaccine4.Id
+            };
+            context.Immunizations.Add(imm4);
 
             context.SaveChanges();
         }

@@ -16,7 +16,9 @@
 namespace ImmunizationApi.Repository.Example
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
@@ -50,6 +52,7 @@ namespace ImmunizationApi.Repository.Example
                     VaccinationDate = imz.AdministeredOnDate.ToShortDateString(),
                     NextVaccinationDueDate = imz.NextDueDate.ToShortDateString(),
                     DoseNumber = imz.DoseNumber,
+                    LotNumber = imz.LotNumber,
                     CountryOfVaccination = imz.AdministeredAt.Country,
                     Facility = imz.AdministeredAt.Name,
 
@@ -61,8 +64,8 @@ namespace ImmunizationApi.Repository.Example
                             SystemUri = $"urn:oid:2.16.840.1.113883.4.50",  // BC PHN HL7 Object Identifier IRI.
                         },
                         BirthDate = imz.Patient.BirthDate.ToShortDateString(),
-                        FullName = imz.Patient.LastName,
-                        ReferenceURI = ""
+                        FullName = imz.Patient.LastName.ToUpper() + ", " + imz.Patient.GivenNames,
+                        ReferenceURI = "urn:/Patient/" + imz.PatientId
 
                     },
                     Vaccine = new Vaccine
@@ -81,11 +84,16 @@ namespace ImmunizationApi.Repository.Example
             }
             return immunization;
         }
-        public IEnumerable<Immunization> Find(string patientId)
+        public async Task<IEnumerable<Immunization>> Find(string patientId)
         {
             List<Immunization> immunizations = new List<Immunization>();
 
-            var records = dbContext.Immunizations.Include(r => r.Patient.Id == patientId);
+            var records = await dbContext.Immunizations
+                .Where(i => i.PatientId == patientId)
+                .Include(i => i.Patient)
+                .Include(i => i.Vaccine)
+                .Include(i => i.AdministeredAt).ToListAsync<ImmunizationEntity>();
+
             foreach (ImmunizationEntity imz in records)
             {
                 Immunization i = this.FromEntity(imz);
@@ -95,11 +103,16 @@ namespace ImmunizationApi.Repository.Example
 
         }
 
-        public Immunization Get(string immunizationId)
+        public async Task<Immunization> Get(string immunizationId)
         {
             Immunization immunization = null;
 
-            ImmunizationEntity imz = dbContext.Immunizations.Find(immunizationId);
+            ImmunizationEntity imz = await dbContext.Immunizations
+                .Where(i => i.Id.ToString() == immunizationId)
+                .Include(i => i.Patient)
+                .Include(i => i.Vaccine)
+                .Include(i => i.AdministeredAt).FirstAsync<ImmunizationEntity>();
+            
             immunization = this.FromEntity(imz);
             return immunization;
         }

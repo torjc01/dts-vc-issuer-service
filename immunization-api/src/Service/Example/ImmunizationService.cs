@@ -36,18 +36,15 @@ namespace ImmunizationApi.Services.Example
         /// <inherited/>
         public Task<IEnumerable<Immunization>> GetImmunizations(string patientId, string accessToken = null)
         {
-            IEnumerable<Immunization> immunizations = new List<Immunization>();
-
-            immunizations = repository.Find(patientId);
-            return Task.FromResult(immunizations);
-
+            Task<IEnumerable<Immunization>> immunizations = repository.Find(patientId);
+            return immunizations;
         }
 
         /// <inherited/>
         public Task<Immunization> GetImmunization(string immunizationId, string accessToken = null)
         {
-            Immunization immunization = repository.Get(immunizationId);
-            return Task.FromResult(immunization);
+            Task<Immunization> immunization =  repository.Get(immunizationId);
+            return immunization;
         }
     }
 }

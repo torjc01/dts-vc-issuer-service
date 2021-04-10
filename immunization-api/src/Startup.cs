@@ -34,9 +34,13 @@ namespace ImmunizationApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ImmunizationDbContext>(opt => opt.UseInMemoryDatabase(databaseName: "Immunizations"));
+
+            services.AddMvcCore();
+            
             services.AddScoped<IImmunizationRepository, ImmunizationRepository>();
             services.AddScoped<IImmunizationService, ImmunizationService>();
 
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

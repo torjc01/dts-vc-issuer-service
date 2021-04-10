@@ -16,6 +16,8 @@
 namespace ImmunizationApi.Models.Entity
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
+
     using System.Collections.Generic;
 
     /// <summary>
@@ -26,6 +28,7 @@ namespace ImmunizationApi.Models.Entity
         /// <summary>
         /// Gets or sets the subject's Identifier.
         /// </summary>j
+        [Key]
         public string Id { get; set; } 
 
         /// <summary>

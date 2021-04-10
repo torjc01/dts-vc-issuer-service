@@ -16,6 +16,7 @@
 namespace ImmunizationApi.Controllers
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -48,6 +49,13 @@ namespace ImmunizationApi.Controllers
         /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
 
+        private string ResourceBaseUrl()
+        {
+            HostString host = this.httpContextAccessor.HttpContext.Request.Host;
+            string uriProto = this.httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://";
+            return uriProto + host.ToUriComponent() + this.httpContextAccessor.HttpContext.Request.Path;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImmunizationController"/> class.
         /// </summary>
@@ -69,8 +77,20 @@ namespace ImmunizationApi.Controllers
         //[Authorize]
         public async Task<IActionResult> GetImmunization(string immunizationId)
         {
-            Immunization immunization = await service.GetImmunization(immunizationId);
-            return new JsonResult(immunization);
+            try
+            {
+                Immunization immunization = await service.GetImmunization(immunizationId);
+                if (immunization == null)
+                    return NotFound();
+                immunization.FullUrl = this.ResourceBaseUrl();
+                return new JsonResult(immunization);
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogDebug(ex.ToString());
+                return NotFound();
+            }
+
         }
 
         [HttpGet] // GET  api/Immunization?patient=39393993
@@ -78,8 +98,25 @@ namespace ImmunizationApi.Controllers
         //[Authorize]
         public async Task<IActionResult> GetImmunizations(string patient)
         {
-            IEnumerable<Immunization> immunizations = await service.GetImmunizations(patient);
-            return new JsonResult(immunizations);
+            try
+            {
+                IEnumerable<Immunization> immunizations = await service.GetImmunizations(patient);
+
+                if (Enumerable.Count<Immunization>(immunizations) == 0)
+                    return NotFound();
+
+                foreach (Immunization i in immunizations)
+                {
+                    i.FullUrl = this.ResourceBaseUrl() + "/" + i.RecordIdentifier;
+                }
+                return new JsonResult(immunizations);
+
+            }
+            catch (Exception ex)
+            {
+                this.logger.LogDebug(ex.ToString());
+                return NotFound();
+            }
         }
     }
 }

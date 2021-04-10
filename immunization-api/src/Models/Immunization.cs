@@ -21,7 +21,7 @@ namespace ImmunizationApi.Models
     /// <summary>
     /// Represents an Immunization Record.
     /// </summary>
-    public class ImmunizationRecord
+    public class Immunization
     {
         /// <summary>
         /// Gets or sets this immunization Fully qualified URL

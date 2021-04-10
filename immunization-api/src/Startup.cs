@@ -6,11 +6,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
+
+using ImmunizationApi.Repository;
+using ImmunizationApi.Repository.Example;
+using ImmunizationApi.Services;
+using ImmunizationApi.Services.Example;
 
 namespace ImmunizationApi
 {
@@ -26,7 +33,14 @@ namespace ImmunizationApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ImmunizationDbContext>(opt => opt.UseInMemoryDatabase(databaseName: "Immunizations"));
 
+            services.AddMvcCore();
+            
+            services.AddScoped<IImmunizationRepository, ImmunizationRepository>();
+            services.AddScoped<IImmunizationService, ImmunizationService>();
+
+            services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +68,11 @@ namespace ImmunizationApi
             {
                 endpoints.MapControllers();
             });
+
+            // Creating a new scope as the default dbContext is scoped.
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ImmunizationDbContext>();
+            SampleDataInitializer.Seed(context);
         }
     }
 }

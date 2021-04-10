@@ -30,7 +30,7 @@ namespace ImmunizationApi.Models
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of Immunizations events.
+        /// Gets or sets the system for the Identifier.
         /// </summary>
         [JsonPropertyName("system")]
         public string SystemUri { get; set; }

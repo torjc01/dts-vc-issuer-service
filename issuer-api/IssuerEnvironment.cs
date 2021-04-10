@@ -26,8 +26,8 @@ namespace Issuer
         /// </summary>
         public static class VerifiableCredentialApi
         {
-            public static readonly string Url = Environment.GetEnvironmentVariable("VERIFIABLE_CREDENTIAL_API_URL") ?? "https://prime-agent-admin-dev.pathfinder.gov.bc.ca/";
-            public static readonly string Key = Environment.GetEnvironmentVariable("VERIFIABLE_CREDENTIAL_API_KEY") ?? "P8ZmRJ05biXGWI1/bDtXcp1pixtWdsAqhcUJcn4S7QQ=";
+            public static readonly string Url =  "http://agent:8026/";
+            public static readonly string Key = Environment.GetEnvironmentVariable("ISSUER_AGENT_ADMIN_API_KEY");
         }
 
         /// <summary>

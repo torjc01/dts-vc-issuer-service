@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { NgxMaterialModule } from './modules/ngx-material/ngx-material.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -11,7 +13,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMaterialModule
   ]
 })
 export class SharedModule { }

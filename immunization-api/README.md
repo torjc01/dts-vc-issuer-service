@@ -20,6 +20,10 @@ http://localhost:5001/swagger/index.html
 
 ## Example Patients
 
+- Fictional characters from Schitt's Creek TV series.
+- Real Vaccines with real DIN codes for Canada.
+- Plausable Immunization Records.
+
 For example data sets loaded in EF Memory DB, see the file
 ` src/Respository/Example/SampleDataInitializer.cs
 `
@@ -27,3 +31,5 @@ For example data sets loaded in EF Memory DB, see the file
 ## TBD
 
 Need a docker file.
+
+## 

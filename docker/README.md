@@ -8,9 +8,11 @@ To run the project you will need to open two terminals:
 
 Once started the services will be listening on localhost as follows:
 
-- `api`: http://localhost:5000 - running in dev mode with hot-reloading.
+- `immunization-api-dev`: http://localhost:5001 - running in dev mode with hot-reloading.
 
-- `frontend`: http://localhost:4251 - running in dev mode with hot reloading.
+- `issuer-api-dev`: http://localhost:5000 - running in dev mode with hot-reloading.
+
+- `frontend`: http://localhost:4200 - running in dev mode with hot reloading.
 
 - `agent`: http://localhost:8024 (admin API).
 

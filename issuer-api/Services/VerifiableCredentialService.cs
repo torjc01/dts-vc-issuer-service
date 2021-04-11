@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QRCoder;
-
 using Issuer.Models;
 using Issuer.HttpClients;
 using Issuer.Models.Api;
@@ -77,7 +76,7 @@ namespace Issuer.Services
             }
         }
 
-        public async Task<int> IssueCredentialsAsync(Patient patient, List<Identifier> identifiers)
+        public async Task<string> IssueCredentialsAsync(Patient patient, List<Identifier> identifiers)
         {
             var connectionActive = true;
             var connection = await _context.Connections
@@ -95,17 +94,29 @@ namespace Issuer.Services
             var alias = patient.Id.ToString();
             var issuerDid = await _verifiableCredentialClient.GetIssuerDidAsync();
             var schemaId = await _verifiableCredentialClient.GetSchemaId(issuerDid);
+            if(schemaId == null)
+            {
+                schemaId =  await _verifiableCredentialClient.CreateSchemaAsync();
+            }
             var credentialDefinitionId = await _verifiableCredentialClient.GetCredentialDefinitionIdAsync(schemaId);
+            if(credentialDefinitionId == null)
+            {
+                credentialDefinitionId = await _verifiableCredentialClient.CreateCredentialDefinitionAsync(schemaId);
+            }
             var credentials = new List<Credential>();
 
             foreach(var identifier in identifiers)
             {
                 var newCredential = new Credential
                 {
-                    Connection = connection,
+                    ConnectionId = connection.Id,
                     SchemaId = schemaId,
                     CredentialDefinitionId = credentialDefinitionId,
-                    Identifier = identifier
+                    Identifier = new Identifier
+                    {
+                        Guid = identifier.Guid,
+                        Uri = identifier.Uri
+                    }
                 };
 
                 credentials.Add(newCredential);
@@ -130,9 +141,11 @@ namespace Issuer.Services
                     await IssueCredential(connection.ConnectionId, patient.Id, credential.Identifier.Uri);
                     _logger.LogInformation("Credential has been issued for connection_id: {connectionId}", connection.ConnectionId);
                 }
+
+                return null;
             }
 
-            return created;
+            return connection.Base64QRCode;
         }
 
         // Create an invitation to establish a connection between the agents.

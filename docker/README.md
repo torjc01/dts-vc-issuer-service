@@ -8,9 +8,11 @@ To run the project you will need to open two terminals:
 
 Once started the services will be listening on localhost as follows:
 
-- `api`: http://localhost:5000 - running in dev mode with hot-reloading.
+- `immunization-api-dev`: http://localhost:5001 - running in dev mode with hot-reloading.
 
-- `frontend`: http://localhost:4251 - running in dev mode with hot reloading.
+- `issuer-api-dev`: http://localhost:5000 - running in dev mode with hot-reloading.
+
+- `frontend`: http://localhost:4200 - running in dev mode with hot reloading.
 
 - `agent`: http://localhost:8024 (admin API).
 
@@ -18,7 +20,7 @@ Once started the services will be listening on localhost as follows:
 
 - `maildev`: http://localhost:8050
 
-- `db` and `wallet` postgres databases will respectively be listening on ports `5433` and `5434`.
+- `db` and `wallet` postgres databases will respectively be listening on ports `5432` and `5434`.
 
 You can always run `./manage -h` to get more information about the usage of the script, and refer to it to find values for environment variables being set and consumed by `docker-compose`.
 

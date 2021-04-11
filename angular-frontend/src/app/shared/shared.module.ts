@@ -4,8 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { NgxMaterialModule } from './modules/ngx-material/ngx-material.module';
+import { FormatDatePipe } from './pipes/format-date.pipe';
 
 @NgModule({
+  declarations: [
+    FormatDatePipe
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -14,7 +18,8 @@ import { NgxMaterialModule } from './modules/ngx-material/ngx-material.module';
   exports: [
     CommonModule,
     ReactiveFormsModule,
-    NgxMaterialModule
+    NgxMaterialModule,
+    FormatDatePipe
   ]
 })
 export class SharedModule { }

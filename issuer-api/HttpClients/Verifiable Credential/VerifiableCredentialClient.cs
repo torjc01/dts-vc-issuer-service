@@ -139,10 +139,16 @@ namespace Issuer.HttpClients
             }
 
             JObject body = JObject.Parse(await response.Content.ReadAsStringAsync());
+            var schemas = (JArray)body.SelectToken("schema_ids");
 
-            _logger.LogInformation("SCHEMA_ID: {schemaid}", (string)body.SelectToken("schema_ids[0]"));
-
-            return (string)body.SelectToken("schema_ids[0]");
+            if(schemas != null && schemas.Count > 0)
+            {
+                _logger.LogInformation("SCHEMA_ID: {schemaid}", (string)body.SelectToken("schema_ids[0]"));
+                return (string)body.SelectToken("schema_ids[0]");
+            }
+            else {
+                return null;
+            }
         }
 
         public async Task<JObject> GetSchema(string schemaId)
@@ -169,6 +175,45 @@ namespace Issuer.HttpClients
             _logger.LogInformation("GET Schema response {@JObject}", JsonConvert.SerializeObject(body));
 
             return body;
+        }
+
+        public async Task<string> CreateSchemaAsync()
+        {
+            var schema = new JObject
+            {
+                { "attributes", new JArray
+                    {
+                        "test"
+                    }
+                },
+                { "schema_name", SchemaName },
+                { "schema_version", SchemaVersion}
+            };
+
+            var httpContent = new StringContent(schema.ToString(), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _client.PostAsync($"schemas", httpContent);
+            }
+            catch (Exception ex)
+            {
+                await LogError(response, ex);
+                throw new VerifiableCredentialApiException("Error occurred attempting to create a schema: ", ex);
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await LogError(response);
+                throw new VerifiableCredentialApiException($"Error code {response.StatusCode} was provided when calling VerifiableCredentialClient::CreateSchemaAsync");
+            }
+
+            JObject body = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+            _logger.LogInformation("Schema Created successfully {@JObject}", JsonConvert.SerializeObject(body));
+
+            return (string)body.SelectToken("schema_id");
         }
 
         public async Task<string> GetIssuerDidAsync()
@@ -220,12 +265,47 @@ namespace Issuer.HttpClients
             JArray credentialDefinitionIds = (JArray)body.SelectToken("credential_definition_ids");
 
             _logger.LogInformation("GET Credential Definition IDs {@JObject}", JsonConvert.SerializeObject(body));
-            if(credentialDefinitionIds == null | credentialDefinitionIds.Count == 0)
+            if(credentialDefinitionIds != null && credentialDefinitionIds.Count > 0)
             {
-                throw new VerifiableCredentialApiException($"Error No credential Definition exists for schema when calling VerifiableCredentialClient::GetCredentialDefinitionAsync");
+                return (string)body.SelectToken($"credential_definition_ids[{credentialDefinitionIds.Count - 1}]");
             }
 
-            return (string)body.SelectToken($"credential_definition_ids[{credentialDefinitionIds.Count - 1}]");
+            return null;
+        }
+
+        public async Task<string> CreateCredentialDefinitionAsync(string schemaId)
+        {
+            var credentialDefinition = new JObject
+            {
+                { "schema_id", schemaId },
+                { "support_revocation", true },
+                { "tag", "test" }
+            };
+
+            var httpContent = new StringContent(credentialDefinition.ToString(), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await _client.PostAsync($"credential-definitions", httpContent);
+            }
+            catch (Exception ex)
+            {
+                await LogError(response, ex);
+                throw new VerifiableCredentialApiException("Error occurred attempting to create a credential-definition: ", ex);
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await LogError(response);
+                throw new VerifiableCredentialApiException($"Error code {response.StatusCode} was provided when calling VerifiableCredentialClient::CreateCredentialDefinitionAsync");
+            }
+
+            JObject body = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+            _logger.LogInformation("Credential Definition Created successfully {@JObject}", JsonConvert.SerializeObject(body));
+
+            return (string)body.SelectToken("credential_definition_id");
         }
 
         public async Task<JObject> GetPresentationProof(string presentationExchangeId)

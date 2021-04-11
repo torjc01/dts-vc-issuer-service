@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using QRCoder;
-
 using Issuer.Models;
 using Issuer.HttpClients;
 using Issuer.Models.Api;
@@ -95,7 +94,15 @@ namespace Issuer.Services
             var alias = patient.Id.ToString();
             var issuerDid = await _verifiableCredentialClient.GetIssuerDidAsync();
             var schemaId = await _verifiableCredentialClient.GetSchemaId(issuerDid);
+            if(schemaId == null)
+            {
+                schemaId =  await _verifiableCredentialClient.CreateSchemaAsync();
+            }
             var credentialDefinitionId = await _verifiableCredentialClient.GetCredentialDefinitionIdAsync(schemaId);
+            if(credentialDefinitionId == null)
+            {
+                credentialDefinitionId = await _verifiableCredentialClient.CreateCredentialDefinitionAsync(schemaId);
+            }
             var credentials = new List<Credential>();
 
             foreach(var identifier in identifiers)

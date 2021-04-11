@@ -114,7 +114,7 @@ namespace Issuer.Controllers
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ApiResultResponse<Credential>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResultResponse<string>), StatusCodes.Status201Created)]
         public async Task<ActionResult> Credential(int patientId, List<Identifier> identifiers)
         {
             var patient = await _patientService.GetPatientAsync(patientId);
@@ -124,6 +124,8 @@ namespace Issuer.Controllers
             }
 
             await _verifiableCredentialService.IssueCredentialsAsync(patient, identifiers);
+
+            // TODO return qrcode if invitation not acepted otherwise nothing
 
             return Ok();
         }

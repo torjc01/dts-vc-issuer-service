@@ -1,5 +1,5 @@
-<div>
-  <img [src]="'data:image/png;base64,' + data.base64Image | safe: 'url'"
+<div *ngIf="base64QRCode">
+  <img [src]="'data:image/png;base64,' + base64QRCode | safe: 'url'"
        alt="QRCode">
 
   <a href="https://vonx.io/getwallet"

@@ -233,6 +233,10 @@ namespace Issuer.Services
 
                     var connection = GetConnectionByConnectionIdAsync(connectionId);
 
+                    connection.AcceptedConnectionDate = DateTime.Now;
+
+                    await _context.SaveChangesAsync();
+
                     var credentials = await _context.Credentials
                         .Where(c => c.ConnectionId == connection.Id)
                         .ToListAsync();
@@ -315,6 +319,8 @@ namespace Issuer.Services
         private Connection GetConnectionByConnectionIdAsync(string connectionId)
         {
             return _context.Connections
+                    .Include(c => c.Credentials)
+                        .ThenInclude(cr => cr.Identifier)
                     .SingleOrDefault(c => c.ConnectionId == connectionId);
         }
 

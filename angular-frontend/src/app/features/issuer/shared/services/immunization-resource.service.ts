@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 
 import { AppConfig, APP_CONFIG } from 'app/app-config.module';
 import { ApiResourceUtilsService } from '@core/resources/api-resource-utils.service';
@@ -26,6 +26,7 @@ export class ImmunizationResource {
     const params = this.apiResourceUtilsService.makeHttpParams({ patientId });
     return this.http.get<ImmunizationRecord[]>(`${ this.config.apiEndpoints.immunization }/immunization`, { params })
       .pipe(
+        map((immunizations: ImmunizationRecord[]) => (immunizations) ? immunizations : []),
         tap((immunizations: ImmunizationRecord[]) => this.logger.info('IMMUNIZATIONS', immunizations)),
         catchError((error: any) => {
           this.logger.error('ImmunizationResource::immunizations error has occurred: ', error);

@@ -9,15 +9,17 @@ export class ApiResourceUtilsService {
    * @description
    * Make HttpParams from an object literal.
    */
-  public makeHttpParams(queryParams: { [key: string]: any; }): HttpParams | undefined {
+  public makeHttpParams(queryParams: { [key: string]: any; }): HttpParams {
+    const httpParams = new HttpParams();
+
     if (!queryParams) {
-      return;
+      return httpParams;
     }
 
     const keys = Object.keys(queryParams);
 
     if (!keys.length) {
-      return;
+      return httpParams;
     }
 
     return keys.reduce(
@@ -25,7 +27,7 @@ export class ApiResourceUtilsService {
         (![null, undefined].includes(queryParams[key]))
           ? this.makeHttpParam(httpParams, key, queryParams[key])
           : httpParams,
-      new HttpParams()
+      httpParams
     );
   }
 

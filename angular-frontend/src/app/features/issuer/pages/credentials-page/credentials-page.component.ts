@@ -17,6 +17,8 @@ export class CredentialsPageComponent implements OnInit {
   public patient: Patient | null;
   public issuedCredential: string | null;
 
+  public selectedImmunizationRecords: ImmunizationRecord[];
+
   public constructor(
     private immunizationResource: ImmunizationResource,
     private issuerResource: IssuerResource
@@ -24,6 +26,20 @@ export class CredentialsPageComponent implements OnInit {
     this.immunizationRecords = null;
     this.patient = null;
     this.issuedCredential = null;
+    this.selectedImmunizationRecords = [];
+  }
+
+  public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord) {
+    if (!this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id)) {
+      this.selectedImmunizationRecords.push(immunizationRecord);
+    }
+  }
+
+  public removeSelectedImmunizationRecord(immunizationId: string) {
+    const index = this.selectedImmunizationRecords.findIndex(ir => ir.id === immunizationId);
+    if (index > -1) {
+      this.selectedImmunizationRecords.splice(index, 1);
+    }
   }
 
   public ngOnInit(): void {

@@ -7,14 +7,14 @@ import { NgxMaterialModule } from './modules/ngx-material/ngx-material.module';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { SafePipe } from './pipes/safe.pipe';
 import { CardAlertComponent } from './components/card-alert/card-alert.component';
-import { ImageComponent } from './components/image/image.component';
+import { QRCodeComponent } from './components/qrcode/qrcode.component';
 
 @NgModule({
   declarations: [
     FormatDatePipe,
     SafePipe,
     CardAlertComponent,
-    ImageComponent
+    QRCodeComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { ImageComponent } from './components/image/image.component';
     FormatDatePipe,
     SafePipe,
     CardAlertComponent,
-    ImageComponent
+    QRCodeComponent
   ]
 })
 export class SharedModule { }

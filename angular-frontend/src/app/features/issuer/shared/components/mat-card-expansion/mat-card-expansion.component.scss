@@ -1,7 +1,9 @@
 @import 'palette';
 
-.mat-stroked-button .mat-icon {
-  margin-top: -3px;
+.mat-card .mat-divider-horizontal {
+  // Override equal margins in expansion to match padding
+  // when expansion button is located above a mat-footer
+  margin-top: 12px;
 }
 
 .mat-list .mat-list-item {

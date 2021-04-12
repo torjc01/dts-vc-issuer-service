@@ -6,7 +6,6 @@ import { ImmunizationRecord } from '@features/issuer/shared/models/immunization-
 import { Patient } from '@features/issuer/shared/models/patient.model';
 import { ImmunizationResource } from '@features/issuer/shared/services/immunization-resource.service';
 import { IssuerResource } from '@features/issuer/shared/services/issuer-resource.service';
-import { IssuedCredential } from '@features/issuer/shared/models/issued-credential.model';
 
 @Component({
   selector: 'app-credentials-page',
@@ -16,7 +15,7 @@ import { IssuedCredential } from '@features/issuer/shared/models/issued-credenti
 export class CredentialsPageComponent implements OnInit {
   public immunizationRecords: ImmunizationRecord[] | null;
   public patient: Patient | null;
-  public issuedCredential: IssuedCredential | null;
+  public issuedCredential: string | null;
 
   public constructor(
     private immunizationResource: ImmunizationResource,
@@ -54,6 +53,6 @@ export class CredentialsPageComponent implements OnInit {
         ),
         exhaustMap((params: [number, ImmunizationRecord[]]) => this.issuerResource.issueCredential(...params))
       )
-      .subscribe((issuedCredential: IssuedCredential) => this.issuedCredential = issuedCredential);
+      .subscribe((issuedCredential: string) => this.issuedCredential = issuedCredential);
   }
 }

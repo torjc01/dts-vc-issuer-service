@@ -2,21 +2,21 @@
 
 ## To build this .Net Core 5 service
 
-`
+```bash
 dotnet build
-`
+```
 
 ## To Run locally
 
-`
+```bash
 dotnet run
-`
+```
 
 ## Swagger
 
-`
+```bash
 http://localhost:5001/swagger/index.html
-`
+```
 
 ## Example Patients
 
@@ -25,11 +25,20 @@ http://localhost:5001/swagger/index.html
 - Plausable Immunization Records.
 
 For example data sets loaded in EF Memory DB, see the file
-` src/Respository/Example/SampleDataInitializer.cs
-`
 
-## TBD
+```bash
+src/Respository/Example/SampleDataInitializer.cs
+```
 
-Need a docker file.
+## Docker build
 
-## 
+```bash
+docker build . -t immunization-api
+```
+
+### Docker Run
+
+```bash
+docker container rm immunization
+docker run -it -p 8080:8080 -p 8081:8081 --name immunization immunization-api:latest
+```

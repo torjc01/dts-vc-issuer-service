@@ -223,7 +223,7 @@ configureEnvironment() {
   export AGENT_WEBHOOK_URL=${AGENT_WEBHOOK_URL:-http://issuer-api-dev:5000/api/webhooks}
   export AGENT_HTTP_INTERFACE_PORT=8021
   export AGENT_NAME="DTS VC Issuer"
-  export AGENT_ENDPOINT=${AGENT_ENDPOINT:-http://$DOCKERHOST:$AGENT_HTTP_INTERFACE_PORT}
+  export AGENT_ENDPOINT=${NGROK_AGENT_ENDPOINT:-http://$DOCKERHOST:$AGENT_HTTP_INTERFACE_PORT}
   export AGENT_ADMIN_API_KEY=${AGENT_ADMIN_API_KEY:-"agent-api-key-dev"}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
   if [ ! -z "${AGENT_ADMIN_API_KEY}" ]; then

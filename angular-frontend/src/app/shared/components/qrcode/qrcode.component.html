@@ -1,0 +1,4 @@
+<div *ngIf="base64QRCode">
+  <img [src]="'data:image/png;base64,' + base64QRCode | safe: 'url'"
+       alt="QRCode">
+</div>

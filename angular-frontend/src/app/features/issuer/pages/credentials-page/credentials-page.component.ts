@@ -19,6 +19,23 @@ export class CredentialsPageComponent implements OnInit {
 
   public selectedImmunizationRecords: ImmunizationRecord[];
 
+  private readonly patientSeed = {
+    patientId: '9039555099',
+    create: {
+      userId: '22091b5c-b2df-4f6e-b184-46d7bee84b08', // GUID
+      hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
+      firstName: 'Foghorn',
+      lastName: 'Leghorn',
+      givenNames: 'Foghorn Leghorn',
+      preferredFirstName: '',
+      preferredMiddleName: '',
+      preferredLastName: '',
+      dateOfBirth: '2021-09-22',
+      email: 'foghorn.leghorn@example.com',
+      phone: '9999999999'
+    }
+  };
+
   public constructor(
     private immunizationResource: ImmunizationResource,
     private issuerResource: IssuerResource
@@ -42,33 +59,20 @@ export class CredentialsPageComponent implements OnInit {
     }
   }
 
-  public ngOnInit(): void {
-    const patientId = '9039555099';
-    this.immunizationResource.immunizations(patientId)
-      .subscribe((immunizationRecords: ImmunizationRecord[]) => this.immunizationRecords = immunizationRecords);
-
-    const patient = {
-      userId: '22091b5c-b2df-4f6e-b184-46d7bee84b08', // GUID
-      hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
-      firstName: 'Foghorn',
-      lastName: 'Leghorn',
-      givenNames: 'Foghorn Leghorn',
-      preferredFirstName: '',
-      preferredMiddleName: '',
-      preferredLastName: '',
-      dateOfBirth: '2021-09-22',
-      email: 'foghorn.leghorn@example.com',
-      phone: '9999999999'
-    };
-    this.issuerResource.createPatient(patient)
-      .pipe(
-        map((patient: Patient) => this.patient = patient),
-        exhaustMap((patient: Patient) =>
-          this.immunizationResource.immunizations('9039555099')
-            .pipe(map((immunizationRecords: ImmunizationRecord[]) => [patient.id, immunizationRecords]))
-        ),
-        exhaustMap((params: [number, ImmunizationRecord[]]) => this.issuerResource.issueCredential(...params))
-      )
+  public onCreateCredential() {
+    this.issuerResource.issueCredential(this.patient.id, this.selectedImmunizationRecords)
       .subscribe((issuedCredential: string) => this.issuedCredential = issuedCredential);
+  }
+
+  public ngOnInit(): void {
+    this.immunizationResource.immunizations(this.patientSeed.patientId)
+      .subscribe((immunizationRecords: ImmunizationRecord[]) =>
+        this.immunizationRecords = immunizationRecords
+      );
+
+    // TODO check for existence of the patient before creation
+    this.issuerResource.createPatient(this.patientSeed.create)
+      .pipe(map((patient: Patient) => this.patient = patient))
+      .subscribe();
   }
 }

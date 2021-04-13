@@ -39,17 +39,20 @@ namespace Issuer.Services
     public class VerifiableCredentialService : BaseService, IVerifiableCredentialService
     {
         private readonly IVerifiableCredentialClient _verifiableCredentialClient;
+        private readonly IImmunizationClient _immunizationClient;
         private readonly ILogger _logger;
 
         public VerifiableCredentialService(
             ApiDbContext context,
             IHttpContextAccessor httpContext,
             IVerifiableCredentialClient verifiableCredentialClient,
+            IImmunizationClient immunizationClient,
             IPatientService patientService,
             ILogger<VerifiableCredentialService> logger)
             : base(context, httpContext)
         {
             _verifiableCredentialClient = verifiableCredentialClient;
+            _immunizationClient = immunizationClient;
             _logger = logger;
         }
 
@@ -137,7 +140,7 @@ namespace Issuer.Services
                 {
                     _logger.LogInformation("Issuing a credential with this connection_id: {connectionId}", connection.ConnectionId);
                     // Assumed that when a connection invitation has been sent and accepted
-                    await IssueCredential(credential, connection.ConnectionId, credential.Identifier.Uri);
+                    await IssueCredential(credential, connection.ConnectionId, credential.Identifier.Guid);
                     _logger.LogInformation("Credential has been issued for connection_id: {connectionId}", connection.ConnectionId);
                 }
 
@@ -244,7 +247,7 @@ namespace Issuer.Services
                     {
                         _logger.LogInformation("Issuing a credential with this connection_id: {connectionId}", connectionId);
                         // Assumed that when a connection invitation has been sent and accepted
-                        await IssueCredential(credential, connectionId, credential.Identifier.Uri);
+                        await IssueCredential(credential, connectionId, credential.Identifier.Guid);
                         _logger.LogInformation("Credential has been issued for connection_id: {connectionId}", connectionId);
                     }
 
@@ -336,7 +339,7 @@ namespace Issuer.Services
         }
 
         // Issue a credential to an active connection.
-        private async Task<JObject> IssueCredential(Credential credential, string connectionId, string url)
+        private async Task<JObject> IssueCredential(Credential credential, string connectionId, Guid guid)
         {
             if (credential == null || credential.AcceptedCredentialDate != null)
             {
@@ -344,7 +347,7 @@ namespace Issuer.Services
                 return null;
             }
 
-            var credentialAttributes = await CreateCredentialAttributesAsync(credential.Connection.PatientId, url);
+            var credentialAttributes = await CreateCredentialAttributesAsync(credential.Connection.PatientId, guid);
             var credentialOffer = await CreateCredentialOfferAsync(connectionId, credentialAttributes);
             var issueCredentialResponse = await _verifiableCredentialClient.IssueCredentialAsync(credentialOffer);
 
@@ -393,9 +396,10 @@ namespace Issuer.Services
         }
 
         // Create the credential proposal attributes.
-        private async Task<JArray> CreateCredentialAttributesAsync(int patientId, string url)
+        private async Task<JArray> CreateCredentialAttributesAsync(int patientId, Guid guid)
         {
-            // var record = _immunizationClient
+            // var record = await _immunizationClient.GetImmunizationRecordAsync(guid);
+
             var immunizationRecord = new ImmunizationRecordResponse();
 
             var attributes = new JArray

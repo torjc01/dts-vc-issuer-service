@@ -132,7 +132,7 @@ namespace Issuer.Controllers
 
             var qrCode = await _verifiableCredentialService.IssueCredentialsAsync(patient, identifiers);
 
-            // return qrcode if invitation not yet acepted otherwise nothing
+            // return qrcode if invitation not yet accepted, otherwise nothing
             return Ok(qrCode);
         }
 

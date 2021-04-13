@@ -27,7 +27,8 @@ export class CredentialsPageComponent implements OnInit {
 
   private readonly patientSeed = {
     // patientId: '9039555099', // Immunization patient
-    patientId: '9902489314', // Immunization patient
+    // patientId: '9902489314', // Immunization patient
+    patientId: '900489178',
     create: { // Issuer patient
       userId: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
       hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
@@ -39,7 +40,8 @@ export class CredentialsPageComponent implements OnInit {
       preferredLastName: '',
       dateOfBirth: '2021-09-22',
       email: 'foghorn.leghorn@example.com',
-      phone: '9999999999'
+      phone: '9999999999',
+      patientIdentifier: '9902489314'
     },
     createdId: 0
   };
@@ -139,11 +141,11 @@ export class CredentialsPageComponent implements OnInit {
 
     // TODO check for the existence of the patient before creation
     // TODO use an MVP solution for patient identification that isn't userId since we don't have keycloak
-    // this.busy = this.issuerResource.getPatientByUserId('22091b5c-b2df-4f6e-b184-46d7bee84b08')
-    //   // this.busy = this.issuerResource.getPatientByPatientId(1)
-    //   .subscribe((response) => {
-    //     console.log('EXISTS', response);
-    //   });
+    // this.busy = this.issuerResource.getPatientByIdentifier(this.patientSeed.patientId)
+    // this.busy = this.issuerResource.getPatientByPatientId(1)
+    // .subscribe((response) => {
+    //   console.log('EXISTS', response);
+    // });
     this.busy = this.issuerResource.createPatient(this.patientSeed.create)
       .pipe(map((patient: Patient) => this.patient = patient))
       .subscribe();

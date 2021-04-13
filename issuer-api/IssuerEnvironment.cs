@@ -35,7 +35,7 @@ namespace Issuer
         /// </summary>
         public static class ImmunizationApi
         {
-            public static readonly string Url = Environment.GetEnvironmentVariable("IMMUNIZATION_API_URL") ?? "https://test.ca";
+            public static readonly string Url = Environment.GetEnvironmentVariable("IMMUNIZATION_API_URL") ?? "http://immunization-api-dev:5000/api/";
         }
     }
 }

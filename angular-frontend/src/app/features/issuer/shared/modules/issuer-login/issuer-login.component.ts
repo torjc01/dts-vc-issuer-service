@@ -1,22 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormUtilsService } from '@core/services/form-utils.service';
 
 @Component({
   selector: 'app-issuer-login',
   templateUrl: './issuer-login.component.html',
   styleUrls: ['./issuer-login.component.scss']
 })
-export class IssuerLoginComponent {
+export class IssuerLoginComponent implements OnInit {
   public title: string;
+  public form: FormGroup;
 
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private fb: FormBuilder,
+    private formUtilsService: FormUtilsService
   ) {
     this.title = route.snapshot.data.title;
   }
 
-  public onLogin(): void {
+  public get email(): FormControl {
+    return this.form.get('email') as FormControl;
+  }
 
+  public get password(): FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
+  public onSubmit(): void {
+    console.log('SUBMITTED');
+
+    if (this.formUtilsService.checkValidity(this.form)) {
+      this.router.navigate(['/issuer/credentials']);
+    }
+  }
+
+  public ngOnInit(): void {
+    this.createFormInstance();
+  }
+
+  private createFormInstance() {
+    this.form = this.fb.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
   }
 }

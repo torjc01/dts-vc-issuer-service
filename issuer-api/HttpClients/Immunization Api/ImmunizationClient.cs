@@ -24,12 +24,12 @@ namespace Issuer.HttpClients
             _logger = logger;
         }
 
-        public async Task<JObject> GetImmunizationRecordAsync(string url)
+        public async Task<JObject> GetImmunizationRecordAsync(Guid guid)
         {
             HttpResponseMessage response = null;
             try
             {
-                response = await _client.GetAsync($"{url}");
+                response = await _client.GetAsync($"immunization/{guid}");
             }
             catch (Exception ex)
             {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatCardExpansionComponent } from './mat-card-expansion.component';
+import { CardActionExpansionComponent } from './card-action-expansion.component';
 
 describe('MatCardExpansionComponent', () => {
-  let component: MatCardExpansionComponent;
-  let fixture: ComponentFixture<MatCardExpansionComponent>;
+  let component: CardActionExpansionComponent;
+  let fixture: ComponentFixture<CardActionExpansionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MatCardExpansionComponent ]
+      declarations: [CardActionExpansionComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatCardExpansionComponent);
+    fixture = TestBed.createComponent(CardActionExpansionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

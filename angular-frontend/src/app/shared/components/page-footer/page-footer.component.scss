@@ -1,0 +1,44 @@
+@import 'palette';
+
+.wrapper {
+  background-color: theme-palette(blue, darkest);
+  border-top: 3px solid lighten(theme-palette(blue, darkest), 40%);
+  margin-top: 3rem;
+  min-height: 400px;
+
+  .container {
+    color: white;
+    padding-top: 4.5rem;
+  }
+
+  h1 {
+    color: theme-palette(blue, lighter);
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  ul {
+    margin-bottom: 2rem;
+
+    li {
+      font-size: 1rem;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+    }
+
+    a {
+      color: theme-palette(blue, lightest);
+    }
+  }
+
+  hr {
+    border-color: lighten(theme-palette(blue, darkest), 15%);
+  }
+
+  small {
+    color: lighten(theme-palette(blue, darkest), 20%);
+    display: block;
+    padding-bottom: 2rem;
+  }
+}

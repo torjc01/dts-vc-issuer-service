@@ -1,23 +1,13 @@
 @import 'palette';
 @import 'bootstrap/bootstrap-imports';
 
-// TODO quick and dirty alert type mixin that needs refinement
-@mixin alert-type($border-color, $header-text-color, $footer-bg-color, $footer-color) {
-  border-left-color: $border-color;
-
-  .mat-card-avatar .mat-icon {
-    color: $header-text-color;
-  }
-
-  .mat-card-title {
-    color: $header-text-color;
-  }
-
-  color: $footer-color;
+@mixin alert-type($border-font-color, $footer-bg-color, $footer-font-color) {
+  border-left-color: $border-font-color;
 
   .mat-card-footer {
     background-color: $footer-bg-color;
-    border-top-color: $border-color
+    border-top-color: $border-font-color;
+    color: $footer-font-color;
   }
 }
 
@@ -33,11 +23,13 @@
     width: 60px;
 
     .mat-icon {
+      color: lighten(theme-palette(blue), 5%);
       font-size: 3.5rem;
     }
   }
 
   .mat-card-title {
+    color: lighten(theme-palette(blue), 5%);
     font-size: 2.25rem;
   }
 
@@ -52,10 +44,21 @@
 
     .mat-icon {
       font-size: 1.75rem;
+      // Slight adjustment to the icon position relative to
+      // the notification message
+      padding-top: .3rem;
     }
   }
 
-  &.card-alert-info {
-    @include alert-type(#d6ddec, lighten(theme-palette(blue), 10%), #f8f9fb, theme-palette(blue));
+  $types: info blue, success green, warn yellow, danger red;
+
+  @each $type, $color in $types {
+    &.card-alert-#{$type} {
+      @include alert-type(
+        rgba(theme-palette($color), .75),
+        rgba(theme-palette($color), .08),
+        theme-palette($color)
+      );
+    }
   }
 }

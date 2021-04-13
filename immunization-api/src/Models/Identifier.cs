@@ -26,13 +26,11 @@ namespace ImmunizationApi.Models
         /// <summary>
         /// Gets or sets the Identifier value
         /// </summary>
-        [JsonPropertyName("value")]
         public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets the system for the Identifier.
         /// </summary>
-        [JsonPropertyName("system")]
         public string SystemUri { get; set; }
     }
 }

@@ -1,0 +1,162 @@
+@import 'palette';
+@import 'material/material-theme';
+@import 'bootstrap/bootstrap-imports';
+
+.wrapper {
+  background-color: theme-palette(blue, darkest);
+  color: white;
+  height: 100%;
+  min-height: 100vh;
+
+  // Increase padding to drop down content on
+  // larger viewports
+  padding-top: 2.5rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 5rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 10rem;
+  }
+
+  h1 {
+    font-weight: 900;
+  }
+
+  .position {
+    position: absolute;
+  }
+
+  .mat-icon {
+    font-size: 4rem;
+    color: lighten(theme-palette(blue, darkest), 10%);
+    position: relative;
+    top: -0.75rem;
+    left: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 6rem;
+      top: -3.25rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 6rem;
+      top: -4.75rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      font-size: 8rem;
+      top: -5.75rem;
+      left: -3rem;
+    }
+  }
+
+  // TODO split out into separate component
+  section {
+    // Provide a margin when stacked on mobile, and provide
+    // offset from the bottom of the screen
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+
+    h1 {
+      font-size: 3rem;
+      line-height: 3.75rem;
+
+      // Space out header from top of the view, and when not
+      // stacked drop it below the top of the login card
+      margin-top: 5rem;
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 3rem;
+      }
+
+      @include media-breakpoint-up(xl) {
+        margin-top: 5rem;
+      }
+
+      span {
+        white-space: nowrap;
+      }
+
+      div {
+        // Provide a bit of pop to the page and introduce
+        // a bit of the theme
+        color: theme-palette(blue, lighter);
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      h1 {
+        font-size: 3.2rem;
+        line-height: 3.75rem;
+
+        span {
+          white-space: normal;
+        }
+      }
+    }
+
+    p {
+      font-size: 1.3rem;
+      font-weight: 300;
+      line-height: 1.75rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      p {
+        font-size: 1.3rem;
+        line-height: 2rem;
+      }
+    }
+  }
+
+  mat-card {
+    margin: 0 1rem 2rem;
+    padding-bottom: 0;
+  }
+
+  mat-card-content {
+    color: theme-palette(blue);
+    padding: 1rem 1rem 0 1rem;
+
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: .5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      margin-bottom: 1.5rem;
+
+      @include media-breakpoint-up(lg) {
+        font-size: 1.2rem;
+        line-height: 1.75rem;
+      }
+    }
+
+    button {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding-top: .25rem;
+      padding-bottom: .25rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  mat-card-footer {
+    background-color: #f9fafb;
+    border-top: 1px solid #e4e7eb;
+    border-radius: 5px;
+    color: theme-palette(grey, light);
+
+    p {
+      padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+    }
+
+    a {
+      color: theme-palette(blue);
+    }
+  }
+}

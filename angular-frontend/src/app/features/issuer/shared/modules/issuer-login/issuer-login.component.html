@@ -1,3 +1,92 @@
-<button mat-flat-button
-        color="primary"
-        routerLink="/issuer/credentials">Login</button>
+<div class="wrapper">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-12 col-lg-6 col-xl-7">
+        <div class="position">
+          <mat-icon>qr_code_scanner</mat-icon>
+        </div>
+
+        <section>
+          <h1>
+            Vaccination <span>Digital Wallet</span>
+
+            <div>
+              Definitely Not a Passport
+            </div>
+          </h1>
+
+          <p>
+            Use this portal to generate a credential <strong>(that is NOT a passport)</strong> you can use when you
+            need
+            to provide proof of vaccination or negative test results.
+            <strong>Not necessarily at a border crossing unless you want to provide it, but it is not a passport</strong>.
+            These will be stored in a
+            digital wallet on your personal device. You can choose what information you include in the credential
+            <strong>unlike a passport</strong>.
+          </p>
+        </section>
+      </div>
+      <div class="col-sm-12 col-lg-6 col-xl-5">
+
+        <mat-card>
+
+          <mat-card-content>
+
+            <h1>
+              Health Status Credential
+            </h1>
+            <p>
+              Login and generate a credential you can use when you need to provide proof of vaccination or negative test
+              results.
+            </p>
+
+            <form (ngSubmit)="onSubmit()"
+                  [formGroup]="form"
+                  novalidate
+                  autocomplete="off">
+
+              <div class="field">
+                <mat-form-field appearance="outline"
+                                color="accent"
+                                class="w-100">
+                  <input matInput
+                         placeholder="Email"
+                         formControlName="email">
+                  <mat-error *ngIf="email.hasError('required')">Required</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="field">
+                <mat-form-field appearance="outline"
+                                color="accent"
+                                class="w-100">
+                  <input matInput
+                         placeholder="Password"
+                         formControlName="password">
+                  <mat-error *ngIf="password.hasError('required')">Required</mat-error>
+                </mat-form-field>
+              </div>
+
+              <button mat-flat-button
+                      color="primary"
+                      size="large">Log In</button>
+            </form>
+
+          </mat-card-content>
+
+          <mat-card-footer>
+
+            <p>
+              By using lorem ipsum, dolor sit amet consectetur <a href="#">Terms</a> and <a href="#">Data Policy</a>.
+            </p>
+
+          </mat-card-footer>
+
+        </mat-card>
+
+      </div>
+    </div>
+
+  </div>
+</div>

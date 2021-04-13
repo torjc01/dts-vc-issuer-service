@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace Issuer.Models
 {
-    public class SchemaAttributes
+    public class Schema
     {
         public string name { get; set; }
         public string description { get; set; }
@@ -19,12 +19,10 @@ namespace Issuer.Models
         public string credential_type { get; set; }
         public string countryOfVaccination { get; set; }
         public string recipient_type { get; set; }
-        public string recipient_givenName { get; set; }
-        public string recipient_familyName { get; set; }
+        public string recipient_fullName { get; set; }
         public string recipient_birthDate { get; set; }
         public string vaccine_type { get; set; }
         public string vaccine_disease { get; set; }
-        public string vaccine_atcCode { get; set; }
         public string vaccine_medicinalProductName { get; set; }
         public string vaccine_marketingAuthorizationHolder { get; set; }
 

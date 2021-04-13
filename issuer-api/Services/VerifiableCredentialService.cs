@@ -11,6 +11,7 @@ using Issuer.HttpClients;
 using Issuer.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace Issuer.Services
 {
@@ -38,6 +39,7 @@ namespace Issuer.Services
     }
     public class VerifiableCredentialService : BaseService, IVerifiableCredentialService
     {
+        private readonly IMapper _mapper;
         private readonly IVerifiableCredentialClient _verifiableCredentialClient;
         private readonly IImmunizationClient _immunizationClient;
         private readonly ILogger _logger;
@@ -45,12 +47,14 @@ namespace Issuer.Services
         public VerifiableCredentialService(
             ApiDbContext context,
             IHttpContextAccessor httpContext,
+            IMapper mapper,
             IVerifiableCredentialClient verifiableCredentialClient,
             IImmunizationClient immunizationClient,
             IPatientService patientService,
             ILogger<VerifiableCredentialService> logger)
             : base(context, httpContext)
         {
+            _mapper = mapper;
             _verifiableCredentialClient = verifiableCredentialClient;
             _immunizationClient = immunizationClient;
             _logger = logger;
@@ -398,9 +402,9 @@ namespace Issuer.Services
         // Create the credential proposal attributes.
         private async Task<JArray> CreateCredentialAttributesAsync(int patientId, Guid guid)
         {
-            // var record = await _immunizationClient.GetImmunizationRecordAsync(guid);
+            var record = await _immunizationClient.GetImmunizationRecordAsync(guid);
 
-            var immunizationRecord = new ImmunizationRecordResponse();
+            var immunizationRecord = _mapper.Map<ImmunizationResponse, Schema>(record);
 
             var attributes = new JArray
             {
@@ -441,13 +445,8 @@ namespace Issuer.Services
                 },
                 new JObject
                 {
-                    { "name", "recipient_givenName" },
+                    { "name", "recipient_fullName" },
                     { "value", "JOHN" }
-                },
-                new JObject
-                {
-                    { "name", "recipient_familyName" },
-                    { "value", "SMITH" }
                 },
                 new JObject
                 {
@@ -463,11 +462,6 @@ namespace Issuer.Services
                 {
                     { "name", "vaccine_disease" },
                     { "value", "COVID-19" }
-                },
-                new JObject
-                {
-                    { "name", "vaccine_atcCode" },
-                    { "value", "J07BX03" }
                 },
                 new JObject
                 {

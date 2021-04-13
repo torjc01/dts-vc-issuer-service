@@ -1,0 +1,26 @@
+<div class="wrapper">
+  <div class="container">
+
+    <mat-toolbar>
+      <span class="logo">
+        <mat-icon>qr_code_scanner</mat-icon>
+      </span>
+
+      <span class="flex-fill"></span>
+
+      <span *ngIf="username"
+            class="username">
+        {{ username }}
+      </span>
+      <span *ngIf="username"
+            class="logout">
+        <mat-icon (click)="onLogout()">logout</mat-icon>
+      </span>
+    </mat-toolbar>
+
+  </div>
+</div>
+
+<div class="ngx-progress">
+  <ng-progress></ng-progress>
+</div>

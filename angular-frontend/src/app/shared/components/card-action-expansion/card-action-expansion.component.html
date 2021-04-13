@@ -2,6 +2,7 @@
 <mat-card-actions align="end">
   <button mat-button
           class="adjust-margin"
+          color="primary"
           (click)="expanded = !expanded">
     {{ (expanded) ? 'Collapse' : 'Expand' }}
     <mat-icon>
@@ -9,17 +10,6 @@
     </mat-icon>
   </button>
 </mat-card-actions>
-
-<div class="expandable">
-  <button mat-button
-          class="adjust-margin"
-          (click)="expanded = !expanded">
-    {{ (expanded) ? 'Collapse' : 'Expand' }}
-    <mat-icon>
-      {{ (expanded) ? 'expand_less' : 'expand_more' }}
-    </mat-icon>
-  </button>
-</div>
 
 <ng-container *ngIf="expanded">
   <mat-list dense>

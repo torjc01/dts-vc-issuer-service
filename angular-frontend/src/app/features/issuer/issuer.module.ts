@@ -4,8 +4,6 @@ import { SharedModule } from '@shared/shared.module';
 
 import { IssuerRoutingModule } from './issuer-routing.module';
 import { CredentialsPageComponent } from './pages/credentials-page/credentials-page.component';
-import { PageHeaderComponent } from './shared/components/page-header/page-header.component';
-import { PageHeaderSummaryDirective } from './shared/components/page-header/page-header-summary.directive';
 
 @NgModule({
   imports: [
@@ -13,9 +11,7 @@ import { PageHeaderSummaryDirective } from './shared/components/page-header/page
     IssuerRoutingModule
   ],
   declarations: [
-    CredentialsPageComponent,
-    PageHeaderComponent,
-    PageHeaderSummaryDirective
+    CredentialsPageComponent
   ]
 })
 export class IssuerModule { }

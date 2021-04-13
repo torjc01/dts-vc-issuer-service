@@ -1,5 +1,8 @@
 <mat-card class="card-alert"
-          [class.card-alert-info]="alertType === 'info'">
+          [class.card-alert-info]="alertOptions.type === 'info'"
+          [class.card-alert-success]="alertOptions.type === 'success'"
+          [class.card-alert-warn]="alertOptions.type === 'warn'"
+          [class.card-alert-danger]="alertOptions.type === 'danger'">
   <mat-card-header>
     <div *ngIf="icon"
          mat-card-avatar>
@@ -9,7 +12,6 @@
     <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
     <mat-card-title *ngIf="title">{{ title }}</mat-card-title>
 
-
     <ng-content select="card-menu"></ng-content>
   </mat-card-header>
 
@@ -17,20 +19,22 @@
 
   <mat-card-footer>
     <div class="d-flex align-items-center">
-      <div *ngIf="alertIcon && alertMessage"
+      <div *ngIf="alertOptions.icon && alertOptions.message"
            class="mr-4">
-        <mat-icon>{{ alertIcon }}</mat-icon>
+        <mat-icon>{{ alertOptions.icon }}</mat-icon>
       </div>
-      <div *ngIf="alertMessage"
+      <div *ngIf="alertOptions.message"
            class="mr-sm-4">
-        {{ alertMessage }}
+        {{ alertOptions.message }}
       </div>
-      <div class="ms-auto d-none d-sm-block">
+      <div *ngIf="alertOptions.showAction"
+           class="ms-auto d-none d-sm-block">
         <ng-container [ngTemplateOutlet]="addToCredential"></ng-container>
       </div>
     </div>
 
-    <div class="d-block d-sm-none">
+    <div *ngIf="alertOptions.showAction"
+         class="d-block d-sm-none">
       <ng-container [ngTemplateOutlet]="addToCredential"
                     [ngTemplateOutletContext]="{ cssClass: 'w-100 mt-3' }"></ng-container>
     </div>
@@ -42,6 +46,7 @@
   <button mat-flat-button
           color="primary"
           [class]="cssClass"
+          [disabled]="alertOptions.disableAction"
           (click)="onAction()">
     Add to Wallet
   </button>

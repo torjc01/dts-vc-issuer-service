@@ -62,14 +62,16 @@ services:
     image: node:erbium
     volumes:
       - ../angular-frontend:/usr/src/frontend
+      - frontend-npm-cache:/usr/src/frontend/node_modules
     working_dir: /usr/src/frontend
     ports:
       - ${FRONTEND_WEB_PORT}:${FRONTEND_WEB_PORT}
     networks:
       - dts-vc-issuer
-    command: npm run serve
     depends_on:
       - issuer-api-dev
+    entrypoint: /bin/bash
+    command: ["-c", "npm install; npm run serve"]
 
   # # Keycloak
   # keycloak:
@@ -196,3 +198,4 @@ volumes:
   issuer-api-dev-obj:
   immunization-api-dev-bin:
   immunization-api-dev-obj:
+  frontend-npm-cache:

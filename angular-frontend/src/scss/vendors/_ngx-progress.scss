@@ -3,20 +3,20 @@
 // Wrapper for ng-progress that displays a yellow line, which is covered
 // by ng-progress when active to indicate loading
 .ngx-progress {
-  background-color: theme-palette(yellow);
-  height: 3px;
+  background-color: theme-palette(blue, lighter);
+  height: 4px;
 }
 
 .ng-bar-placeholder {
-  background-color: theme-palette(blue);
+  background-color: theme-palette(blue, darkest);
 
   // Change the height of the progress bar
   // to match the height of the top border
   // of the container
-  height: 3px !important;
+  height: 4px !important;
 }
 
 .ng-bar {
   // Actual bar that translates when the progress increments
-  background: theme-palette(yellow) !important;
+  background: theme-palette(blue) !important;
 }

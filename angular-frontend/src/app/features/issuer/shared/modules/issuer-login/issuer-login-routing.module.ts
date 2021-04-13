@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: IssuerLoginComponent,
-    data: { title: 'Issuer' }
+    data: { title: 'Health Status Credential' }
   }];
 
 @NgModule({

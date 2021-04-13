@@ -65,7 +65,6 @@ namespace Issuer.Services
                 case WebhookTopic.IssueCredential:
                     return await HandleIssueCredentialAsync(data);
                 case WebhookTopic.RevocationRegistry:
-                    _logger.LogInformation("Revocation Registry data: for {@JObject}", JsonConvert.SerializeObject(data));
                     return true;
                 case WebhookTopic.BasicMessage:
                     _logger.LogInformation("Basic Message data: for {@JObject}", JsonConvert.SerializeObject(data));
@@ -403,44 +402,80 @@ namespace Issuer.Services
             {
                 new JObject
                 {
-                    { "name", "test"},
-                    { "value", "test" }
-                }
+                    { "name", "name"},
+                    { "value", "Vaccination Certificate" }
+                },
+                new JObject
+                {
+                    { "name", "description"},
+                    { "value", "Vaccination Certificate" }
+                },
+                new JObject
+                {
+                    { "name", "issuanceDate"},
+                    { "value", DateTime.Now }
+                },
+                new JObject
+                {
+                    { "name", "expirationDate"},
+                    { "value", DateTime.Now.AddYears(1) }
+                },
+                new JObject
+                {
+                    { "name", "credential_type" },
+                    { "value", "VaccinationEvent" }
+                },
+                new JObject
+                {
+                    { "name", "countryOfVaccination" },
+                    { "value", "NZ" }
+                },
+                new JObject
+                {
+                    { "name", "recipient_type" },
+                    { "value", "VaccineRecipient" }
+                },
+                new JObject
+                {
+                    { "name", "recipient_givenName" },
+                    { "value", "JOHN" }
+                },
+                new JObject
+                {
+                    { "name", "recipient_familyName" },
+                    { "value", "SMITH" }
+                },
+                new JObject
+                {
+                    { "name", "recipient_birthDate" },
+                    { "value", "1958-07-17" }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_type" },
+                    { "value", "Vaccine" }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_disease" },
+                    { "value", "COVID-19" }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_atcCode" },
+                    { "value", "J07BX03" }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_medicinalProductName" },
+                    { "value", "COVID-19 Vaccine Moderna" }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_marketingAuthorizationHolder" },
+                    { "value", "Moderna Biotech" }
+                },
             };
-
-            // var attributes = new JArray
-            // {
-            //     new JObject
-            //     {
-            //         { "name", "Lot Number"},
-            //         { "value", immunizationRecord.LotNumber }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Date of Vaccination" },
-            //         { "value", immunizationRecord.VaccinationDate }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Dose Number" },
-            //         { "value", immunizationRecord.DoseNumber }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Country of Vaccination" },
-            //         { "value", immunizationRecord.CountryOfVaccination }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Administering Centre" },
-            //         { "value", immunizationRecord.Facility }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Next Vaccination Date" },
-            //         { "value", immunizationRecord.NextVaccinationDueDate }
-            //     }
-            // };
 
             _logger.LogInformation("Credential offer attributes for {@JObject}", JsonConvert.SerializeObject(attributes));
 

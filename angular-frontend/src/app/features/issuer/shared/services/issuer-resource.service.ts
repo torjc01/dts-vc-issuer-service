@@ -40,12 +40,27 @@ export class IssuerResource {
    * @description
    * Get the user by the unique ID associated with their profile.
    */
-  public getPatientByPatientId(patientId: number): Observable<Patient> {
+  public getPatientById(patientId: number): Observable<Patient> {
     return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }`)
       .pipe(
         tap((patient: Patient) => this.logger.info('PATIENT', patient)),
         catchError((error: any) => {
-          this.logger.error('IssuerResource::getPatientByPatientId error has occurred: ', error);
+          this.logger.error('IssuerResource::getPatientById error has occurred: ', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
+   * @description
+   * Get the user by the unique ID associated with their immunization profile.
+   */
+  public getPatientByIdentifier(patientId: number): Observable<Patient> {
+    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }`)
+      .pipe(
+        tap((patient: Patient) => this.logger.info('PATIENT', patient)),
+        catchError((error: any) => {
+          this.logger.error('IssuerResource::getPatientByIdentifier error has occurred: ', error);
           throw error;
         })
       );

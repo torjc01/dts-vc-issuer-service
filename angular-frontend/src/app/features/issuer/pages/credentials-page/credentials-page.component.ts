@@ -26,7 +26,8 @@ export class CredentialsPageComponent implements OnInit {
   public savedImmunizationRecords: ImmunizationRecord[];
 
   private readonly patientSeed = {
-    patientId: '9039555099', // Immunization patient
+    // patientId: '9039555099', // Immunization patient
+    patientId: '9902489314', // Immunization patient
     create: { // Issuer patient
       userId: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
       hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
@@ -39,7 +40,8 @@ export class CredentialsPageComponent implements OnInit {
       dateOfBirth: '2021-09-22',
       email: 'foghorn.leghorn@example.com',
       phone: '9999999999'
-    }
+    },
+    createdId: 0
   };
 
   public constructor(
@@ -85,7 +87,7 @@ export class CredentialsPageComponent implements OnInit {
       return {
         type: 'info',
         icon: 'notification_important',
-        message: 'Immunization record has not been added to your credential',
+        message: 'Immunization record has not been added to your certificate',
         showAction: true,
         disableAction: isPending
       };
@@ -135,14 +137,13 @@ export class CredentialsPageComponent implements OnInit {
         this.immunizationRecords = immunizationRecords
       );
 
-    // TODO check for existence of the patient before creation
-
-    this.busy = this.issuerResource.getPatientByUserId('22091b5c-b2df-4f6e-b184-46d7bee84b08')
-      // this.busy = this.issuerResource.getPatientByPatientId(1)
-      .subscribe((response) => {
-        console.log('EXISTS', response);
-      });
-
+    // TODO check for the existence of the patient before creation
+    // TODO use an MVP solution for patient identification that isn't userId since we don't have keycloak
+    // this.busy = this.issuerResource.getPatientByUserId('22091b5c-b2df-4f6e-b184-46d7bee84b08')
+    //   // this.busy = this.issuerResource.getPatientByPatientId(1)
+    //   .subscribe((response) => {
+    //     console.log('EXISTS', response);
+    //   });
     this.busy = this.issuerResource.createPatient(this.patientSeed.create)
       .pipe(map((patient: Patient) => this.patient = patient))
       .subscribe();

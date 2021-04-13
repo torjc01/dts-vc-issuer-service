@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using Issuer.Models;
+using System.Linq;
 
 namespace Issuer.HttpClients
 {
@@ -15,7 +16,7 @@ namespace Issuer.HttpClients
         private readonly HttpClient _client;
         private readonly ILogger _logger;
 
-        private static readonly string SchemaName = "test";
+        private static readonly string SchemaName = "vaccine";
         private static readonly string SchemaVersion = "1.0";
         // If schema changes, the following must be updated in all agents for each environment as the code changes are pushed so versions are the same
         // and have verifier app updated by aries team in each environment (send them schema id, if claims change send them new attributes)
@@ -179,13 +180,35 @@ namespace Issuer.HttpClients
 
         public async Task<string> CreateSchemaAsync()
         {
+            // JObject propertiesObject = JObject.FromObject(new SchemaAttributes{});
+
+            // var attributes = new JArray{};
+            // foreach(var property in propertiesObject.Properties())
+            // {
+            //     attributes.Add(property.Name);
+            // }
+
+            var attributes = new JArray{
+                "name",
+                "description",
+                "issuanceDate",
+                "expirationDate",
+                "credential_type",
+                "countryOfVaccination",
+                "recipient_type",
+                "recipient_givenName",
+                "recipient_familyName",
+                "recipient_birthDate",
+                "vaccine_type",
+                "vaccine_disease",
+                "vaccine_atcCode",
+                "vaccine_medicinalProductName",
+                "vaccine_marketingAuthorizationHolder",
+            };
+
             var schema = new JObject
             {
-                { "attributes", new JArray
-                    {
-                        "test"
-                    }
-                },
+                { "attributes", attributes },
                 { "schema_name", SchemaName },
                 { "schema_version", SchemaVersion}
             };

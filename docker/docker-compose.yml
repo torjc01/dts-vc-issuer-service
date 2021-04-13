@@ -45,7 +45,7 @@ services:
 
   # PostgreSQL database used by the API
   db:
-    image: postgres:latest
+    image: postgres:12-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -116,7 +116,7 @@ services:
       ACAPY_ENDPOINT: ${AGENT_ENDPOINT}
       ACAPY_GENESIS_URL: ${LEDGER_URL}/genesis
       ACAPY_WALLET_NAME: ${AGENT_WALLET_NAME}
-      ACAPY_WALLET_TYPE: indy
+      ACAPY_WALLET_TYPE: "indy"
       ACAPY_WALLET_KEY: ${AGENT_WALLET_ENCRYPTION_KEY}
       ACAPY_WALLET_SEED: ${AGENT_WALLET_SEED}
       ACAPY_WALLET_STORAGE_TYPE: ${AGENT_WALLET_STORAGE_TYPE}
@@ -127,10 +127,6 @@ services:
       ACAPY_AUTO_ACCEPT_REQUESTS: "true"
       ACAPY_AUTO_PING_CONNECTION: "true"
       ACAPY_AUTO_RESPOND_MESSAGES: "true"
-      ACAPY_AUTO_RESPOND_CREDENTIAL_OFFER: "true"
-      ACAPY_AUTO_RESPOND_PRESENTATION_REQUEST: "true"
-      ACAPY_AUTO_RESPOND_CREDENTIAL_REQUEST: "true"
-      ACAPY_AUTO_VERIFY_PRESENTATION: "true"
       ACAPY_TAILS_SERVER_BASE_URL: ${TAILS_SERVER_URL}
       AGENT_HTTP_IN_PORT: ${AGENT_HTTP_IN_PORT}
       AGENT_WS_IN_PORT: ${AGENT_WS_IN_PORT}
@@ -158,33 +154,32 @@ services:
         --outbound-transport ws \
         --outbound-transport http \
         --wallet-storage-config '{\"url\":\"${WALLET_HOST}:${WALLET_PORT}\",\"max_connections\":5}' \
-        --wallet-storage-creds '{\"account\":\"${WALLET_USER}\",\"password\":\"${WALLET_PASSWORD}\",\"admin_account\":\"postgres\",\"admin_password\":\"${WALLET_PASSWORD}\"}' \
+        --wallet-storage-creds '{\"account\":\"${WALLET_USER}\",\"password\":\"${WALLET_PASSWORD}\",\"admin_account\":\"${WALLET_USER}\",\"admin_password\":\"${WALLET_PASSWORD}\"}' \
         --admin '0.0.0.0' ${AGENT_ADMIN_PORT} \
         --${AGENT_ADMIN_MODE}",
       ]
 
   # Wallet
   wallet:
-    image: postgres:latest
+    image: postgres:12-alpine
     environment:
       POSTGRES_USER: ${WALLET_USER}
       POSTGRES_PASSWORD: ${WALLET_PASSWORD}
-      POSTGRES_DB: ${WALLET_DATABASE}
     networks:
       - dts-vc-issuer
     ports:
-      - ${WALLET_PORT}:${WALLET_PORT}
+      - ${EXPOSED_WALLET_PORT}:${WALLET_PORT}
     volumes:
       - wallet-data:/var/lib/postgresql/data
 
   # Outgoing mail server
   # See: https://hub.docker.com/r/maildev/maildev
-  maildev:
-    image: maildev/maildev
-    networks:
-      - dts-vc-issuer
-    ports:
-      - "8050:80"
+  # maildev:
+  #   image: maildev/maildev
+  #   networks:
+  #     - dts-vc-issuer
+  #   ports:
+  #     - "8050:80"
 
 networks:
   dts-vc-issuer:

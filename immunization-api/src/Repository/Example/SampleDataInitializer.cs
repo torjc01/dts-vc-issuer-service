@@ -358,6 +358,18 @@ namespace ImmunizationApi.Repository.Example
             };
             context.Immunizations.Add(imm14);
 
+            ImmunizationEntity imm15 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2020, 11, 19),
+                AdministeredAt = loc3,
+                DoseNumber = 1,
+                LotNumber = "",
+                NextDueDate = new DateTime(2021, 10, 1),
+                PatientId = patient3.Id,
+                VaccineId = vaccine8.Id
+            };
+            context.Immunizations.Add(imm15);
+
             context.SaveChanges();
         }
     }

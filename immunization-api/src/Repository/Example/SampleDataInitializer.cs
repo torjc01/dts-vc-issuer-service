@@ -32,6 +32,29 @@ namespace ImmunizationApi.Repository.Example
 
             };
             context.Locations.Add(loc2);
+
+            LocationEntity loc3 = new LocationEntity
+            {
+                Name = "Rexall",
+                StreetLine1 = "6580 Fraser St.",
+                City = "Vancouver",
+                Country = "CA",
+                PostalCode = "V5X 3T4"
+
+            };
+            context.Locations.Add(loc3);
+
+            LocationEntity loc4 = new LocationEntity
+            {
+                Name = "VCHA - Simon Fraser Elementary School",
+                StreetLine1 = "100 W 15th Ave",
+                City = "Vancouver",
+                Country = "CA",
+                PostalCode = "V5Y 3B7"
+
+            };
+            context.Locations.Add(loc4);
+
             context.SaveChanges();
 
             PatientEntity patient1 = new PatientEntity
@@ -115,6 +138,64 @@ namespace ImmunizationApi.Repository.Example
                 Disease = "COVID-19"
             };
             context.Vaccines.Add(vaccine5);
+
+            VaccineEntity vaccine6 = new VaccineEntity
+            {
+                Id = "02445646",  // DIN
+                Name = "Fluzone High-Dose",
+                Manufacturer = "SANOFI PASTEUR LIMITED",
+                Disease = "Influenza"
+            };
+            context.Vaccines.Add(vaccine6);
+
+            VaccineEntity vaccine7 = new VaccineEntity
+            {
+                Id = "02240255",  // DIN
+                Name = "ADACEL",
+                Manufacturer = "SANOFI PASTEUR LIMITED",
+                Disease = "Diphtheria, Tetanus and Pertussis"
+            };
+            context.Vaccines.Add(vaccine7);
+
+            VaccineEntity vaccine8 = new VaccineEntity
+            {
+                Id = "02246081",  // DIN
+                Name = "VARIVAX III SINGLE-DOSE VIAL 0.5 ML",
+                Manufacturer = "Merck Canada Inc",
+                Disease = "Varicella (Chickenpox)"
+            };
+            context.Vaccines.Add(vaccine8);
+
+            VaccineEntity vaccine9 = new VaccineEntity
+            {
+                Id = "02243167",  // DIN
+                Name = "Pediacel 0.5 mL",
+                Manufacturer = "Sanofi Pasteur Limited",
+                AtcCode = "J07CA06",
+                Disease = "DIPH,PERT(A),TET,POLIO,HIB/PF 15-20-5-10 HV"
+            };
+            context.Vaccines.Add(vaccine9);
+
+            VaccineEntity vaccine10 = new VaccineEntity
+            {
+                Id = "02437058",  // DIN
+                Name = "Gardasil 9",
+                Manufacturer = "MERCK CANADA INC",
+                AtcCode = "",
+                Disease = "HPV VACCINE 9-VALENT/PF 0.5 ML HV"
+            };
+            context.Vaccines.Add(vaccine10);
+
+            VaccineEntity vaccine11 = new VaccineEntity
+            {
+                Id = "00466085",  // DIN
+                Name = "M-M-R II",
+                Manufacturer = "MERCK CANADA INC",
+                AtcCode = "",
+                Disease = "MEASLES,MUMPS,RUBELLA VACC/PF 1K-5K/0.5 HS"
+            };
+            context.Vaccines.Add(vaccine11);
+
             context.SaveChanges();
 
             ImmunizationEntity imm1 = new ImmunizationEntity
@@ -172,6 +253,110 @@ namespace ImmunizationApi.Repository.Example
                 VaccineId = vaccine4.Id
             };
             context.Immunizations.Add(imm4);
+
+            ImmunizationEntity imm6 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2020, 9, 22),
+                AdministeredAt = loc3,
+                DoseNumber = 1,
+                LotNumber = "",
+                NextDueDate = new DateTime(2021, 10, 1),
+                PatientId = patient3.Id,
+                VaccineId = vaccine6.Id
+            };
+            context.Immunizations.Add(imm6);
+
+            ImmunizationEntity imm7 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2019, 7, 10),
+                AdministeredAt = loc1,
+                DoseNumber = 1,
+                LotNumber = "AA10101",
+                NextDueDate = new DateTime(2029, 7, 1),
+                PatientId = patient4.Id,
+                VaccineId = vaccine7.Id
+            };
+            context.Immunizations.Add(imm7);
+
+            ImmunizationEntity imm8 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2003, 3, 19),
+                AdministeredAt = loc3,
+                DoseNumber = 1,
+                LotNumber = "10344AB",
+                PatientId = patient4.Id,
+                VaccineId = vaccine8.Id
+            };
+            context.Immunizations.Add(imm8);
+
+            ImmunizationEntity imm9 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(1991, 11, 28),
+                AdministeredAt = loc1,
+                DoseNumber = 1,
+                LotNumber = "",
+                NextDueDate = new DateTime(1992, 1, 30),
+                PatientId = patient4.Id,
+                VaccineId = vaccine9.Id
+            };
+            context.Immunizations.Add(imm9);
+
+            ImmunizationEntity imm10 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(1992, 2, 2),
+                AdministeredAt = loc1,
+                DoseNumber = 2,
+                LotNumber = "",
+                NextDueDate = new DateTime(1992, 4, 2),
+                PatientId = patient4.Id,
+                VaccineId = vaccine9.Id
+            };
+            context.Immunizations.Add(imm10);
+
+            ImmunizationEntity imm11 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(1992, 4, 6),
+                AdministeredAt = loc2,
+                DoseNumber = 3,
+                LotNumber = "",
+                NextDueDate = new DateTime(1993, 3, 22),
+                PatientId = patient4.Id,
+                VaccineId = vaccine9.Id
+            };
+            context.Immunizations.Add(imm11);
+
+            ImmunizationEntity imm12 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(1993, 3, 29),
+                AdministeredAt = loc2,
+                DoseNumber = 4,
+                LotNumber = "",
+                PatientId = patient4.Id,
+                VaccineId = vaccine9.Id
+            };
+            context.Immunizations.Add(imm12);
+
+            ImmunizationEntity imm13 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(1992, 10, 10),
+                AdministeredAt = loc1,
+                DoseNumber = 1,
+                LotNumber = "",
+                PatientId = patient4.Id,
+                VaccineId = vaccine11.Id
+            };
+            context.Immunizations.Add(imm13);
+
+            ImmunizationEntity imm14 = new ImmunizationEntity
+            {
+                AdministeredOnDate = new DateTime(2005, 3, 10),
+                AdministeredAt = loc4,
+                DoseNumber = 1,
+                LotNumber = "",
+                PatientId = patient4.Id,
+                VaccineId = vaccine10.Id
+            };
+            context.Immunizations.Add(imm14);
 
             context.SaveChanges();
         }

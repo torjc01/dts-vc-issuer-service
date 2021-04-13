@@ -24,7 +24,7 @@ namespace ImmunizationApi.Models
     public class Vaccine
     {
         /// <summary>
-        /// Gets or the Identifier for the drug (e.g. DIN code)
+        /// Gets or the Identifier for the drug (e.g. Canada DIN, or WHO ATC Code)
         /// </summary>
         [JsonPropertyName("identifier")]
         public Identifier VaccineIdentifier { get; set; }
@@ -36,7 +36,7 @@ namespace ImmunizationApi.Models
         public string Manufacturer { get; set; }
 
         /// <summary>
-        /// Gets or sets the vaccine manufacturer
+        /// Gets or sets the vaccine product name
         /// </summary>
         [JsonPropertyName("productName")]
         public string ProductName { get; set; }

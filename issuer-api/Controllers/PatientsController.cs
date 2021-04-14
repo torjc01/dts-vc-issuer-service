@@ -33,9 +33,8 @@ namespace Issuer.Controllers
         /// Gets Patient by UserId
         /// </summary>
         /// <param name="userId"></param>
-        // TODO temporarily added /auth to distinguish between the getBy endpoints until
-        // a proper GUID is provided and the .Net can distinguish between the URI param
-        // data types
+        // TODO temporarily added /auth to distinguish between the getBy endpoints until a
+        // proper GUID is provided and.Net can distinguish between the URI param data types
         [HttpGet("{userId}/auth", Name = nameof(GetPatientByUserId))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

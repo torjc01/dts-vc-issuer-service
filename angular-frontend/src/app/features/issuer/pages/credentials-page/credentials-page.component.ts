@@ -89,16 +89,30 @@ export class CredentialsPageComponent implements OnInit {
     // };
   }
 
+  /**
+   * @description
+   * Add all the immunization records that do not already
+   * exist to the "cart".
+   */
   public addAllImmunizationRecords() {
     this.selectedImmunizationRecords = [...this.immunizationRecords];
   }
 
+  /**
+   * @description
+   * Add selected immunization records that do not already
+   * exist to the "cart".
+   */
   public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord) {
     if (!this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id)) {
       this.selectedImmunizationRecords.push(immunizationRecord);
     }
   }
 
+  /**
+   * @description
+   * Remove a selected immunization record from the "cart".
+   */
   public removeSelectedImmunizationRecord(immunizationId: string) {
     const index = this.selectedImmunizationRecords.findIndex(ir => ir.id === immunizationId);
     if (index > -1) {
@@ -106,6 +120,10 @@ export class CredentialsPageComponent implements OnInit {
     }
   }
 
+  /**
+   * @description
+   * Handle the creation of a credential.
+   */
   public onCreateCredential() {
     this.busy = this.issuerResource.issueCredential(this.patient.id, this.selectedImmunizationRecords)
       .subscribe((issuedCredential: string) => {
@@ -115,6 +133,10 @@ export class CredentialsPageComponent implements OnInit {
       });
   }
 
+  /**
+   * @description
+   * Handle logout.
+   */
   public onLogout() {
     this.router.navigate(['/login']);
   }

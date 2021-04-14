@@ -262,7 +262,10 @@ namespace Issuer.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
+                var stringContent = await response.Content.ReadAsStringAsync();
                 await LogError(response);
+                _logger.LogInformation($"ERROR: {response}");
+                _logger.LogInformation($"ERROR: {stringContent}");
                 throw new VerifiableCredentialApiException($"Error code {response.StatusCode} was provided when calling VerifiableCredentialClient::GetCredentialDefinitionAsync");
             }
 

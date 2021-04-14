@@ -179,10 +179,8 @@ namespace Issuer
             var schemaId = await _verifiableCredentialClient.GetSchemaId(issuerDid);
             if(schemaId == null)
             {
-                await _verifiableCredentialClient.CreateSchemaAsync();
+                schemaId = await _verifiableCredentialClient.CreateSchemaAsync();
             }
-
-            System.Threading.Thread.Sleep(5000);
 
             var credentialDefinitionId = await _verifiableCredentialClient.GetCredentialDefinitionIdAsync(schemaId);
             if(credentialDefinitionId == null)

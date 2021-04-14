@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Issuer.Models
 {
@@ -12,17 +12,21 @@ namespace Issuer.Models
         [Key]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int PatientId { get; set; }
 
         [JsonIgnore]
         public Patient Patient { get; set; }
 
+        [JsonIgnore]
         public string ConnectionId { get; set; }
 
+        [JsonIgnore]
         public string Base64QRCode { get; set; }
 
         public DateTimeOffset? AcceptedConnectionDate { get; set; }
 
+        [JsonIgnore]
         public ICollection<Credential> Credentials { get; set; }
 
     }

@@ -14,6 +14,7 @@ using Serilog;
 using Microsoft.Extensions.Hosting;
 using Issuer.Services;
 using Issuer.HttpClients;
+using AutoMapper;
 
 namespace Issuer
 {
@@ -72,6 +73,8 @@ namespace Issuer
             services.AddHttpContextAccessor();
 
             services.AddAuthorization();
+
+            services.AddAutoMapper(typeof(Startup));
 
             ConfigureDatabase(services);
 

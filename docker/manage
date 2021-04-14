@@ -208,15 +208,15 @@ configureEnvironment() {
 
   # wallet
   export WALLET_HOST="wallet"
-  export WALLET_PORT="5434"
+  export WALLET_PORT="5432"
+  export EXPOSED_WALLET_PORT="5434"
   export WALLET_USER="DB_USER"
   export WALLET_PASSWORD="DB_PASSWORD"
-  export WALLET_DATABASE="default"
 
   # agent
   export AGENT_WALLET_NAME="dts_vc_issuer"
   export AGENT_WALLET_ENCRYPTION_KEY="key"
-  export AGENT_STORAGE_WALLET_TYPE="postgres_storage"
+  export AGENT_WALLET_STORAGE_TYPE="postgres_storage"
   export AGENT_ADMIN_PORT=8024
   export AGENT_HTTP_IN_PORT=8021
   export AGENT_WS_IN_PORT=8026
@@ -368,7 +368,9 @@ case "${COMMAND}" in
     docker-compose stop
     ;;
   rm|down)
-    rm .env
+    if [ -f ".env" ] ; then
+        rm ".env"
+    fi
     configureEnvironment
     deleteVolumes
     ;;

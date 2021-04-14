@@ -11,6 +11,7 @@ using Issuer.HttpClients;
 using Issuer.Models.Api;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace Issuer.Services
 {
@@ -38,18 +39,24 @@ namespace Issuer.Services
     }
     public class VerifiableCredentialService : BaseService, IVerifiableCredentialService
     {
+        private readonly IMapper _mapper;
         private readonly IVerifiableCredentialClient _verifiableCredentialClient;
+        private readonly IImmunizationClient _immunizationClient;
         private readonly ILogger _logger;
 
         public VerifiableCredentialService(
             ApiDbContext context,
             IHttpContextAccessor httpContext,
+            IMapper mapper,
             IVerifiableCredentialClient verifiableCredentialClient,
+            IImmunizationClient immunizationClient,
             IPatientService patientService,
             ILogger<VerifiableCredentialService> logger)
             : base(context, httpContext)
         {
+            _mapper = mapper;
             _verifiableCredentialClient = verifiableCredentialClient;
+            _immunizationClient = immunizationClient;
             _logger = logger;
         }
 
@@ -65,7 +72,6 @@ namespace Issuer.Services
                 case WebhookTopic.IssueCredential:
                     return await HandleIssueCredentialAsync(data);
                 case WebhookTopic.RevocationRegistry:
-                    _logger.LogInformation("Revocation Registry data: for {@JObject}", JsonConvert.SerializeObject(data));
                     return true;
                 case WebhookTopic.BasicMessage:
                     _logger.LogInformation("Basic Message data: for {@JObject}", JsonConvert.SerializeObject(data));
@@ -138,7 +144,7 @@ namespace Issuer.Services
                 {
                     _logger.LogInformation("Issuing a credential with this connection_id: {connectionId}", connection.ConnectionId);
                     // Assumed that when a connection invitation has been sent and accepted
-                    await IssueCredential(connection.ConnectionId, patient.Id, credential.Identifier.Uri);
+                    await IssueCredential(credential, connection.ConnectionId, credential.Identifier.Guid);
                     _logger.LogInformation("Credential has been issued for connection_id: {connectionId}", connection.ConnectionId);
                 }
 
@@ -245,7 +251,7 @@ namespace Issuer.Services
                     {
                         _logger.LogInformation("Issuing a credential with this connection_id: {connectionId}", connectionId);
                         // Assumed that when a connection invitation has been sent and accepted
-                        await IssueCredential(connectionId, alias, credential.Identifier.Uri);
+                        await IssueCredential(credential, connectionId, credential.Identifier.Guid);
                         _logger.LogInformation("Credential has been issued for connection_id: {connectionId}", connectionId);
                     }
 
@@ -272,6 +278,7 @@ namespace Issuer.Services
             switch (state)
             {
                 case CredentialExchangeState.OfferSent:
+                    return true;
                 case CredentialExchangeState.RequestReceived:
                     return true;
                 case CredentialExchangeState.CredentialIssued:
@@ -286,6 +293,11 @@ namespace Issuer.Services
         private async Task<int> UpdateCredentialAfterIssued(JObject data)
         {
             var cred_ex_id = (string)data.SelectToken("cred_ex_id");
+
+            if(cred_ex_id == null)
+            {
+                cred_ex_id = (string)data.SelectToken("credential_exchange_id");
+            }
 
             var credential = GetCredentialByCredentialExchangeIdAsync(cred_ex_id);
 
@@ -331,28 +343,23 @@ namespace Issuer.Services
         }
 
         // Issue a credential to an active connection.
-        private async Task<JObject> IssueCredential(string connectionId, int patientId, string url)
+        private async Task<JObject> IssueCredential(Credential credential, string connectionId, Guid guid)
         {
-            var patient = _context.Patients
-                .SingleOrDefault(e => e.Id == patientId);
+            if (credential == null || credential.AcceptedCredentialDate != null)
+            {
+                _logger.LogInformation("Cannot issue credential, credential from database is null, or a credential has already been accepted.");
+                return null;
+            }
 
-            var connection = GetConnectionByConnectionIdAsync(connectionId);
-
-            // if (credential == null || credential.AcceptedCredentialDate != null)
-            // {
-            //     _logger.LogInformation("Cannot issue credential, credential with this connectionId:{connectionId} from database is null, or a credential has already been accepted.", connectionId);
-            //     return null;
-            // }
-
-            var credentialAttributes = await CreateCredentialAttributesAsync(patientId, url);
+            var credentialAttributes = await CreateCredentialAttributesAsync(credential.Connection.PatientId, guid);
             var credentialOffer = await CreateCredentialOfferAsync(connectionId, credentialAttributes);
             var issueCredentialResponse = await _verifiableCredentialClient.IssueCredentialAsync(credentialOffer);
 
             // // Set credentials CredentialExchangeId from issue credential response
-            // credential.CredentialExchangeId = (string)issueCredentialResponse.SelectToken("credential_exchange_id");
-            // _context.Credentials.Update(credential);
+            credential.CredentialExchangeId = (string)issueCredentialResponse.SelectToken("credential_exchange_id");
+            _context.Credentials.Update(credential);
 
-            // await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return issueCredentialResponse;
         }
@@ -393,53 +400,80 @@ namespace Issuer.Services
         }
 
         // Create the credential proposal attributes.
-        private async Task<JArray> CreateCredentialAttributesAsync(int patientId, string url)
+        private async Task<JArray> CreateCredentialAttributesAsync(int patientId, Guid guid)
         {
-            // var record = _immunizationClient
-            var immunizationRecord = new ImmunizationRecordResponse();
+            var record = await _immunizationClient.GetImmunizationRecordAsync(guid);
+
+            var immunizationRecord = _mapper.Map<ImmunizationResponse, Schema>(record);
 
             var attributes = new JArray
             {
                 new JObject
                 {
-                    { "name", "test"},
-                    { "value", "test" }
-                }
+                    { "name", "name"},
+                    { "value", immunizationRecord.name }
+                },
+                new JObject
+                {
+                    { "name", "description"},
+                    { "value", immunizationRecord.description }
+                },
+                new JObject
+                {
+                    { "name", "issuanceDate"},
+                    { "value", immunizationRecord.issuanceDate }
+                },
+                new JObject
+                {
+                    { "name", "expirationDate"},
+                    { "value", DateTime.Now.AddYears(1) }
+                },
+                new JObject
+                {
+                    { "name", "credential_type" },
+                    { "value", immunizationRecord.credential_type }
+                },
+                new JObject
+                {
+                    { "name", "countryOfVaccination" },
+                    { "value", immunizationRecord.countryOfVaccination }
+                },
+                new JObject
+                {
+                    { "name", "recipient_type" },
+                    { "value", immunizationRecord.recipient_type }
+                },
+                new JObject
+                {
+                    { "name", "recipient_fullName" },
+                    { "value", immunizationRecord.recipient_fullName }
+                },
+                new JObject
+                {
+                    { "name", "recipient_birthDate" },
+                    { "value", immunizationRecord.recipient_birthDate }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_type" },
+                    { "value", immunizationRecord.vaccine_type }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_disease" },
+                    { "value", immunizationRecord.vaccine_disease }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_medicinalProductName" },
+                    { "value", immunizationRecord.vaccine_medicinalProductName }
+                },
+                new JObject
+                {
+                    { "name", "vaccine_marketingAuthorizationHolder" },
+                    { "value", immunizationRecord.vaccine_marketingAuthorizationHolder }
+                },
             };
-
-            // var attributes = new JArray
-            // {
-            //     new JObject
-            //     {
-            //         { "name", "Lot Number"},
-            //         { "value", immunizationRecord.LotNumber }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Date of Vaccination" },
-            //         { "value", immunizationRecord.VaccinationDate }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Dose Number" },
-            //         { "value", immunizationRecord.DoseNumber }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Country of Vaccination" },
-            //         { "value", immunizationRecord.CountryOfVaccination }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Administering Centre" },
-            //         { "value", immunizationRecord.Facility }
-            //     },
-            //     new JObject
-            //     {
-            //         { "name", "Next Vaccination Date" },
-            //         { "value", immunizationRecord.NextVaccinationDueDate }
-            //     }
-            // };
 
             _logger.LogInformation("Credential offer attributes for {@JObject}", JsonConvert.SerializeObject(attributes));
 

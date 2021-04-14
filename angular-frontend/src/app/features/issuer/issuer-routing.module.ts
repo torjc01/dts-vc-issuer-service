@@ -6,7 +6,6 @@ import { AuthenticationGuard } from '@features/auth/shared/guards/authentication
 import { IssuerRoutes } from './issuer.routes';
 import { IssuerGuard } from './shared/guards/issuer.guard';
 import { CredentialsPageComponent } from './pages/credentials-page/credentials-page.component';
-import { IssuancePageComponent } from './pages/issuance-page/issuance-page.component';
 
 const routes: Routes = [
   {
@@ -23,13 +22,7 @@ const routes: Routes = [
         path: IssuerRoutes.CREDENTIALS_PAGE,
         canActivate: [],
         component: CredentialsPageComponent,
-        data: { title: 'Credentials' }
-      },
-      {
-        path: IssuerRoutes.ISSUANCE_PAGE,
-        canActivate: [],
-        component: IssuancePageComponent,
-        data: { title: 'Issuance' }
+        data: { title: 'Obtain Your Health Status Credential' }
       }
     ]
   },

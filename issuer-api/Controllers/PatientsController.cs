@@ -154,7 +154,7 @@ namespace Issuer.Controllers
                 return NotFound(ApiResponse.Message($"Patient not found with id {patientId}"));
             }
 
-            var credentials = _patientService.GetPatientCredentialsAsync(patientId);
+            var credentials = await _patientService.GetPatientCredentialsAsync(patientId);
 
             // return Ok(ApiResponse.Result(credentials));
             return Ok(credentials);

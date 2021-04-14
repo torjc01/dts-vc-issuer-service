@@ -12,16 +12,13 @@ namespace Issuer.Models
         [Key]
         public int Id { get; set; }
 
-        [JsonIgnore]
         public int PatientId { get; set; }
 
         [JsonIgnore]
         public Patient Patient { get; set; }
 
-        [JsonIgnore]
         public string ConnectionId { get; set; }
 
-        [JsonIgnore]
         public string Base64QRCode { get; set; }
 
         public DateTimeOffset? AcceptedConnectionDate { get; set; }

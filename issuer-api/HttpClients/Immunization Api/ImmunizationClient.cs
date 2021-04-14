@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using Issuer.Models;
+using Issuer.Models.Api;
 
 namespace Issuer.HttpClients
 {
@@ -24,7 +25,7 @@ namespace Issuer.HttpClients
             _logger = logger;
         }
 
-        public async Task<JObject> GetImmunizationRecordAsync(Guid guid)
+        public async Task<ImmunizationResponse> GetImmunizationRecordAsync(Guid guid)
         {
             HttpResponseMessage response = null;
             try
@@ -45,7 +46,9 @@ namespace Issuer.HttpClients
 
             _logger.LogInformation("Create connection invitation response {@JObject}", JsonConvert.SerializeObject(response));
 
-            return JObject.Parse(await response.Content.ReadAsStringAsync());
+            var immunizationResponse = JsonConvert.DeserializeObject<ImmunizationResponse>(await response.Content.ReadAsStringAsync());
+
+            return immunizationResponse;
         }
 
         private async Task LogError(HttpResponseMessage response, Exception exception = null)

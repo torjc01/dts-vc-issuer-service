@@ -5,7 +5,7 @@ namespace Issuer.Models.Api
 {
     public class VaccineResponse
     {
-        public Identifier VaccineIdentifier { get; set; }
+        public Identifier Identifier { get; set; }
 
         public string Manufacturer { get; set; }
 

@@ -9,7 +9,7 @@ namespace Issuer.Models.Api
 
         public string BirthDate { get; set; }
 
-        public string ReferenceURI { get; set; }
+        public string Reference { get; set; }
 
     }
 }

@@ -180,31 +180,13 @@ namespace Issuer.HttpClients
 
         public async Task<string> CreateSchemaAsync()
         {
-            // JObject propertiesObject = JObject.FromObject(new SchemaAttributes{});
+            JObject propertiesObject = JObject.FromObject(new Schema{});
 
-            // var attributes = new JArray{};
-            // foreach(var property in propertiesObject.Properties())
-            // {
-            //     attributes.Add(property.Name);
-            // }
-
-            var attributes = new JArray{
-                "name",
-                "description",
-                "issuanceDate",
-                "expirationDate",
-                "credential_type",
-                "countryOfVaccination",
-                "recipient_type",
-                "recipient_givenName",
-                "recipient_familyName",
-                "recipient_birthDate",
-                "vaccine_type",
-                "vaccine_disease",
-                "vaccine_atcCode",
-                "vaccine_medicinalProductName",
-                "vaccine_marketingAuthorizationHolder",
-            };
+            var attributes = new JArray{};
+            foreach(var property in propertiesObject.Properties())
+            {
+                attributes.Add(property.Name);
+            }
 
             var schema = new JObject
             {

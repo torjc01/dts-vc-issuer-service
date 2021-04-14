@@ -411,17 +411,17 @@ namespace Issuer.Services
                 new JObject
                 {
                     { "name", "name"},
-                    { "value", "Vaccination Certificate" }
+                    { "value", immunizationRecord.name }
                 },
                 new JObject
                 {
                     { "name", "description"},
-                    { "value", "Vaccination Certificate" }
+                    { "value", immunizationRecord.description }
                 },
                 new JObject
                 {
                     { "name", "issuanceDate"},
-                    { "value", DateTime.Now }
+                    { "value", immunizationRecord.issuanceDate }
                 },
                 new JObject
                 {
@@ -431,47 +431,47 @@ namespace Issuer.Services
                 new JObject
                 {
                     { "name", "credential_type" },
-                    { "value", "VaccinationEvent" }
+                    { "value", immunizationRecord.credential_type }
                 },
                 new JObject
                 {
                     { "name", "countryOfVaccination" },
-                    { "value", "NZ" }
+                    { "value", immunizationRecord.countryOfVaccination }
                 },
                 new JObject
                 {
                     { "name", "recipient_type" },
-                    { "value", "VaccineRecipient" }
+                    { "value", immunizationRecord.recipient_type }
                 },
                 new JObject
                 {
                     { "name", "recipient_fullName" },
-                    { "value", "JOHN" }
+                    { "value", immunizationRecord.recipient_fullName }
                 },
                 new JObject
                 {
                     { "name", "recipient_birthDate" },
-                    { "value", "1958-07-17" }
+                    { "value", immunizationRecord.recipient_birthDate }
                 },
                 new JObject
                 {
                     { "name", "vaccine_type" },
-                    { "value", "Vaccine" }
+                    { "value", immunizationRecord.vaccine_type }
                 },
                 new JObject
                 {
                     { "name", "vaccine_disease" },
-                    { "value", "COVID-19" }
+                    { "value", immunizationRecord.vaccine_disease }
                 },
                 new JObject
                 {
                     { "name", "vaccine_medicinalProductName" },
-                    { "value", "COVID-19 Vaccine Moderna" }
+                    { "value", immunizationRecord.vaccine_medicinalProductName }
                 },
                 new JObject
                 {
                     { "name", "vaccine_marketingAuthorizationHolder" },
-                    { "value", "Moderna Biotech" }
+                    { "value", immunizationRecord.vaccine_marketingAuthorizationHolder }
                 },
             };
 

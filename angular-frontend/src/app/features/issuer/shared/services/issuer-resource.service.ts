@@ -59,9 +59,8 @@ export class IssuerResource {
    * @description
    * Get the patient by the user ID provided by the authentication token.
    */
-  // TODO temporarily added /auth to distinguish between the getBy endpoints until
-  // a proper GUID is provided and the .Net can distinguish between the URI param
-  // data types
+  // TODO temporarily added /auth to distinguish between the getBy endpoints until a
+  // proper GUID is provided and.Net can distinguish between the URI param data types
   public getPatientByUserId(userId: string): Observable<Patient> {
     return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ userId }/auth`)
       .pipe(

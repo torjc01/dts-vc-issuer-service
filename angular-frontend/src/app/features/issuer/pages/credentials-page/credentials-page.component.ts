@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { of, Subscription } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
 
 import { ImmunizationRecord } from '@features/issuer/shared/models/immunization-record.model';
@@ -125,20 +125,22 @@ export class CredentialsPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    // TODO combine and run in parallel so only a singular busy
-    this.busy = this.immunizationResource.immunizations(this.immunizationPatientIdSeed)
-      .subscribe((immunizationRecords: ImmunizationRecord[]) =>
-        this.immunizationRecords = immunizationRecords
-      );
-
-    this.busy = this.issuerResource.getPatientByUserId(this.immunizationPatientIdSeed)
+    const immunizations$ = this.immunizationResource.immunizations(this.immunizationPatientIdSeed);
+    const patient$ = this.issuerResource.getPatientByUserId(this.immunizationPatientIdSeed)
       .pipe(
         exhaustMap((patient: Patient) =>
           (!patient)
             ? this.issuerResource.createPatient(this.patientSeed.create)
             : of(patient)
         )
-      )
-      .subscribe((patient: Patient) => this.patient = patient);
+      );
+
+    this.busy = forkJoin({
+      immunizationRecords: immunizations$,
+      patient: patient$
+    }).subscribe((response: { immunizationRecords: ImmunizationRecord[], patient: Patient; }) => {
+      this.immunizationRecords = response.immunizationRecords;
+      this.patient = response.patient;
+    });
   }
 }

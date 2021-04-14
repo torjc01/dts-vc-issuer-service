@@ -12,31 +12,18 @@ namespace Issuer.Models
         [Key]
         public int Id { get; set; }
 
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         [StringLength(255)]
         public string HPDID { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
-
-        [Required]
-        public string LastName { get; set; }
-
-        [Required]
-        public string GivenNames { get; set; }
-
-        public string PreferredFirstName { get; set; }
-
-        public string PreferredMiddleName { get; set; }
-
-        public string PreferredLastName { get; set; }
+        public string FullName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
         public string Email { get; set; }
 
-        public string Phone { get; set; }
 
         [JsonIgnore]
         public ICollection<Connection> Connections { get; set; }

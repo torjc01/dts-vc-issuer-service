@@ -28,12 +28,12 @@ namespace Issuer.Controllers
             _verifiableCredentialService = verifiableCredentialService;
         }
 
-        // GET: api/Patients/1234567890
+        // GET: api/Patients/1234567890/auth
         /// <summary>
         /// Gets Patient by UserId
         /// </summary>
         /// <param name="userId"></param>
-        [HttpGet("{userId}", Name = nameof(GetPatientByUserId))]
+        [HttpGet("{userId}/auth", Name = nameof(GetPatientByUserId))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

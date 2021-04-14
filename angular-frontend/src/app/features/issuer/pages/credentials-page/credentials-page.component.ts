@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { forkJoin, of, Subscription } from 'rxjs';
-import { exhaustMap, map } from 'rxjs/operators';
+import { exhaustMap } from 'rxjs/operators';
+
+import { AuthService } from '@core/services/auth.service';
 
 import { ImmunizationRecord } from '@features/issuer/shared/models/immunization-record.model';
 import { Patient } from '@features/issuer/shared/models/patient.model';
@@ -25,23 +27,12 @@ export class CredentialsPageComponent implements OnInit {
   public selectedImmunizationRecords: ImmunizationRecord[];
   public savedImmunizationRecords: ImmunizationRecord[];
 
-  private readonly immunizationPatientIdSeed = '900489178';
-  private readonly patientSeed = {
-    create: {
-      id: 0,
-      userId: this.immunizationPatientIdSeed,
-      hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
-      fullName: 'Foghorn Leghorn',
-      dateOfBirth: '2021-09-22',
-      email: 'foghorn.leghorn@example.com'
-    }
-  };
-
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
     private immunizationResource: ImmunizationResource,
-    private issuerResource: IssuerResource
+    private issuerResource: IssuerResource,
+    private authService: AuthService
   ) {
     this.title = this.route.snapshot.data.title;
     this.immunizationRecords = null;
@@ -51,11 +42,16 @@ export class CredentialsPageComponent implements OnInit {
     this.savedImmunizationRecords = [];
   }
 
+  public get username(): string {
+    return this.authService.token.fullName;
+  }
+
   public getAlertOptions(immunizationRecord: ImmunizationRecord): AlertOptions {
     // TODO temporary way of managing record state indicators
     // TODO MVP demo does not know if it already exists in the digital wallet
     // TODO not managing danger notice until after MVP demo
     // TODO only managing success notice on submission for MVP demo
+    // TODO danger was not added as it identicates that something is wrong instead of messaging that you could do something
 
     const isUnsaved = this.immunizationRecords.some(ir => ir.id === immunizationRecord.id);
     const isPending = this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id);
@@ -85,33 +81,44 @@ export class CredentialsPageComponent implements OnInit {
         disableAction: isPending
       };
     }
-
-    // return {
-    //   type: 'danger',
-    //   icon: 'notification_important',
-    //   message: 'Vaccination record has not been added to your digital wallet',
-    //   showAction: true
-    // };
   }
 
-  public addAllImmunizationRecords() {
+  /**
+   * @description
+   * Add all the immunization records that do not already
+   * exist to the "cart".
+   */
+  public addAllImmunizationRecords(): void {
     this.selectedImmunizationRecords = [...this.immunizationRecords];
   }
 
-  public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord) {
+  /**
+   * @description
+   * Add selected immunization records that do not already
+   * exist to the "cart".
+   */
+  public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord): void {
     if (!this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id)) {
       this.selectedImmunizationRecords.push(immunizationRecord);
     }
   }
 
-  public removeSelectedImmunizationRecord(immunizationId: string) {
+  /**
+   * @description
+   * Remove a selected immunization record from the "cart".
+   */
+  public removeSelectedImmunizationRecord(immunizationId: string): void {
     const index = this.selectedImmunizationRecords.findIndex(ir => ir.id === immunizationId);
     if (index > -1) {
       this.selectedImmunizationRecords.splice(index, 1);
     }
   }
 
-  public onCreateCredential() {
+  /**
+   * @description
+   * Handle the creation of a credential.
+   */
+  public onCreateCredential(): void {
     this.busy = this.issuerResource.issueCredential(this.patient.id, this.selectedImmunizationRecords)
       .subscribe((issuedCredential: string) => {
         this.issuedCredential = issuedCredential;
@@ -120,17 +127,23 @@ export class CredentialsPageComponent implements OnInit {
       });
   }
 
-  public onLogout() {
+  /**
+   * @description
+   * Handle logout.
+   */
+  public onLogout(): void {
     this.router.navigate(['/login']);
   }
 
   public ngOnInit(): void {
-    const immunizations$ = this.immunizationResource.immunizations(this.immunizationPatientIdSeed);
-    const patient$ = this.issuerResource.getPatientByUserId(this.immunizationPatientIdSeed)
+    const patientId = this.authService.token.userId;
+
+    const immunizations$ = this.immunizationResource.immunizations(patientId);
+    const patient$ = this.issuerResource.getPatientByUserId(patientId)
       .pipe(
         exhaustMap((patient: Patient) =>
           (!patient)
-            ? this.issuerResource.createPatient(this.patientSeed.create)
+            ? this.issuerResource.createPatient(this.authService.token)
             : of(patient)
         )
       );

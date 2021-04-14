@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 import { AppConfig, APP_CONFIG } from 'app/app-config.module';
@@ -45,22 +45,11 @@ export class IssuerResource {
       .pipe(
         tap((patient: Patient) => this.logger.info('PATIENT', patient)),
         catchError((error: any) => {
-          this.logger.error('IssuerResource::getPatientById error has occurred: ', error);
-          throw error;
-        })
-      );
-  }
+          if (error.status === 404) {
+            return of(null);
+          }
 
-  /**
-   * @description
-   * Get the user by the unique ID associated with their immunization profile.
-   */
-  public getPatientByIdentifier(patientId: number): Observable<Patient> {
-    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }`)
-      .pipe(
-        tap((patient: Patient) => this.logger.info('PATIENT', patient)),
-        catchError((error: any) => {
-          this.logger.error('IssuerResource::getPatientByIdentifier error has occurred: ', error);
+          this.logger.error('IssuerResource::getPatientById error has occurred: ', error);
           throw error;
         })
       );
@@ -70,11 +59,17 @@ export class IssuerResource {
    * @description
    * Get the patient by the user ID provided by the authentication token.
    */
+  // TODO temporarily added /auth to distinguish between the getBy endpoints until a
+  // proper GUID is provided and.Net can distinguish between the URI param data types
   public getPatientByUserId(userId: string): Observable<Patient> {
-    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ userId }`)
+    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ userId }/auth`)
       .pipe(
         tap((patient: Patient) => this.logger.info('PATIENT', patient)),
         catchError((error: any) => {
+          if (error.status === 404) {
+            return of(null);
+          }
+
           this.logger.error('IssuerResource::getPatientByUserId error has occurred: ', error);
           throw error;
         })

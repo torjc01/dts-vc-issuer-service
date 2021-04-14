@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { forkJoin, of, Subscription } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
 
 import { ImmunizationRecord } from '@features/issuer/shared/models/immunization-record.model';
@@ -25,25 +25,16 @@ export class CredentialsPageComponent implements OnInit {
   public selectedImmunizationRecords: ImmunizationRecord[];
   public savedImmunizationRecords: ImmunizationRecord[];
 
+  private readonly immunizationPatientIdSeed = '900489178';
   private readonly patientSeed = {
-    // patientId: '9039555099', // Immunization patient
-    // patientId: '9902489314', // Immunization patient
-    patientId: '900489178',
-    create: { // Issuer patient
-      userId: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
+    create: {
+      id: 0,
+      userId: this.immunizationPatientIdSeed,
       hpdid: '22091b5c-b2df-4f6e-b184-46d7bee84b08',
-      firstName: 'Foghorn',
-      lastName: 'Leghorn',
-      givenNames: 'Foghorn Leghorn',
-      preferredFirstName: '',
-      preferredMiddleName: '',
-      preferredLastName: '',
+      fullName: 'Foghorn Leghorn',
       dateOfBirth: '2021-09-22',
-      email: 'foghorn.leghorn@example.com',
-      phone: '9999999999',
-      patientIdentifier: '9902489314'
-    },
-    createdId: 0
+      email: 'foghorn.leghorn@example.com'
+    }
   };
 
   public constructor(
@@ -134,20 +125,22 @@ export class CredentialsPageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.busy = this.immunizationResource.immunizations(this.patientSeed.patientId)
-      .subscribe((immunizationRecords: ImmunizationRecord[]) =>
-        this.immunizationRecords = immunizationRecords
+    const immunizations$ = this.immunizationResource.immunizations(this.immunizationPatientIdSeed);
+    const patient$ = this.issuerResource.getPatientByUserId(this.immunizationPatientIdSeed)
+      .pipe(
+        exhaustMap((patient: Patient) =>
+          (!patient)
+            ? this.issuerResource.createPatient(this.patientSeed.create)
+            : of(patient)
+        )
       );
 
-    // TODO check for the existence of the patient before creation
-    // TODO use an MVP solution for patient identification that isn't userId since we don't have keycloak
-    // this.busy = this.issuerResource.getPatientByIdentifier(this.patientSeed.patientId)
-    // this.busy = this.issuerResource.getPatientByPatientId(1)
-    // .subscribe((response) => {
-    //   console.log('EXISTS', response);
-    // });
-    this.busy = this.issuerResource.createPatient(this.patientSeed.create)
-      .pipe(map((patient: Patient) => this.patient = patient))
-      .subscribe();
+    this.busy = forkJoin({
+      immunizationRecords: immunizations$,
+      patient: patient$
+    }).subscribe((response: { immunizationRecords: ImmunizationRecord[], patient: Patient; }) => {
+      this.immunizationRecords = response.immunizationRecords;
+      this.patient = response.patient;
+    });
   }
 }

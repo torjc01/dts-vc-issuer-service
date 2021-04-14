@@ -6,10 +6,10 @@ namespace Issuer.Services
 {
     public interface IPatientService
     {
-        Task<Patient> GetPatientForUserIdAsync(Guid userId);
+        Task<Patient> GetPatientForUserIdAsync(string userId);
         Task<Patient> GetPatientAsync(int patientId);
         Task<bool> PatientExistsAsync(int patientId);
-        Task<bool> UserIdExistsAsync(Guid userId);
+        Task<bool> UserIdExistsAsync(string userId);
         Task<int> CreatePatientAsync(Patient patient);
     }
 }

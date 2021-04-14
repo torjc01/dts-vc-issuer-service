@@ -74,7 +74,7 @@ export class CredentialsPageComponent implements OnInit {
       return {
         type: 'warn',
         icon: 'task_alt',
-        message: 'Immunization record is ready to be saved to your digital wallet',
+        message: 'Vaccination record is ready to be saved to your digital wallet',
         showAction: true,
         disableAction: true
       };
@@ -82,14 +82,14 @@ export class CredentialsPageComponent implements OnInit {
       return {
         type: 'success',
         icon: 'verified',
-        message: 'Immunization record exists in your digital wallet',
+        message: 'Vaccination record exists in your digital wallet',
         showAction: false
       };
     } else {
       return {
         type: 'info',
         icon: 'notification_important',
-        message: 'Immunization record has not been added to your certificate',
+        message: 'Vaccination record has not been added to your certificate',
         showAction: true,
         disableAction: isPending
       };
@@ -98,7 +98,7 @@ export class CredentialsPageComponent implements OnInit {
     // return {
     //   type: 'danger',
     //   icon: 'notification_important',
-    //   message: 'Immunization record has not been added to your digital wallet',
+    //   message: 'Vaccination record has not been added to your digital wallet',
     //   showAction: true
     // };
   }

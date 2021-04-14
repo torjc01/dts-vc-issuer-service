@@ -42,7 +42,7 @@ export class IssuerLoginComponent implements OnInit {
     this.createFormInstance();
   }
 
-  private createFormInstance() {
+  private createFormInstance(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]

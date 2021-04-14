@@ -88,7 +88,7 @@ export class CredentialsPageComponent implements OnInit {
    * Add all the immunization records that do not already
    * exist to the "cart".
    */
-  public addAllImmunizationRecords() {
+  public addAllImmunizationRecords(): void {
     this.selectedImmunizationRecords = [...this.immunizationRecords];
   }
 
@@ -97,7 +97,7 @@ export class CredentialsPageComponent implements OnInit {
    * Add selected immunization records that do not already
    * exist to the "cart".
    */
-  public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord) {
+  public addSelectedImmunizationRecord(immunizationRecord: ImmunizationRecord): void {
     if (!this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id)) {
       this.selectedImmunizationRecords.push(immunizationRecord);
     }
@@ -107,7 +107,7 @@ export class CredentialsPageComponent implements OnInit {
    * @description
    * Remove a selected immunization record from the "cart".
    */
-  public removeSelectedImmunizationRecord(immunizationId: string) {
+  public removeSelectedImmunizationRecord(immunizationId: string): void {
     const index = this.selectedImmunizationRecords.findIndex(ir => ir.id === immunizationId);
     if (index > -1) {
       this.selectedImmunizationRecords.splice(index, 1);
@@ -118,7 +118,7 @@ export class CredentialsPageComponent implements OnInit {
    * @description
    * Handle the creation of a credential.
    */
-  public onCreateCredential() {
+  public onCreateCredential(): void {
     this.busy = this.issuerResource.issueCredential(this.patient.id, this.selectedImmunizationRecords)
       .subscribe((issuedCredential: string) => {
         this.issuedCredential = issuedCredential;
@@ -131,7 +131,7 @@ export class CredentialsPageComponent implements OnInit {
    * @description
    * Handle logout.
    */
-  public onLogout() {
+  public onLogout(): void {
     this.router.navigate(['/login']);
   }
 

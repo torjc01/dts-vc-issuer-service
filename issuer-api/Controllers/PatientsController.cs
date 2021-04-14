@@ -51,7 +51,7 @@ namespace Issuer.Controllers
         /// Gets a specific Patient.
         /// </summary>
         /// <param name="patientId"></param>
-        [HttpGet("{patientId}", Name = nameof(GetPatientById))]
+        [HttpGet("{patientId:int}", Name = nameof(GetPatientById))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

@@ -51,6 +51,7 @@ export class CredentialsPageComponent implements OnInit {
     // TODO MVP demo does not know if it already exists in the digital wallet
     // TODO not managing danger notice until after MVP demo
     // TODO only managing success notice on submission for MVP demo
+    // TODO danger was not added as it identicates that something is wrong instead of messaging that you could do something
 
     const isUnsaved = this.immunizationRecords.some(ir => ir.id === immunizationRecord.id);
     const isPending = this.selectedImmunizationRecords.some(ir => ir.id === immunizationRecord.id);
@@ -80,13 +81,6 @@ export class CredentialsPageComponent implements OnInit {
         disableAction: isPending
       };
     }
-
-    // return {
-    //   type: 'danger',
-    //   icon: 'notification_important',
-    //   message: 'Vaccination record has not been added to your digital wallet',
-    //   showAction: true
-    // };
   }
 
   /**

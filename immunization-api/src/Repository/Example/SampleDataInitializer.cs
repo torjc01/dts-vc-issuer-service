@@ -153,7 +153,7 @@ namespace ImmunizationApi.Repository.Example
                 Id = "02240255",  // DIN
                 Name = "ADACEL",
                 Manufacturer = "SANOFI PASTEUR LIMITED",
-                Disease = "Diphtheria, Tetanus + Pertussis"
+                Disease = "Diphtheria, Tetanus and Pertussis"
             };
             context.Vaccines.Add(vaccine7);
 
@@ -172,7 +172,7 @@ namespace ImmunizationApi.Repository.Example
                 Name = "Pediacel 0.5 mL",
                 Manufacturer = "Sanofi Pasteur Limited",
                 AtcCode = "J07CA06",
-                Disease = "Diphtheria + Pertussis + Tetanus + Polio + Hib"
+                Disease = "DIPH,PERT(A),TET,POLIO,HIB/PF 15-20-5-10 HV"
             };
             context.Vaccines.Add(vaccine9);
 
@@ -182,7 +182,7 @@ namespace ImmunizationApi.Repository.Example
                 Name = "Gardasil 9",
                 Manufacturer = "MERCK CANADA INC",
                 AtcCode = "",
-                Disease = "Human Papillomavirus"
+                Disease = "HPV VACCINE 9-VALENT/PF 0.5 ML HV"
             };
             context.Vaccines.Add(vaccine10);
 
@@ -192,7 +192,7 @@ namespace ImmunizationApi.Repository.Example
                 Name = "M-M-R II",
                 Manufacturer = "MERCK CANADA INC",
                 AtcCode = "",
-                Disease = "Measles + Mumps + Rubella"
+                Disease = "MEASLES,MUMPS,RUBELLA VACC/PF 1K-5K/0.5 HS"
             };
             context.Vaccines.Add(vaccine11);
 

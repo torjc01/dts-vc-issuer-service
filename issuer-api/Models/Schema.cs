@@ -14,7 +14,6 @@ namespace Issuer.Models
     {
         public string name { get; set; }
         public string description { get; set; }
-        public string issuanceDate { get; set; }
         public string expirationDate { get; set; }
         public string credential_type { get; set; }
         public string countryOfVaccination { get; set; }
@@ -25,6 +24,7 @@ namespace Issuer.Models
         public string vaccine_disease { get; set; }
         public string vaccine_medicinalProductName { get; set; }
         public string vaccine_marketingAuthorizationHolder { get; set; }
+        public string vaccine_dateOfVaccination { get; set; }
 
     }
 }

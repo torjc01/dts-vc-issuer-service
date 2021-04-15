@@ -12,7 +12,7 @@ export class BusyOverlayComponent {
   @Output() public started: EventEmitter<boolean>;
   @Output() public stopped: EventEmitter<boolean>;
 
-  constructor() {
+  public constructor() {
     this.started = new EventEmitter();
     this.stopped = new EventEmitter();
   }
@@ -21,7 +21,7 @@ export class BusyOverlayComponent {
    * @description
    * Indicate the busy overlay is displayed.
    */
-  public onBusyStart(event: boolean) {
+  public onBusyStart(event: boolean): void {
     this.started.emit(event);
   }
 
@@ -29,7 +29,7 @@ export class BusyOverlayComponent {
    * @description
    * Indicate the busy overlay is hidden.
    */
-  public onBusyStop(event: boolean) {
+  public onBusyStop(event: boolean): void {
     this.stopped.emit(event);
   }
 }

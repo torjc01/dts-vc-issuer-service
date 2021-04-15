@@ -23,6 +23,27 @@ export class IssuerResource {
 
   /**
    * @description
+   * Get the patient by the user ID provided by the authentication token.
+   */
+  // TODO temporarily added /auth to distinguish between the getBy endpoints until a
+  // proper GUID is provided and.Net can distinguish between the URI param data types
+  public getPatientByUserId(userId: string): Observable<Patient> {
+    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ userId }/auth`)
+      .pipe(
+        tap((patient: Patient) => this.logger.info('PATIENT', patient)),
+        catchError((error: any) => {
+          if (error.status === 404) {
+            return of(null);
+          }
+
+          this.logger.error('IssuerResource::getPatientByUserId error has occurred: ', error);
+          throw error;
+        })
+      );
+  }
+
+  /**
+   * @description
    * Create a new patient profile.
    */
   public createPatient(patient: Patient): Observable<Patient> {
@@ -57,20 +78,15 @@ export class IssuerResource {
 
   /**
    * @description
-   * Get the patient by the user ID provided by the authentication token.
+   * Issue a credential for an existing patient.
    */
-  // TODO temporarily added /auth to distinguish between the getBy endpoints until a
-  // proper GUID is provided and.Net can distinguish between the URI param data types
-  public getPatientByUserId(userId: string): Observable<Patient> {
-    return this.http.get<Patient>(`${ this.config.apiEndpoints.issuer }/patients/${ userId }/auth`)
+  public issueCredential(patientId: number, immunizationRecords: ImmunizationRecord[]): Observable<string> {
+    const payload = immunizationRecords.map(({ id: guid, fullUrl: uri }: ImmunizationRecord) => ({ guid, uri }));
+    return this.http.post<string>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }/credential`, payload)
       .pipe(
-        tap((patient: Patient) => this.logger.info('PATIENT', patient)),
+        tap((credential: string) => this.logger.info('CREDENTIAL', credential)),
         catchError((error: any) => {
-          if (error.status === 404) {
-            return of(null);
-          }
-
-          this.logger.error('IssuerResource::getPatientByUserId error has occurred: ', error);
+          this.logger.error('IssuerResource::issueCredential error has occurred: ', error);
           throw error;
         })
       );
@@ -80,7 +96,7 @@ export class IssuerResource {
    * @description
    * Issue a credential for an existing patient.
    */
-  public issueCredential(patientId: number, immunizationRecords: ImmunizationRecord[]): Observable<string> {
+  public getPatient(patientId: number, immunizationRecords: ImmunizationRecord[]): Observable<string> {
     const payload = immunizationRecords.map(({ id: guid, fullUrl: uri }: ImmunizationRecord) => ({ guid, uri }));
     return this.http.post<string>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }/credential`, payload)
       .pipe(

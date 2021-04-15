@@ -7,7 +7,7 @@ export type DomSanitizerType = 'html' | 'style' | 'script' | 'url' | 'resourceUr
   name: 'safe'
 })
 export class SafePipe implements PipeTransform {
-  constructor(
+  public constructor(
     private sanitizer: DomSanitizer
   ) { }
 
@@ -22,7 +22,7 @@ export class SafePipe implements PipeTransform {
       case 'script': return this.sanitizer.bypassSecurityTrustScript(value);
       case 'url': return this.sanitizer.bypassSecurityTrustUrl(value);
       case 'resourceUrl': return this.sanitizer.bypassSecurityTrustResourceUrl(value);
-      default: throw new Error(`Invalid DOM sanitizer type specified: ${type}`);
+      default: throw new Error(`Invalid DOM sanitizer type specified: ${ type }`);
     }
   }
 }

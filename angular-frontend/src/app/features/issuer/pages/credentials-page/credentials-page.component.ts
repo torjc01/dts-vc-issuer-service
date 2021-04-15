@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
+
+import { TranslocoService } from '@ngneat/transloco';
 
 import { AuthService } from '@core/services/auth.service';
 import { LoggerService } from '@core/services/logger.service';
@@ -21,7 +23,6 @@ import { IssuerResource } from '@features/issuer/shared/services/issuer-resource
 })
 export class CredentialsPageComponent implements OnInit {
   public busy: Subscription;
-  public title: string;
 
   /**
    * @description
@@ -61,10 +62,10 @@ export class CredentialsPageComponent implements OnInit {
     private immunizationResource: ImmunizationResource,
     private issuerResource: IssuerResource,
     private authService: AuthService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private translocoService: TranslocoService
   ) {
-    this.title = this.route.snapshot.data.title;
-
+    this.immunizationRecords = null;
     this.patient = null;
     this.immunizationRecords = null;
     this.patientCredentials = null;
@@ -88,14 +89,14 @@ export class CredentialsPageComponent implements OnInit {
     const isSaved = this.storedImmunizationRecords.some(predicate);
 
     if (isSaved) {
-      return new AlertOptions('success', 'verified', 'Vaccination record exists in your digital wallet');
+      return new AlertOptions('success', 'verified', this.translocoService.translate('vaccinationRecordReadyToBeSavedInWallet'));
     }
 
     const isPending = this.selectedImmunizationRecords.some(predicate);
 
     return (isPending)
-      ? new AlertOptions('warn', 'task_alt', 'Vaccination record is ready to be saved to your digital wallet', true, true)
-      : new AlertOptions('info', 'notification_important', 'Vaccination record has not been added to your certificate', true, isPending);
+      ? new AlertOptions('warn', 'task_alt', this.translocoService.translate('vaccinationRecordReadyToBeSavedInWallet'), true, true)
+      : new AlertOptions('info', 'notification_important', this.translocoService.translate('notAddedToCertificateMessage'), true, isPending);
   }
 
   /**

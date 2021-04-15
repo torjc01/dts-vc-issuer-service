@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-export interface AlertOptions {
-  type: 'info' | 'success' | 'warn' | 'danger';
-  icon: string;
-  message: string;
-  showAction?: boolean;
-  disableAction?: boolean;
+export class AlertOptions {
+  public constructor(
+    public type: 'info' | 'success' | 'warn' | 'danger',
+    public icon: string,
+    public message: string,
+    public showAction: boolean = false,
+    public disableAction: boolean = false
+  ) { }
 }
 
 @Component({

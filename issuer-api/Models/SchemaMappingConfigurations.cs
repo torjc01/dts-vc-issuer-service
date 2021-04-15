@@ -14,7 +14,6 @@ namespace Issuer.Infrastructure.AutoMapperProfiles
             CreateMap<ImmunizationResponse, Schema>()
                 .ForMember(dest => dest.name, opt => opt.MapFrom(src => "Vaccination Certificate"))
                 .ForMember(dest => dest.description, opt => opt.MapFrom(src => "Vaccination Certificate"))
-                .ForMember(dest => dest.issuanceDate, opt => opt.MapFrom(src => src.DateOfVaccination))
                 .ForMember(dest => dest.expirationDate, opt => opt.MapFrom(src => src.NextVaccinationDueDate))
                 .ForMember(dest => dest.credential_type, opt => opt.MapFrom(src => "VaccinationEvent"))
                 .ForMember(dest => dest.countryOfVaccination, opt => opt.MapFrom(src => src.CountryOfVaccination))
@@ -24,7 +23,8 @@ namespace Issuer.Infrastructure.AutoMapperProfiles
                 .ForMember(dest => dest.vaccine_type, opt => opt.MapFrom(src => "Vaccine"))
                 .ForMember(dest => dest.vaccine_disease, opt => opt.MapFrom(src => src.Vaccine.Disease))
                 .ForMember(dest => dest.vaccine_medicinalProductName, opt => opt.MapFrom(src => src.Vaccine.ProductName))
-                .ForMember(dest => dest.vaccine_marketingAuthorizationHolder, opt => opt.MapFrom(src => src.Vaccine.Manufacturer));
+                .ForMember(dest => dest.vaccine_marketingAuthorizationHolder, opt => opt.MapFrom(src => src.Vaccine.Manufacturer))
+                .ForMember(dest => dest.vaccine_dateOfVaccination, opt => opt.MapFrom(src => src.DateOfVaccination));
 
         }
     }

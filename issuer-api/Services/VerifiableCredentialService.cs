@@ -420,11 +420,6 @@ namespace Issuer.Services
                 },
                 new JObject
                 {
-                    { "name", "issuanceDate"},
-                    { "value", immunizationRecord.issuanceDate }
-                },
-                new JObject
-                {
                     { "name", "expirationDate"},
                     { "value", DateTime.Now.AddYears(1) }
                 },
@@ -473,6 +468,11 @@ namespace Issuer.Services
                     { "name", "vaccine_marketingAuthorizationHolder" },
                     { "value", immunizationRecord.vaccine_marketingAuthorizationHolder }
                 },
+                new JObject
+                {
+                    { "name", "vaccine_dateOfVaccination"},
+                    { "value", immunizationRecord.vaccine_dateOfVaccination }
+                }
             };
 
             _logger.LogInformation("Credential offer attributes for {@JObject}", JsonConvert.SerializeObject(attributes));

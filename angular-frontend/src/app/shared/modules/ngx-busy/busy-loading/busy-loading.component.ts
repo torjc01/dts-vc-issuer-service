@@ -8,11 +8,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./busy-loading.component.scss']
 })
 export class BusyLoadingComponent {
-  @Input() busy: Subscription;
-  @Input() align: 'left' | 'center';
-  @Input() loadingMessage: string;
+  @Input() public busy: Subscription;
+  @Input() public align: 'left' | 'center';
+  @Input() public loadingMessage: string;
 
-  constructor() {
+  public constructor() {
     this.align = 'left';
     this.loadingMessage = 'Loading...';
   }
@@ -21,7 +21,7 @@ export class BusyLoadingComponent {
    * @description
    * Get the text alignment CSS class.
    */
-  public getTextAlignment() {
-    return `text-${this.align}`;
+  public getTextAlignment(): string {
+    return `text-${ this.align }`;
   }
 }

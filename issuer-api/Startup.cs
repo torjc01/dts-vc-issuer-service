@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Issuer.Services;
 using Issuer.HttpClients;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace Issuer
 {
@@ -114,7 +115,7 @@ namespace Issuer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -144,6 +145,8 @@ namespace Issuer
             {
                 endpoints.MapControllers();
             });
+
+            lifetime.ApplicationStarted.Register(OnApplicationStartedAsync(app.ApplicationServices.GetRequiredService<IVerifiableCredentialClient>()).Wait);
         }
 
         protected virtual void ConfigureDatabase(IServiceCollection services)
@@ -168,6 +171,24 @@ namespace Issuer
             // Only logs components that appear after it in the pipeline, which
             // can be used to exclude noisy handlers from logging
             app.UseSerilogRequestLogging();
+        }
+
+        private async Task<Action> OnApplicationStartedAsync(IVerifiableCredentialClient _verifiableCredentialClient)
+        {
+            var issuerDid = await _verifiableCredentialClient.GetIssuerDidAsync();
+            var schemaId = await _verifiableCredentialClient.GetSchemaId(issuerDid);
+            if(schemaId == null)
+            {
+                schemaId = await _verifiableCredentialClient.CreateSchemaAsync();
+            }
+
+            var credentialDefinitionId = await _verifiableCredentialClient.GetCredentialDefinitionIdAsync(schemaId);
+            if(credentialDefinitionId == null)
+            {
+                credentialDefinitionId = await _verifiableCredentialClient.CreateCredentialDefinitionAsync(schemaId);
+            }
+
+           return null;
         }
     }
 }

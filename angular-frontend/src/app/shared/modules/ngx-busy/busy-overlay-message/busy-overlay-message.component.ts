@@ -8,11 +8,11 @@ import { InstanceConfigHolderService } from 'ng-busy';
   styleUrls: ['./busy-overlay-message.component.scss']
 })
 export class BusyOverlayMessageComponent {
-  constructor(
+  public constructor(
     @Inject('instanceConfigHolder') private instanceConfigHolder: InstanceConfigHolderService
   ) { }
 
-  public get message() {
+  public get message(): string {
     return this.instanceConfigHolder.config.message;
   }
 }

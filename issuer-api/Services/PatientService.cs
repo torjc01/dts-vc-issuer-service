@@ -26,14 +26,14 @@ namespace Issuer.Services
                 .AnyAsync(e => e.Id == patientId);
         }
 
-        public async Task<bool> UserIdExistsAsync(Guid userId)
+        public async Task<bool> UserIdExistsAsync(string userId)
         {
             return await _context.Patients
                 .AsNoTracking()
                 .AnyAsync(e => e.UserId == userId);
         }
 
-        public async Task<Patient> GetPatientForUserIdAsync(Guid userId)
+        public async Task<Patient> GetPatientForUserIdAsync(string userId)
         {
             return await _context.Patients
                 .Include(e => e.Connections)

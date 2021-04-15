@@ -28,23 +28,21 @@ namespace Issuer.Controllers
             _verifiableCredentialService = verifiableCredentialService;
         }
 
-        // GET: api/Patients/026a6bf5-3a7a-4b63-8dd6-f9a10ce30bbb
+        // GET: api/Patients/1234567890/auth
         /// <summary>
         /// Gets Patient by UserId
         /// </summary>
         /// <param name="userId"></param>
-        [HttpGet("{userId}:Guid", Name = nameof(GetPatientByUserId))]
+        // TODO temporarily added /auth to distinguish between the getBy endpoints until a
+        // proper GUID is provided and.Net can distinguish between the URI param data types
+        [HttpGet("{userId}/auth", Name = nameof(GetPatientByUserId))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         // [ProducesResponseType(typeof(ApiResultResponse<Patient>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Patient), StatusCodes.Status200OK)]
-        public async Task<ActionResult> GetPatientByUserId(Guid userId)
+        public async Task<ActionResult> GetPatientByUserId(string userId)
         {
-            if(userId != User.GetissuerUserId())
-            {
-                return Forbid();
-            }
             var patient = await _patientService.GetPatientForUserIdAsync(userId);
             // return Ok(ApiResponse.Result( patient ));
             return Ok(patient);
@@ -55,7 +53,7 @@ namespace Issuer.Controllers
         /// Gets a specific Patient.
         /// </summary>
         /// <param name="patientId"></param>
-        [HttpGet("{patientId}", Name = nameof(GetPatientById))]
+        [HttpGet("{patientId:int}", Name = nameof(GetPatientById))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -92,7 +90,7 @@ namespace Issuer.Controllers
                 return BadRequest(ApiResponse.BadRequest(ModelState));
             }
 
-            if (await _patientService.UserIdExistsAsync(User.GetissuerUserId()))
+            if (await _patientService.UserIdExistsAsync(patient.UserId))
             {
                 ModelState.AddModelError("Patient.UserId", "An patient already exists for this User Id, only one patient is allowed per User Id.");
                 return BadRequest(ApiResponse.BadRequest(ModelState));

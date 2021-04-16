@@ -2,9 +2,12 @@
 
 .wrapper {
   background-color: theme-palette(blue, darkest);
-  border-top: 3px solid lighten(theme-palette(blue, darkest), 40%);
-  margin-top: 3rem;
   min-height: 400px;
+
+  &.separator {
+    border-top: 3px solid lighten(theme-palette(blue, darkest), 40%);
+    margin-top: 3rem;
+  }
 
   .container {
     color: white;

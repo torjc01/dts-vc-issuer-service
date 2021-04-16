@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 
 import { TranslocoService } from '@ngneat/transloco';
@@ -9,12 +9,15 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['./page-footer.component.scss']
 })
 export class PageFooterComponent {
+  @Input() public showSeparator: boolean;
+
   public defaultLanguage: string;
 
   public constructor(
     private translocoService: TranslocoService
   ) {
-    this.defaultLanguage = this.translocoService.getDefaultLang();
+    this.showSeparator = false;
+    this.defaultLanguage = this.translocoService.getActiveLang();
   }
 
   public onLanguageChange(change: MatSelectChange) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { exhaustMap, map } from 'rxjs/operators';
@@ -16,7 +16,6 @@ import { PatientCredential } from '@features/issuer/shared/models/patient-creden
 import { ImmunizationResource } from '@features/issuer/shared/services/immunization-resource.service';
 import { IssuerResource } from '@features/issuer/shared/services/issuer-resource.service';
 
-// TODO poll or websocket detect when connection has been made and remove the QRCode
 @Component({
   selector: 'app-credentials-page',
   templateUrl: './credentials-page.component.html',
@@ -58,7 +57,6 @@ export class CredentialsPageComponent implements OnInit {
   public issuedCredential: string | null;
 
   public constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private immunizationResource: ImmunizationResource,
     private issuerResource: IssuerResource,
@@ -188,9 +186,11 @@ export class CredentialsPageComponent implements OnInit {
         immunizationRecords,
         patientCredentials
       }: { immunizationRecords: ImmunizationRecord[]; patientCredentials: PatientCredential[]; }) => {
-        this.storedImmunizationRecords = this.intersectionOfImmunCreds(immunizationRecords, patientCredentials);
-        this.immunizationRecords = immunizationRecords;
-        this.patientCredentials = patientCredentials;
+        if (immunizationRecords?.length) {
+          this.storedImmunizationRecords = this.intersectionOfImmunCreds(immunizationRecords, patientCredentials);
+          this.immunizationRecords = immunizationRecords;
+          this.patientCredentials = patientCredentials;
+        }
       });
   }
 

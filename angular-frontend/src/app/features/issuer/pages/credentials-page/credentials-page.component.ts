@@ -16,6 +16,7 @@ import { PatientCredential } from '@features/issuer/shared/models/patient-creden
 import { ImmunizationResource } from '@features/issuer/shared/services/immunization-resource.service';
 import { IssuerResource } from '@features/issuer/shared/services/issuer-resource.service';
 
+// TODO poll or websocket detect when connection has been made and remove the QRCode
 @Component({
   selector: 'app-credentials-page',
   templateUrl: './credentials-page.component.html',
@@ -105,39 +106,17 @@ export class CredentialsPageComponent implements OnInit {
    */
   public addAllImmunizationRecords(): void {
     if (this.immunizationRecords?.length) {
-      // TODO isolate the values that are not stored to populate the list
-      // const immunizationRecords = this.intersectionOfImmunCreds(this.immunizationRecords, this.patientCredentials);
-      // this.selectedImmunizationRecords = [...immunizationRecords];
-
-      if (this.patientCredentials?.length) {
-
-      } else {
-
-      }
-
       const credentialGuids = this.getCredentialGuids(this.patientCredentials);
 
-      console.log(this.immunizationRecords.reduce((
-        storedImmunizationRecords: ImmunizationRecord[],
-        immunizationRecord: ImmunizationRecord
-      ) => {
-        if (!credentialGuids.includes(immunizationRecord.id)) {
-          storedImmunizationRecords.push(immunizationRecord);
-        }
-
-        return storedImmunizationRecords;
-      }, []));
-
-
       this.selectedImmunizationRecords = this.immunizationRecords.reduce((
-        storedImmunizationRecords: ImmunizationRecord[],
+        selectableImmunizationRecords: ImmunizationRecord[],
         immunizationRecord: ImmunizationRecord
       ) => {
         if (!credentialGuids.includes(immunizationRecord.id)) {
-          storedImmunizationRecords.push(immunizationRecord);
+          selectableImmunizationRecords.push(immunizationRecord);
         }
 
-        return storedImmunizationRecords;
+        return selectableImmunizationRecords;
       }, []);
     }
   }

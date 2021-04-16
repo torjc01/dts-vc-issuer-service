@@ -40,7 +40,5 @@ namespace ImmunizationApi.Services
         /// <param name="bearerToken">The security token representing the authenticated user.</param>
         /// <returns>Returns a list of immunizations.</returns>
         public Task<Immunization> GetImmunization(string immunizationId, string accessToken = null);
-
-
     }
 }

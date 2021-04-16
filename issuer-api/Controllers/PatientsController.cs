@@ -53,7 +53,7 @@ namespace Issuer.Controllers
         /// Gets a specific Patient.
         /// </summary>
         /// <param name="patientId"></param>
-        [HttpGet("{patientId:int}", Name = nameof(GetPatientById))]
+        [HttpGet("{patientId}", Name = nameof(GetPatientById))]
         [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -132,6 +132,32 @@ namespace Issuer.Controllers
 
             // return qrcode if invitation not yet accepted, otherwise nothing
             return Ok(qrCode);
+        }
+
+        // GET: api/Patients/5/credentials
+        /// <summary>
+        /// Gets a patients credentials
+        /// </summary>
+        /// <param name="patientId"></param>
+        [HttpGet("{patientId}/credentials", Name = nameof(GetPatientCredentials))]
+        [ProducesResponseType(typeof(ApiBadRequestResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ApiMessageResponse), StatusCodes.Status404NotFound)]
+        // [ProducesResponseType(typeof(ApiResultResponse<IEnumerable<CredentialViewModel>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<CredentialViewModel>), StatusCodes.Status200OK)]
+        public async Task<ActionResult> GetPatientCredentials(int patientId)
+        {
+            var patient = await _patientService.GetPatientAsync(patientId);
+            if (patient == null)
+            {
+                return NotFound(ApiResponse.Message($"Patient not found with id {patientId}"));
+            }
+
+            var credentials = await _patientService.GetPatientCredentialsAsync(patientId);
+
+            // return Ok(ApiResponse.Result(credentials));
+            return Ok(credentials);
         }
 
     }

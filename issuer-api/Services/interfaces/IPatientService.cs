@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Issuer.Models;
 
@@ -11,5 +12,6 @@ namespace Issuer.Services
         Task<bool> PatientExistsAsync(int patientId);
         Task<bool> UserIdExistsAsync(string userId);
         Task<int> CreatePatientAsync(Patient patient);
+        Task<IEnumerable<CredentialViewModel>> GetPatientCredentialsAsync(int patientId);
     }
 }

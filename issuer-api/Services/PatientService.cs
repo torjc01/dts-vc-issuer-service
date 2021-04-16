@@ -1,21 +1,28 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Issuer.HttpClients;
 using Issuer.Models;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Issuer.Services
 {
     public class PatientService : BaseService, IPatientService
     {
+        private readonly IMapper _mapper;
         private readonly IImmunizationClient _immunizationClient;
         public PatientService(
             ApiDbContext context,
             IHttpContextAccessor httpContext,
+            IMapper mapper,
             IImmunizationClient immunizationClient)
             : base(context, httpContext)
         {
+            _mapper = mapper;
             _immunizationClient = immunizationClient;
         }
 
@@ -62,6 +69,15 @@ namespace Issuer.Services
             }
 
             return newPatient.Id;
+        }
+
+        public async Task<IEnumerable<CredentialViewModel>> GetPatientCredentialsAsync(int patientId)
+        {
+            return await _context.Credentials
+                .Include(c => c.Connection)
+                .Where(c => c.Connection.PatientId == patientId)
+                .ProjectTo<CredentialViewModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
     }
 }

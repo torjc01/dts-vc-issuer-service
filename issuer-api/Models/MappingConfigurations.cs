@@ -7,9 +7,9 @@ using Issuer.Models.Api;
 
 namespace Issuer.Infrastructure.AutoMapperProfiles
 {
-    public class SchemaMappingConfigurations : Profile
+    public class MappingConfigurations : Profile
     {
-        public SchemaMappingConfigurations()
+        public MappingConfigurations()
         {
             CreateMap<ImmunizationResponse, Schema>()
                 .ForMember(dest => dest.name, opt => opt.MapFrom(src => "Vaccination Certificate"))
@@ -25,6 +25,9 @@ namespace Issuer.Infrastructure.AutoMapperProfiles
                 .ForMember(dest => dest.vaccine_medicinalProductName, opt => opt.MapFrom(src => src.Vaccine.ProductName))
                 .ForMember(dest => dest.vaccine_marketingAuthorizationHolder, opt => opt.MapFrom(src => src.Vaccine.Manufacturer))
                 .ForMember(dest => dest.vaccine_dateOfVaccination, opt => opt.MapFrom(src => src.DateOfVaccination));
+
+             CreateMap<Credential, CredentialViewModel>()
+                .ForMember(dest => dest.Guid, opt => opt.MapFrom(src => src.Identifier.Guid));
 
         }
     }

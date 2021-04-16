@@ -2,7 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgBusyModule } from 'ng-busy';
 
-import { BusyOverlayComponent } from '../busy-overlay/busy-overlay.component';
+import { BusyOverlayComponent } from './busy-overlay.component';
 import { busyConfig } from '../busy.config';
 
 describe('BusyOverlayComponent', () => {

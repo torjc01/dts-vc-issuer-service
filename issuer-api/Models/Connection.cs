@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Issuer.Models
 {
@@ -23,6 +23,7 @@ namespace Issuer.Models
 
         public DateTimeOffset? AcceptedConnectionDate { get; set; }
 
+        [JsonIgnore]
         public ICollection<Credential> Credentials { get; set; }
 
     }

@@ -24,6 +24,9 @@
       "@env/*": [
         "./environments/*"
       ],
+      "@lib/*": [
+        "./lib/*"
+      ],
       "@core/*": [
         "./app/core/*"
       ],

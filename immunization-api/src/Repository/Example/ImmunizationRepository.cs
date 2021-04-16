@@ -50,7 +50,7 @@ namespace ImmunizationApi.Repository.Example
                 {
                     RecordIdentifier = imz.Id.ToString(),
                     VaccinationDate = imz.AdministeredOnDate.ToShortDateString(),
-                    NextVaccinationDueDate = imz.NextDueDate.ToShortDateString(),
+                    NextVaccinationDueDate = imz.NextDueDate?.ToShortDateString(),
                     DoseNumber = imz.DoseNumber,
                     LotNumber = imz.LotNumber,
                     CountryOfVaccination = imz.AdministeredAt.Country,
@@ -112,7 +112,7 @@ namespace ImmunizationApi.Repository.Example
                 .Include(i => i.Patient)
                 .Include(i => i.Vaccine)
                 .Include(i => i.AdministeredAt).FirstAsync<ImmunizationEntity>();
-            
+
             immunization = this.FromEntity(imz);
             return immunization;
         }

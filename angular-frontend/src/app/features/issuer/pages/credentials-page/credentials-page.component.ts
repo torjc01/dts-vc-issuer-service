@@ -72,7 +72,8 @@ export class CredentialsPageComponent implements OnInit {
         type: 'success',
         icon: 'verified',
         message: this.translocoService.translate('vaccinationRecordExistsInWallet'),
-        showAction: false
+        showAction: false,
+        disableAction: true
       };
     } else {
       return {

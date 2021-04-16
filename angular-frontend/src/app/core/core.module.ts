@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { NgxMaterialModule } from '../lib/modules/ngx-material/ngx-material.module';
 import { NgxTranslocoModule } from '../lib/modules/ngx-transloco/ngx-transloco.module';
 
 import { throwIfAlreadyLoaded } from '@core/module-import-guard';
@@ -12,7 +13,8 @@ import { ErrorHandlerInterceptor } from '@core/interceptors/error-handler.interc
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMaterialModule
   ],
   providers: [
     {

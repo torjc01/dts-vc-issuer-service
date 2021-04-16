@@ -9,7 +9,7 @@ import { LoggerService } from '@core/services/logger.service';
 
 import { Patient } from '../models/patient.model';
 import { ImmunizationRecord } from '../models/immunization-record.model';
-import { IssuedCredential } from '../models/issued-credential.model';
+import { PatientCredential } from '../models/patient-credential.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,15 +94,14 @@ export class IssuerResource {
 
   /**
    * @description
-   * Issue a credential for an existing patient.
+   * Get a list of patient credentials.
    */
-  public getPatient(patientId: number, immunizationRecords: ImmunizationRecord[]): Observable<string> {
-    const payload = immunizationRecords.map(({ id: guid, fullUrl: uri }: ImmunizationRecord) => ({ guid, uri }));
-    return this.http.post<string>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }/credential`, payload)
+  public patientCredentials(patientId: number): Observable<PatientCredential[]> {
+    return this.http.get<PatientCredential[]>(`${ this.config.apiEndpoints.issuer }/patients/${ patientId }/credentials`)
       .pipe(
-        tap((credential: string) => this.logger.info('CREDENTIAL', credential)),
+        tap((credentials: PatientCredential[]) => this.logger.info('CREDENTIALS', credentials)),
         catchError((error: any) => {
-          this.logger.error('IssuerResource::issueCredential error has occurred: ', error);
+          this.logger.error('IssuerResource::patientCredentials error has occurred: ', error);
           throw error;
         })
       );

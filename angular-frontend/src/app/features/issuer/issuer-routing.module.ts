@@ -21,12 +21,10 @@ const routes: Routes = [
       {
         path: IssuerRoutes.CREDENTIALS_PAGE,
         canActivate: [],
-        component: CredentialsPageComponent,
-        data: { title: 'Obtain Your Health Status Credential' }
+        component: CredentialsPageComponent
       }
     ]
-  },
-  { path: 'login', loadChildren: () => import('./shared/modules/issuer-login/issuer-login.module').then(m => m.IssuerLoginModule) }
+  }
 ];
 
 @NgModule({

@@ -13,8 +13,7 @@ import { IssuerLoginComponent } from './issuer-login.component';
   ],
   imports: [
     SharedModule,
-    IssuerLoginRoutingModule,
-    TranslocoModule
+    IssuerLoginRoutingModule
   ]
 })
 export class IssuerLoginModule { }

@@ -42,7 +42,7 @@ import { PageFooterComponent } from './components/page-footer/page-footer.compon
     NgxBusyModule,
     NgxProgressModule,
     TranslocoModule,
-    TranslocoLocaleModule.init()
+    TranslocoLocaleModule
   ],
   exports: [
     CommonModule,
@@ -50,6 +50,8 @@ import { PageFooterComponent } from './components/page-footer/page-footer.compon
     NgxMaterialModule,
     NgxBusyModule,
     NgxProgressModule,
+    TranslocoModule,
+    TranslocoLocaleModule,
     FormatDatePipe,
     SafePipe,
     DefaultPipe,

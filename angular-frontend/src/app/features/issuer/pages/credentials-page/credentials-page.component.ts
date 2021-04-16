@@ -104,23 +104,41 @@ export class CredentialsPageComponent implements OnInit {
    * Add all the immunization records that do not already exist to the "cart".
    */
   public addAllImmunizationRecords(): void {
-    if (this.immunizationRecords?.length && this.patientCredentials?.length) {
+    if (this.immunizationRecords?.length) {
       // TODO isolate the values that are not stored to populate the list
       // const immunizationRecords = this.intersectionOfImmunCreds(this.immunizationRecords, this.patientCredentials);
       // this.selectedImmunizationRecords = [...immunizationRecords];
 
-      // const credentialGuids = this.getCredentialGuids(patientCredentials);
+      if (this.patientCredentials?.length) {
 
-      // return immunizationRecords.reduce((
-      //   storedImmunizationRecords: ImmunizationRecord[],
-      //   immunizationRecord: ImmunizationRecord
-      // ) => {
-      //   if (credentialGuids.includes(immunizationRecord.id)) {
-      //     storedImmunizationRecords.push(immunizationRecord);
-      //   }
+      } else {
 
-      //   return storedImmunizationRecords;
-      // }, []);
+      }
+
+      const credentialGuids = this.getCredentialGuids(this.patientCredentials);
+
+      console.log(this.immunizationRecords.reduce((
+        storedImmunizationRecords: ImmunizationRecord[],
+        immunizationRecord: ImmunizationRecord
+      ) => {
+        if (!credentialGuids.includes(immunizationRecord.id)) {
+          storedImmunizationRecords.push(immunizationRecord);
+        }
+
+        return storedImmunizationRecords;
+      }, []));
+
+
+      this.selectedImmunizationRecords = this.immunizationRecords.reduce((
+        storedImmunizationRecords: ImmunizationRecord[],
+        immunizationRecord: ImmunizationRecord
+      ) => {
+        if (!credentialGuids.includes(immunizationRecord.id)) {
+          storedImmunizationRecords.push(immunizationRecord);
+        }
+
+        return storedImmunizationRecords;
+      }, []);
     }
   }
 

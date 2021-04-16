@@ -5,8 +5,7 @@ import { CoreModule } from '@core/core.module';
 import { AppComponent } from './app.component';
 import { AppConfigModule } from './app-config.module';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { TranslocoRootModule } from './transloco/transloco-root.module';
+import { NgxTranslocoModule } from './lib/modules/ngx-transloco/ngx-transloco.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +13,7 @@ import { TranslocoRootModule } from './transloco/transloco-root.module';
     CoreModule,
     AppConfigModule,
     AppRoutingModule,
-    TranslocoRootModule
+    NgxTranslocoModule
   ],
   bootstrap: [AppComponent]
 })

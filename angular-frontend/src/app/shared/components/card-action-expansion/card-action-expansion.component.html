@@ -1,5 +1,6 @@
 <!-- TODO make this into div for expansion instead of card specific -->
-<mat-card-actions align="end" *transloco="let t">
+<mat-card-actions align="end"
+                  *transloco="let t">
   <button mat-button
           class="adjust-margin"
           color="primary"
@@ -12,7 +13,8 @@
 </mat-card-actions>
 
 <ng-container *ngIf="expanded">
-  <mat-list dense *transloco="let t">
+  <mat-list dense
+            *transloco="let t">
 
     <mat-divider></mat-divider>
 
@@ -22,11 +24,11 @@
     </mat-list-item>
     <mat-list-item>
       <h3 matLine>{{ t('doseNumberLabel') }}</h3>
-      <p matLine>{{ immunizationRecord.doseNumber }}</p>
+      <p matLine>{{ immunizationRecord.doseNumber | default: 'N/A' }}</p>
     </mat-list-item>
     <mat-list-item>
       <h3 matLine>{{ t('vaccineLotNumberLabel') }}</h3>
-      <p matLine>{{ immunizationRecord.lotNumber }}</p>
+      <p matLine>{{ immunizationRecord.lotNumber | default: 'N/A' }}</p>
     </mat-list-item>
     <mat-list-item>
       <h3 matLine>{{ t('administrationCentreLabel') }}</h3>
@@ -38,7 +40,8 @@
     </mat-list-item>
     <mat-list-item>
       <h3 matLine>{{ t('dueDateOfNextDoseLabel') }}</h3>
-      <p matLine>{{ immunizationRecord.nextVaccinationDate | translocoDate: { dateStyle: 'long' } }}</p>
+      <p matLine>{{ immunizationRecord.nextVaccinationDate | translocoDate: { dateStyle: 'long' } | default: 'N/A' }}
+      </p>
     </mat-list-item>
   </mat-list>
 </ng-container>

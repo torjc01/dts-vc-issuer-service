@@ -12,7 +12,7 @@ namespace ImmunizationApi.Models.Entity
         [Key]
         public Guid Id { get; set; }
         public DateTime AdministeredOnDate { get; set; }
-        public DateTime NextDueDate { get; set; }
+        public DateTime? NextDueDate { get; set; }
         public string LotNumber { get; set; }
         public int DoseNumber { get; set; }
         public string PatientId { get; set; }

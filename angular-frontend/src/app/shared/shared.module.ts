@@ -8,6 +8,7 @@ import { NgxBusyModule } from './modules/ngx-busy/ngx-busy.module';
 import { NgxProgressModule } from './modules/ngx-progress/ngx-progress.module';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { DefaultPipe } from './pipes/default.pipe';
 import { CardAlertComponent } from './components/card-alert/card-alert.component';
 import { CardActionExpansionComponent } from './components/card-action-expansion/card-action-expansion.component';
 import { QRCodeComponent } from './components/qrcode/qrcode.component';
@@ -22,6 +23,7 @@ import { TranslocoLocaleModule } from '@ngneat/transloco-locale';
   declarations: [
     FormatDatePipe,
     SafePipe,
+    DefaultPipe,
     CardAlertComponent,
     CardActionExpansionComponent,
     QRCodeComponent,
@@ -48,6 +50,7 @@ import { TranslocoLocaleModule } from '@ngneat/transloco-locale';
     NgxProgressModule,
     FormatDatePipe,
     SafePipe,
+    DefaultPipe,
     CardAlertComponent,
     CardActionExpansionComponent,
     QRCodeComponent,

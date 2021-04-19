@@ -1,4 +1,7 @@
-<div class="wrapper" *transloco="let t">
+<div class="wrapper"
+     [class.separator]="showSeparator"
+     *transloco="let t">
+
   <div class="container">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-4">
@@ -27,7 +30,8 @@
         <h1>{{ t('languageLabel') }}</h1>
 
         <mat-form-field appearance="outline">
-          <mat-select value="en">
+          <mat-select [value]="defaultLanguage"
+                      (selectionChange)="onLanguageChange($event)">
             <mat-option value="en">{{ t('englishLanguageLabel') }}</mat-option>
             <mat-option value="fr">{{ t('frenchLanguageLabel') }}</mat-option>
           </mat-select>

@@ -6,15 +6,17 @@ import { exhaustMap, map } from 'rxjs/operators';
 
 import { TranslocoService } from '@ngneat/transloco';
 
+import { ToastService } from '@core/services/toast.service';
+
 import { AuthService } from '@core/services/auth.service';
 import { LoggerService } from '@core/services/logger.service';
 import { AlertOptions } from '@shared/components/card-alert/card-alert.component';
 
 import { ImmunizationRecord } from '@features/issuer/shared/models/immunization-record.model';
+import { IssuerResource } from '@features/issuer/shared/services/issuer-resource.service';
 import { Patient } from '@features/issuer/shared/models/patient.model';
 import { PatientCredential } from '@features/issuer/shared/models/patient-credential.model';
 import { ImmunizationResource } from '@features/issuer/shared/services/immunization-resource.service';
-import { IssuerResource } from '@features/issuer/shared/services/issuer-resource.service';
 
 @Component({
   selector: 'app-credentials-page',
@@ -62,6 +64,7 @@ export class CredentialsPageComponent implements OnInit {
     private issuerResource: IssuerResource,
     private authService: AuthService,
     private logger: LoggerService,
+    private toastService: ToastService,
     private translocoService: TranslocoService
   ) {
     this.immunizationRecords = null;
@@ -152,6 +155,8 @@ export class CredentialsPageComponent implements OnInit {
         map((patientCredentials: PatientCredential[]) => {
           this.storedImmunizationRecords = this.intersectionOfImmunCreds(this.immunizationRecords, patientCredentials);
           this.patientCredentials = patientCredentials;
+
+          this.toastService.openSuccessToast(this.translocoService.translate('createCredentialSuccessMessage'));
         })
       )
       .subscribe(() => this.selectedImmunizationRecords = []);

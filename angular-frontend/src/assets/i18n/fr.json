@@ -39,13 +39,14 @@
   "privacyLabel": "Confidentialité",
   "termsLabel": "Conditions",
   "languageLabel": "Langue",
-  "englishLanguageLabel": "Anglais",
-  "frenchLanguageLabel": "Français",
+  "englishLanguageLabel": "English",
+  "frenchLanguageLabel": "French",
   "footerNote": "2021 Health Status Credential. Tous droits réservés.",
   "saveToWalletButtonLabel": "Enregistrer dans Portefeuille",
   "byClickingMessage": "En cliquant sur",
   "createWithListedVaccinationRecordsMessage": "vous allez créer un certificat de santé avec les preuves de vaccination énumérés.",
   "scanQrCodeMessage": "Scannez ce code QR avec votre téléphone pour ajouter votre certificat de santé numérique à votre portefeuille numérique. Vous ne scannerez ce code qu'une seule fois.",
   "listOfVaccinationRecordsSelected": "Liste des preuves vaccinales que vous avez sélectionnées pour être ajoutées à votre portefeuille numérique :",
-  "obtainYourHealthStatusCredentialTitle": "Obtenez votre certificat d'état de santé"
+  "obtainYourHealthStatusCredentialTitle": "Obtenez votre certificat d'état de santé",
+  "createCredentialSuccessMessage": "Votre (vos) preuve(s) vaccinale a (ont) été ajouté(s) à votre carnet de santé numérique"
 }

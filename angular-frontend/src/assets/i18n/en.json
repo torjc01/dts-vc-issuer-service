@@ -39,13 +39,14 @@
   "privacyLabel": "Privacy",
   "termsLabel": "Terms",
   "languageLabel": "Language",
-  "englishLanguageLabel": "English",
-  "frenchLanguageLabel": "French",
+  "englishLanguageLabel": "Anglais",
+  "frenchLanguageLabel": "Français",
   "footerNote": "2021 Health Status Credential. All rights reserved.",
   "saveToWalletButtonLabel": "Save to Wallet",
   "byClickingMessage": "By clicking",
   "createWithListedVaccinationRecordsMessage": "you will create a Health Certificate with the listed vaccination records.",
   "scanQrCodeMessage": "Scan this QR code with your phone to add your digital health certificate to your digital wallet. You will only scan this code once.",
   "listOfVaccinationRecordsSelected": "List of vaccination records that you've selected to be added to your digial wallet:",
-  "obtainYourHealthStatusCredentialTitle": "Obtain Your Health Status Credential"
+  "obtainYourHealthStatusCredentialTitle": "Obtain Your Health Status Credential",
+  "createCredentialSuccessMessage": "Your vaccination record(s) have been added to your Digital Health Certificate"
 }

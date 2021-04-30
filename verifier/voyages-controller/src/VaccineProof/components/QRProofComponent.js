@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React                from 'react';
 import QRCode               from 'qrcode.react'
 import { useTranslation }   from 'react-i18next'

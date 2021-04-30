@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
  

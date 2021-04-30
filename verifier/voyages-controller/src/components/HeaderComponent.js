@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React, { useState, useEffect } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import { useLocation }                from 'react-router-dom';

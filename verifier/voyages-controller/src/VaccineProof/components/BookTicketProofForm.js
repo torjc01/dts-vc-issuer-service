@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React, { useState } from 'react';
 import { Col, FormGroup, Label, Input,   } from 'reactstrap';
 

@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React, { useState, useEffect }       from 'react'
 import { Container, Button, Col, Spinner }  from 'reactstrap'
 import { useTranslation } 					from 'react-i18next' 

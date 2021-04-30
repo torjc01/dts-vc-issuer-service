@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React, { useState }      from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter,
          Dropdown, DropdownToggle, DropdownMenu, DropdownItem, CardColumns} from 'reactstrap';

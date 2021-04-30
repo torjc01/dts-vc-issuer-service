@@ -1,9 +1,3 @@
-/*
-* Copyright (c) 2020 Gouvernement du Québec
-* Auteur: Julio Cesar Torres (torj01)
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 export function GET_API_SECRET() {
     let API_SECRET = process.env.REACT_APP_API_SECRET;
     if (API_SECRET === undefined || API_SECRET === '')

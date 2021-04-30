@@ -1,7 +1,3 @@
-/*
-* SPDX-License-Identifier: LiLiQ-R-v.1.1
-* License-Filename: /LICENSE
-*/
 import React              from 'react';
 import { Container }      from 'reactstrap';
 import BookTicketProofForm    from '../components/BookTicketProofForm'

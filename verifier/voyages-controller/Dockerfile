@@ -1,4 +1,5 @@
 FROM registry.redhat.io/ubi8/nodejs-12 as builder
+# FROM node:13.12.0-alpine as builder
 USER 1000
 WORKDIR /opt/app-root/src
 ENV PATH /opt/app-root/src/node_modules/.bin:$PATH

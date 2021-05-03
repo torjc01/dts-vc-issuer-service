@@ -31,6 +31,20 @@ services:
       dotnet watch run --urls=http://+:5000"
     ]
 
+  # ReactJS API Verifier 
+  verifier-api-dev: 
+    image: dts-vc-verifier-api-dev
+    ports: 
+      - ${VERIFIER_API_PORT}:10000
+    networks: 
+      - dts-vc-issuer
+    volumes: 
+      - '../verifier/voyages-controller:/app'
+      - '/app/node_modules'
+    command: [
+      "npm", "start"
+    ]
+
   # .Net Core API Immunization
   immunization-api-dev:
     image: dts-vc-immunization-api-dev
@@ -194,3 +208,4 @@ volumes:
   immunization-api-dev-bin:
   immunization-api-dev-obj:
   frontend-npm-cache:
+  verifier-dev-modules:

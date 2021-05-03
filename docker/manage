@@ -145,6 +145,11 @@ build() {
   docker build \
     -t 'dts-vc-immunization-api-dev' \
     -f './api/immunization/Dockerfile.dev' '..'
+
+  echo -e "\nBuilding dts-vc-verifier-api development image..."
+  docker build \
+    -t 'dts-vc-verifier-api-dev' \
+    -f './../verifier/voyages-controller/Dockerfile.dev' './../verifier/voyages-controller/'
 }
 
 configureEnvironment() {
@@ -238,6 +243,10 @@ configureEnvironment() {
   # immunization api
   export IMMUNIZATION_DATABASE_NAME="dts_immunization_db"
   export IMMUNIZATION_API_PORT=5001
+
+  # verifier api 
+  export VERIFIER_API_PORT=10000
+
 }
 
 getInputParams() {

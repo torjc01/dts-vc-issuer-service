@@ -1,6 +1,6 @@
 {
-  "name": "issuer",
-  "version": "0.1.0",
+  "name": "vc-verifier",
+  "version": "1.0.0",
   "proxy": "http://localhost:3000",
   "private": true,
   "dependencies": {

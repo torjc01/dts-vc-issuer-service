@@ -12,7 +12,7 @@ i18n
   .init({
     debug: true,
  
-    lng: 'fr',
+    lng: 'en',
     fallbackLng: 'en',
     whitelist: ['en', 'fr', 'de', 'pt'],
  

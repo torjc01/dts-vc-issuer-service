@@ -35,12 +35,9 @@ services:
   verifier-api-dev: 
     image: dts-vc-verifier-api-dev
     ports: 
-      - ${VERIFIER_API_PORT}:10000
+      - ${VERIFIER_API_PORT}:${VERIFIER_API_PORT}
     networks: 
       - dts-vc-issuer
-    volumes: 
-      - '../verifier/voyages-controller:/app'
-      - '/app/node_modules'
     command: [
       "npm", "start"
     ]
@@ -208,4 +205,3 @@ volumes:
   immunization-api-dev-bin:
   immunization-api-dev-obj:
   frontend-npm-cache:
-  verifier-dev-modules:

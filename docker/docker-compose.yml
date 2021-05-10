@@ -37,7 +37,7 @@ services:
     ports: 
       - ${VERIFIER_API_PORT}:${VERIFIER_API_PORT}
     networks: 
-      - dts-vc-issuer
+      - dts-vc-verifier
     command: [
       "npm", "start"
     ]
@@ -194,6 +194,7 @@ services:
 
 networks:
   dts-vc-issuer:
+  dts-vc-verifier:
 
 volumes:
   keycloak-db-data:

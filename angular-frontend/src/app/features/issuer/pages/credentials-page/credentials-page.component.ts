@@ -252,4 +252,12 @@ export class CredentialsPageComponent implements OnInit {
 
     return [...(new Set(credentials))];
   }
+
+    /**
+   * @description 
+   * Forwards to verification landing page. 
+   */
+     public onVerifyCredential(): void {
+      window.open("http://localhost:10000", "_blank");
+    }
 }

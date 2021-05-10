@@ -26,7 +26,7 @@ function ProofVerificationContainer(props) {
 				{
 					method: 'GET',
 					headers: {
-						'X-API-Key': `${GET_API_SECRET()}`,
+                        'X-API-Key': 'cqen-api-test',
 						'Content-Type': 'application/json; charset=utf-8',
 					}
 				}, TIMEOUT).then((
@@ -56,7 +56,7 @@ function ProofVerificationContainer(props) {
 			{
 				method : 'POST', 
 				headers: {
-                    'X-API-Key'                         : `${GET_API_SECRET()}`,
+                    'X-API-Key': 'cqen-api-test',
 					'Content-Type'                      : 'application/json; charset=utf-8',
 					'Access-Control-Allow-Origin'       : '*', 
 					'Access-Control-Allow-Methods'      : '*',

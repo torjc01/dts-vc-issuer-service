@@ -31,7 +31,7 @@ function QRVerificationContainer(props){
 				{
 					method : 'GET',
 					headers: {
-						'X-API-Key'    : `${GET_API_SECRET()}`,
+                        'X-API-Key': 'cqen-api-test',
 						'Content-Type' : 'application/json; charset=utf-8',
 					}
 				}, TIMEOUT).then((
@@ -67,7 +67,7 @@ function QRVerificationContainer(props){
 			{
 				method : 'POST', 
 				headers: {
-					'X-API-Key'    : `${GET_API_SECRET()}`,
+					'X-API-Key': 'cqen-api-test',
 					'Content-Type' : 'application/json; charset=utf-8',
 				},
 				body: JSON.stringify( 

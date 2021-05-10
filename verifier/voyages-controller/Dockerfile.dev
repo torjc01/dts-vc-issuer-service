@@ -5,6 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app
 COPY public public/
 COPY src /app/src
+COPY parms /app/.env
 
 RUN npm install --silent
 RUN npm run build

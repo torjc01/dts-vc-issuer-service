@@ -1,3 +1,4 @@
+[Version Française](README_fr_CA.md)
 # DTS VC Issuer Service
 
 ## Table of Contents

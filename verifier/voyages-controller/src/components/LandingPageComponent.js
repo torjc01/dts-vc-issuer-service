@@ -16,6 +16,7 @@ const LandingPageComponent = () => {
         method: 'POST',
         headers: {
             'Content-Type'                 : 'application/json; charset=utf-8',
+            'X-API-Key'                    : 'cqen-api-test',
             'Access-Control-Allow-Origin'  : '*', 
             'Access-Control-Allow-Methods' : 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS', 
             'Access-Control-Allow-Headers' : 'Content-Type', 

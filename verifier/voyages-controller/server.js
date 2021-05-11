@@ -16,6 +16,14 @@ app.use(
 );
 
 app.use(
+    '/connections/create-invitation',
+    createProxyMiddleware({
+        target: HOST_URL,
+        changeOrigin: true,
+    })
+);
+
+app.use(
     '/issue-credential',
     createProxyMiddleware({
         target: HOST_URL,

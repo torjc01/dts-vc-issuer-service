@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } 
+                                      from 'reactstrap';
 import { useLocation }                from 'react-router-dom';
 import { useTranslation }             from 'react-i18next'
 import { globalStyles }               from '../assets/styles/globalStyles';
-import Auth                           from '../helpers/Auth';
-import AppLogo                     from '../assets/images/airplane-logo.png';
-import LangueComponent  from './LangueComponent'
+import AppLogo                        from '../assets/images/airplane-logo.png';
+import LangueComponent                from './LangueComponent'
+import { returnIssuer }               from '../helpers/NavigationHelpers'; 
+
 
 
 const HeaderComponent = () => {
@@ -25,22 +27,20 @@ const HeaderComponent = () => {
   return (
     <Navbar expand="sm" fixed="top" style={globalStyles.navbar}>     
       <NavbarBrand className="navbar-brand oneliner">
-        <a href="http://localhost:10000/"><img src={AppLogo} alt="air-secur-logo" style={globalStyles.navbarLogoMini} />
-        <span style={{ color: '#fff', 'margin-left': '10px' }}>AIR-SECUR</span></a>
+        <img src={AppLogo} alt="air-secur-logo" style={globalStyles.navbarLogoMini} />
+        <span style={{ color: '#fff', marginleft: '10px' }}><a href="http://localhost:10000/">AIR-SECUR</a></span>
       </NavbarBrand>
+      <Button style={{backgroundColor: '#707482', color: '#ffffff', marginRight: '300px' }}  onClick={returnIssuer}>
+        {t('vaccine:backToIssuer')}
+      </Button>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav navbar className="ml-auto">
-          {Auth.getAuth() ? (
-            <NavItem>
-            </NavItem>
-          ) : (
               <NavItem>
+                <LangueComponent style={{ marginLeft: '50px' }}/>
               </NavItem>
-            )}
         </Nav>
-      </Collapse>
-      <LangueComponent/>
+      </Collapse> 
     </Navbar>
   );
 };

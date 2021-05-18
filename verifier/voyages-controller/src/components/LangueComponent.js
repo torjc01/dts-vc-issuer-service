@@ -17,13 +17,11 @@ const LangueComponent = () => {
     const languageToggle = () => setLanguageDropdownOpen( !languageDropdownOpen);
     
     useEffect(() => {
-        var userLanguage = navigator.language || navigator.userLanguage;
-        if (userLanguage === 'fr-CA') {
-            setLanguageChoice(t('translation:fr'));
-        } else {
+        // Default language English
+        if(languageChoice == '' || languageChoice == undefined){
             setLanguageChoice(t('translation:en'));
         }
-    });
+    }); 
 
     function changeLanguage(e) {
         let selection = e.target.innerText; 
@@ -41,7 +39,7 @@ const LangueComponent = () => {
                 <Dropdown isOpen={languageDropdownOpen} toggle={languageToggle}>
                     <DropdownToggle caret color="#707482" className="inputField rounded-pill" style={{backgroundColor: '#707482', color: '#ffffff'}}>
                         {languageChoice}
-                    </DropdownToggle>
+                    </DropdownToggle> 
                     <DropdownMenu value={languageChoice} name="languageChoice">
                         <DropdownItem name="self"   onClick={ changeLanguage }>{t('translation:fr')}</DropdownItem>
                         <DropdownItem name="child"  onClick={ changeLanguage }>{t('translation:en')}</DropdownItem>

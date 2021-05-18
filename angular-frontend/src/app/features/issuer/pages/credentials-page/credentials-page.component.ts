@@ -258,6 +258,6 @@ export class CredentialsPageComponent implements OnInit {
    * Forwards to verification landing page. 
    */
      public onVerifyCredential(): void {
-      window.open("http://localhost:10000", "_blank");
+      window.open("http://localhost:10000", "_self");
     }
 }

@@ -75,18 +75,9 @@ function ProofVerificationContainer(props) {
             props.history.push('/proofDisplay', {
                 connection_id                               : props.location.state.connection_id,
                 vaccine: {
-                    vaccine_medicinalProductName            : data.presentation.requested_proof.revealed_attrs.vaccine_medicinalProductName.raw,
-                    countryOfVaccination                    : data.presentation.requested_proof.revealed_attrs.countryOfVaccination.raw,
-                    recipient_birthDate                     : data.presentation.requested_proof.revealed_attrs.recipient_birthDate.raw,
-                    credential_type                         : data.presentation.requested_proof.revealed_attrs.credential_type.raw,
-                    expirationDate                          : data.presentation.requested_proof.revealed_attrs.expirationDate.raw,
                     recipient_fullName                      : data.presentation.requested_proof.revealed_attrs.recipient_fullName.raw,
-                    vaccine_type                            : data.presentation.requested_proof.revealed_attrs.vaccine_type.raw,
-                    recipient_type                          : data.presentation.requested_proof.revealed_attrs.recipient_type.raw,
-                    description                             : data.presentation.requested_proof.revealed_attrs.description.raw,
-                    vaccine_marketingAuthorizationHolder    : data.presentation.requested_proof.revealed_attrs.vaccine_marketingAuthorizationHolder.raw,
+                    recipient_birthDate                     : data.presentation.requested_proof.revealed_attrs.recipient_birthDate.raw,
                     vaccine_dateOfVaccination               : data.presentation.requested_proof.revealed_attrs.vaccine_dateOfVaccination.raw,
-                    vaccine_disease                         : data.presentation.requested_proof.revealed_attrs.vaccine_disease.raw,
                 }
             })
         });

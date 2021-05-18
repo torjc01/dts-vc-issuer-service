@@ -87,37 +87,7 @@ function QRVerificationContainer(props){
 						"name"    : "vaccine", 
 						"version" : "1.2", 
 						"requested_attributes" : {
-							
-							"description": {
-								"name": "description",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							"expirationDate": {
-								"name": "expirationDate",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							"countryOfVaccination": {
-								"name": "countryOfVaccination",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							"credential_type": {
-								"name": "credential_type",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							
-							
+
 							"recipient_birthDate": {
 								"name": "recipient_birthDate",
 								"restrictions": [
@@ -131,13 +101,6 @@ function QRVerificationContainer(props){
 									{"schema_name": schemaName,
                         			"schema_version": version}
 								]
-							},
-							"recipient_type": {
-								"name": "recipient_type",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
 							}, 
 							"vaccine_dateOfVaccination": {
 								"name": "vaccine_dateOfVaccination",
@@ -146,34 +109,6 @@ function QRVerificationContainer(props){
                         			"schema_version": version}
 								]
 							}, 
-							"vaccine_disease": {
-								"name": "vaccine_disease",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							"vaccine_type": {
-								"name": "vaccine_type",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-                            }, 
-                            "vaccine_medicinalProductName": {
-								"name": "vaccine_medicinalProductName",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							},
-							"vaccine_marketingAuthorizationHolder": {
-								"name": "vaccine_marketingAuthorizationHolder",
-								"restrictions": [
-									{"schema_name": schemaName,
-                        			"schema_version": version}
-								]
-							}
 						}, 
 						"requested_predicates" : {}
 					}

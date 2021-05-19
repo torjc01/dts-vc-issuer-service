@@ -22,7 +22,7 @@ function BookTicketProofForm(props) {
           <hr />
 
           <FormGroup row>
-            <Label for="recipient_fullName" sm={3}>
+            <Label for="recipient_fullName" sm={6}>
             {t('vaccine:recipient_fullName')}
             </Label>
             <Col sm={10}>
@@ -31,7 +31,7 @@ function BookTicketProofForm(props) {
           </FormGroup>
           
           <FormGroup row>
-            <Label for="recipient_birthDate" sm={3}>
+            <Label for="recipient_birthDate" sm={6}>
             {t('vaccine:recipient_birthDate')}
             </Label>
             <Col sm={10}>
@@ -47,8 +47,7 @@ function BookTicketProofForm(props) {
               <Input type="text" name="vaccine_dateOfVaccination" id="vaccine_dateOfVaccination" value={vaccine_dateOfVaccination} disabled />
             </Col>
           </FormGroup>
-
-          <br /> &nbsp;<br />
+          <br />
           <hr /> 
         </Col>
         
@@ -59,14 +58,9 @@ function BookTicketProofForm(props) {
             {t('vaccine:vaccine_verified')}
           </h4>
 
-          <p className="ml-md-5 pb-4 mt-2">
+          <p className="ml-md-5 pb-4 mt-2" style={{textAlign: 'justify'}}>
           {t('vaccine:proofMessage')}
           </p>
-
-          <div className="text-center ">
-            <Button className="mt-2" outline color="primary" size="lg" onClick={returnIssuer}>{t('vaccine:backToIssuer')}</Button>
-          </div>
-
         </Col>
       </Row>
     </Container>

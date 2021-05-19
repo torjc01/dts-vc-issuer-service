@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Label, Col, FormGroup, Form, InputGroup, Input, Container, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Auth                from '../helpers/Auth';
-import { useTranslation }  from 'react-i18next' 
-import { GET_PASSCODE }    from '../config/constants'
-import '../assets/styles/LoginContainer.css'
+import React, { useState } 	from 'react';
+import { Button, Label, Col, FormGroup, Form, InputGroup, 
+		 Input, Container, Modal, ModalHeader, ModalBody, ModalFooter } 
+							from 'reactstrap';
+import Auth                	from '../helpers/Auth';
+import { useTranslation }  	from 'react-i18next' 
+import { GET_PASSCODE }    	from '../config/constants'
+import 							 '../assets/styles/LoginContainer.css'
 
 function LoginContainer(props) {
 

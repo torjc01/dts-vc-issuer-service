@@ -1,7 +1,7 @@
-import React              from 'react';
-import { Container }      from 'reactstrap';
-import BookTicketProofForm    from '../components/BookTicketProofForm'
-import '../../assets/styles/LoginContainer.css'
+import React              	from 'react';
+import { Container }      	from 'reactstrap';
+import BookTicketProofForm	from '../components/BookTicketProofForm'
+import 							 '../../assets/styles/LoginContainer.css'
 
 function BookTicketProofContainer(props) {
 

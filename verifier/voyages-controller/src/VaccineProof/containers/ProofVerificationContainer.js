@@ -1,7 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { Container, Spinner }          from 'reactstrap'
 import { useTranslation }              from 'react-i18next'
-import { GET_API_SECRET }              from '../../config/constants' 
 import { fetchWithTimeout }            from '../../helpers/fetchWithTimeout'
 import                                      '../../assets/styles/Forms.css';
 
@@ -97,7 +96,6 @@ function ProofVerificationContainer(props) {
                     {t('identite:msgWait')}
                 </p>
                 <Spinner /> 
-                
             </div>
         </Container>
     );

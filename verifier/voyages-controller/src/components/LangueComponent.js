@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { FormGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
-import '../assets/styles/Social.css'
-import '../assets/styles/ProofContainer.css'
+import React, { useState, useEffect } 
+                                from 'react'
+import { useTranslation }       from 'react-i18next'
+import { FormGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} 
+                                from 'reactstrap';
+import                          '../assets/styles/Social.css'
+import                          '../assets/styles/ProofContainer.css'
 
 const LangueComponent = () => {
     

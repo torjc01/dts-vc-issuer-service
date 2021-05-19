@@ -15,8 +15,6 @@ function QRVerificationContainer(props){
 
 	let INTERVAL    = 5000; 
 	let TIMEOUT     = 3000; 
-	/*let schemaName = GET_SCHEMA_NAME();  
-	let version = GET_SCHEMA_VERSION(); */
 	let schemaName = "vaccine"; 
 	let version ="1.2";
 

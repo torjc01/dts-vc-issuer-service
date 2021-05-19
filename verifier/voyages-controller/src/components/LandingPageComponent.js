@@ -1,11 +1,10 @@
-import React from 'react';
-import { Button } from 'reactstrap';
-import Auth from '../helpers/Auth';
-import { useHistory } from 'react-router-dom';
-import VaccinationStatus from '../helpers/VaccinationStatus';
-import bannerImg from '../assets/images/banner-img-1.png';
-import '../assets/styles/JumbotronComponent.css';
-import { useTranslation }  from 'react-i18next'
+import React              from 'react';
+import { Button }         from 'reactstrap';
+import { useHistory }     from 'react-router-dom';
+import bannerImg          from '../assets/images/banner-img-1.png';
+import { useTranslation } from 'react-i18next'
+import                         '../assets/styles/JumbotronComponent.css';
+
 
 const LandingPageComponent = () => {
   const history = useHistory();

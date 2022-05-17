@@ -27,7 +27,7 @@
     "@ngneat/transloco": "^2.20.1",
     "@ngneat/transloco-locale": "^1.4.0",
     "bootstrap": "^4.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "ng-busy": "^11.0.0",
     "ngx-progressbar": "^6.1.0",
     "rxjs": "~6.6.0",
